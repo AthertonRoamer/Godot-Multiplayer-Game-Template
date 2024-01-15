@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Multiplayer Game Template"
+config/name="Multiplayer Game Template v2"
 run/main_scene="res://menu/main_menu/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
@@ -19,3 +19,7 @@ config/icon="res://icon.svg"
 
 GameState="*res://game_state/game_state.gd"
 Network="*res://network/network.tscn"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
