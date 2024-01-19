@@ -38,7 +38,7 @@ func _ready():
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
 
-func initiate_server() -> void:
+func initiate_enet_server() -> void:
 	close_peer()
 	is_server = true
 	peer = ENetMultiplayerPeer.new()
@@ -51,12 +51,12 @@ func initiate_server() -> void:
 	print("Created server")
 	
 	
-func initiate_local_server() -> void:
-	initiate_server()
+func initiate_local_enet_server() -> void:
+	initiate_enet_server()
 	server_browser.start_broadcast()
 
 
-func initiate_client(ip : String) -> void:
+func initiate_enet_client(ip : String) -> void:
 	close_peer()
 	is_server = false
 	peer = ENetMultiplayerPeer.new()

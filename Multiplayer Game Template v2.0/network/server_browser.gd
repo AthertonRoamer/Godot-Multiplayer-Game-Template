@@ -42,7 +42,6 @@ func start_listening():
 	
 	
 func start_broadcast():
-	broadcast_data = {"server_name" : GameState.player_name}
 	broadcaster = PacketPeerUDP.new()
 	broadcaster.set_broadcast_enabled(true)
 	var ok = broadcaster.bind(BROADCAST_PORT)
