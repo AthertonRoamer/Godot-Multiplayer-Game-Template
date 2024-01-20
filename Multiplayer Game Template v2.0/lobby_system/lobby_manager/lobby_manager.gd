@@ -1,7 +1,8 @@
 extends Node
 #lobby manager autoload
 
-signal created_lobby
+signal created_lobby(data : LobbyData)
+signal closed_lobby(data : LobbyData)
 
 @export var lobby_scene : PackedScene = preload("res://lobby_system/lobby/lobby.tscn")
 
@@ -23,7 +24,15 @@ func create_lobby(lobby_data : Dictionary) -> void:
 	lobby.data = LobbyData.deserialize_from_dictionary(lobby_data)
 	print("Creating new lobby - Id: ", lobby.data.id, " Name: ", lobby.data.name)
 	add_child(lobby)
-	created_lobby.emit()
+	created_lobby.emit(lobby.data)
+	
+	
+#this function is totally unfinished and needs to be wrapped up
+func close_lobby(lobby : Lobby) -> void:
+	if Network.is_server:
+		lobby.close.rpc()
+	closed_lobby.emit(lobby.data)
+		
 
 
 func get_lobbies() -> Array[Lobby]:

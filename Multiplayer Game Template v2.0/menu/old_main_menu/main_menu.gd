@@ -25,13 +25,13 @@ func _ready():
 	
 
 func _on_host_pressed():
-	GameState.player_name = $Menu1/NameInput.text
+	#GameState.player_name = $Menu1/NameInput.text
 	set_menu(menu_options.HOST_MENU)
 	Network.initiate_server()
 
 
 func _on_find_servers_pressed():
-	GameState.player_name = $Menu1/NameInput.text
+	#GameState.player_name = $Menu1/NameInput.text
 	set_menu(menu_options.CLIENT_MENU)
 	Network.server_browser.start_listening()
 	
@@ -100,11 +100,11 @@ func on_listener_failed():
 func on_player_info_updated():
 	for child in $HostMenu/Panel/PlayerList.get_children():
 		child.queue_free()
-	for id in GameState.players_info:
-		if id != 1:
-			var p = player_info_scene.instantiate()
-			p.id = id
-			p.player_name = GameState.players_info[id].name
-			$HostMenu/Panel/PlayerList.add_child(p)
+	#for id in GameState.players_info:
+		#if id != 1:
+			#var p = player_info_scene.instantiate()
+			#p.id = id
+			#p.player_name = GameState.players_info[id].name
+			#$HostMenu/Panel/PlayerList.add_child(p)
 
 
