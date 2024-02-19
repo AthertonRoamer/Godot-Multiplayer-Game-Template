@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnrjcbc2aghey"]
+
+[ext_resource type="Script" path="res://lobby_system/lobby_synchronizer/lobby_syncronizer.gd" id="1_3wyb0"]
+[ext_resource type="PackedScene" uid="uid://bicdyfsswgj06" path="res://network/network.tscn" id="2_ieltm"]
+
+[node name="LobbySynchronizer" type="Node"]
+script = ExtResource("1_3wyb0")
+
+[node name="Network" parent="." instance=ExtResource("2_ieltm")]
+scope = 1

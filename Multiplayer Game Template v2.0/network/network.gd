@@ -1,3 +1,4 @@
+class_name NetworkManager
 extends Node
 
 #emitted when server creation failed
@@ -29,8 +30,17 @@ var peer : ENetMultiplayerPeer
 var is_server : bool = false
 var client_count : int = 0
 
+#global scope means this node changes the multiplayer_peer of the scene tree
+#local scope means this node gives itself a new MultiplayerApi
+#scope must be set before the node is added to the scen tree to have an effect
+enum Scope {Global, Local}
+@export var scope : Scope = Scope.Global
+
 
 func _ready():
+	if scope == Scope.Local:
+		var multiplayerapi = SceneMultiplayer.new()
+		get_tree().set_multiplayer(multiplayerapi, get_path())
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.peer_connected.connect(_on_peer_connected)
@@ -67,6 +77,11 @@ func initiate_enet_client(ip : String) -> void:
 		return
 	multiplayer.multiplayer_peer = peer
 	print("Created client")
+	
+	
+func initiate_local_enet_client(ip : String) -> void:
+	initiate_enet_client(ip)
+	server_browser.start_listening()
 	
 	
 func close_peer() -> void:
