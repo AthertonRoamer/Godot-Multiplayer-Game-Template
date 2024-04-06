@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://4wsghuk7i8ow"]
+[gd_scene load_steps=3 format=3 uid="uid://4wsghuk7i8ow"]
 
 [ext_resource type="Script" path="res://menu/debug_menu/client_debug_sub_menu.gd" id="1_q2diu"]
+[ext_resource type="PackedScene" uid="uid://bkkvybflamla1" path="res://menu/debug_menu/ip_option.tscn" id="2_ham3y"]
 
-[node name="ClientDebugSubMenu" type="Control"]
+[node name="ClientDebugSubMenu" type="Control" node_paths=PackedStringArray("ip_line_edit", "option_holder")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,6 +11,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_q2diu")
+ip_line_edit = NodePath("VBoxContainer/ManualIpInput/LineEdit")
+option_holder = NodePath("VBoxContainer/IPDisplay")
+ip_option_scene = ExtResource("2_ham3y")
+menu_name = "client"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -23,24 +28,27 @@ offset_bottom = -89.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+[node name="ManualIpInput" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Header" type="Label" parent="VBoxContainer/VBoxContainer"]
+[node name="Header" type="Label" parent="VBoxContainer/ManualIpInput"]
 layout_mode = 2
 text = "Enter IP:"
 
-[node name="LineEdit" type="LineEdit" parent="VBoxContainer/VBoxContainer"]
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/ManualIpInput"]
 layout_mode = 2
 text = "127.0.0.1"
 
-[node name="Join" type="Button" parent="VBoxContainer/VBoxContainer"]
+[node name="Join" type="Button" parent="VBoxContainer/ManualIpInput"]
 layout_mode = 2
 text = "Join"
+
+[node name="IPDisplay" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
 
 [node name="Back" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Back"
 
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="VBoxContainer/ManualIpInput/Join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]

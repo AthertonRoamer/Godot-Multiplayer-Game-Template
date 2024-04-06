@@ -13,4 +13,4 @@ func _on_launch_lan_pressed():
 
 func _on_back_pressed():
 	Main.main.mode.close()
-	holder.open_menu(DebugSubMenuHolder.menu_options.DEFAULT)
+	holder.open_menu()

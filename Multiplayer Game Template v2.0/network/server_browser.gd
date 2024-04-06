@@ -27,7 +27,10 @@ func _process(_delta):
 			found_servers.append(server_ip)
 			var json_string = bytes.get_string_from_ascii()
 			var data = JSON.parse_string(json_string)
-			found_server.emit(data.server_name, server_ip)
+			var server_name = ""
+			if data.has("server_name"):
+				server_name = data.server_name
+			found_server.emit(server_name, server_ip)
 			
 			
 func start_listening():
