@@ -1,4 +1,4 @@
-class_name NetworkManager
+class_name NetworkManager #class for handling godot networking api
 extends Node
 
 #emitted when server creation failed
@@ -22,7 +22,7 @@ signal peer_disconnected(id : int)
 signal server_disconnected
 
 
-const PORT = 3000
+var port = 3000
 
 @export var server_browser : ServerBrowser
 
@@ -40,7 +40,7 @@ enum Scope {Global, Local}
 func _ready():
 	if scope == Scope.Local:
 		var multiplayerapi = SceneMultiplayer.new()
-		get_tree().set_multiplayer(multiplayerapi, get_path())
+		get_tree().set_multiplayer(multiplayerapi, get_path()) #sets multiplayer for this node
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.peer_connected.connect(_on_peer_connected)
@@ -52,13 +52,13 @@ func initiate_enet_server() -> void:
 	close_peer()
 	is_server = true
 	peer = ENetMultiplayerPeer.new()
-	var ok = peer.create_server(PORT)
+	var ok = peer.create_server(port)
 	if ok != OK:
-		print("Failed to create server. Error " + str(ok))
+		Main.main.output("Failed to create server. Error " + str(ok))
 		server_failed.emit()
 		return
 	multiplayer.multiplayer_peer = peer
-	print("Created server")
+	Main.main.output("Created server")
 	
 	
 func initiate_local_enet_server() -> void:
@@ -70,18 +70,13 @@ func initiate_enet_client(ip : String) -> void:
 	close_peer()
 	is_server = false
 	peer = ENetMultiplayerPeer.new()
-	var ok = peer.create_client(ip, PORT)
+	var ok = peer.create_client(ip, port)
 	if ok != OK:
-		print("Failed to create client. Error " + str(ok))
+		Main.main.output("Failed to create client. Error " + str(ok))
 		client_failed.emit()
 		return
 	multiplayer.multiplayer_peer = peer
-	print("Created client")
-	
-	
-func initiate_local_enet_client(ip : String) -> void:
-	initiate_enet_client(ip)
-	server_browser.start_listening()
+	Main.main.output("Created client")
 	
 	
 func close_peer() -> void:
@@ -92,31 +87,31 @@ func close_peer() -> void:
 	
 	
 func _on_connected_to_server() -> void:
-	print("Connected to server")
+	Main.main.output("Connected to server")
 	connected_to_server.emit()
 	
 
 func _on_connection_failed() -> void:
-	print("Connection to server failed")
+	Main.main.output("Connection to server failed")
 	connection_failed.emit()
 	
 	
 func _on_peer_connected(id) -> void:
-	print("Peer connected with id: " + str(id))
+	Main.main.output("Peer connected with id: " + str(id))
 	if is_server:
 		client_count += 1
 	peer_connected.emit()
 	
 	
 func _on_peer_disconnected(id) -> void:
-	print("Peer " + str(id) + " disconnected")
+	Main.main.output("Peer " + str(id) + " disconnected")
 	if is_server:
 		client_count -= 1
 	peer_disconnected.emit()
 	
 	
 func _on_server_disconnected():
-	print("Disconnected with server")
+	Main.main.output("Disconnected with server")
 	server_disconnected.emit()
 	
 	

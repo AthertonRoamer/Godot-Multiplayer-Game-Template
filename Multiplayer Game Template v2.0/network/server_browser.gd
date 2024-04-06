@@ -34,11 +34,11 @@ func start_listening():
 	listener = PacketPeerUDP.new()
 	var ok = listener.bind(LISTEN_PORT)
 	if ok != OK:
-		print("Failed to bind listener to listen port")
+		Main.main.output("Failed to bind listener to listen port")
 		listener_failed.emit()
 		return
 	listening = true
-	print("Bound listener to listen port")
+	Main.main.output("Bound listener to listen port")
 	
 	
 func start_broadcast():
@@ -49,11 +49,11 @@ func start_broadcast():
 	broadcaster.set_dest_address(broadcast_address, LISTEN_PORT)
 	
 	if ok != OK:
-		print("Failed to bind broadcaster to broadcast port")
+		Main.main.output("Failed to bind broadcaster to broadcast port")
 		broadcast_failed.emit()
 		return
 		
-	print("Bound broadcaster to broadcast Port: " + str(BROADCAST_PORT) + " successfully!")
+	Main.main.output("Bound broadcaster to broadcast Port: " + str(BROADCAST_PORT) + " successfully!")
 	$BroadcastTimer.start()
 	
 	
@@ -61,13 +61,13 @@ func stop_listening(): #this function may be called even if not listening
 	listening = false
 	listener = null
 	found_servers = []
-	print("Stopped listening")
+	Main.main.output("Stopped listening")
 	
 	
 func stop_broadcast(): #this function may be called even if not broadcasting
 	$BroadcastTimer.stop()
 	broadcaster = null
-	print("Ended broadcast")
+	Main.main.output("Ended broadcast")
 	
 
 func _on_broadcast_timer_timeout():

@@ -1,0 +1,82 @@
+[gd_scene load_steps=6 format=3 uid="uid://cdjakowaa7si1"]
+
+[ext_resource type="Script" path="res://menu/debug_menu/debug_menu.gd" id="1_8wscq"]
+[ext_resource type="Script" path="res://menu/sub_menu/debug_sub_menus/debug_sub_menu_holder.gd" id="2_4n52h"]
+[ext_resource type="PackedScene" uid="uid://c7atjd0hjlng3" path="res://menu/debug_menu/default_debug_sub_menu.tscn" id="3_ge4eg"]
+[ext_resource type="PackedScene" uid="uid://b5k33d222kp2n" path="res://menu/debug_menu/server_debug_sub_menu.tscn" id="4_khoy8"]
+[ext_resource type="PackedScene" uid="uid://4wsghuk7i8ow" path="res://menu/debug_menu/client_debug_sub_menu.tscn" id="5_gyndm"]
+
+[node name="DebugMenu" type="Control" node_paths=PackedStringArray("debug_output_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8wscq")
+debug_output_label = NodePath("Panel/OutputScrollContainer/Label")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.337255, 0.372549, 0.462745, 1)
+
+[node name="Header" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Debug Menu"
+
+[node name="Header2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 56.0
+offset_right = 142.0
+offset_bottom = 79.0
+text = "Output:"
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+offset_left = 28.0
+offset_top = 88.0
+offset_right = 536.0
+offset_bottom = 568.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="OutputScrollContainer" type="ScrollContainer" parent="Panel"]
+layout_mode = 0
+offset_right = 509.0
+offset_bottom = 481.0
+vertical_scroll_mode = 2
+
+[node name="Label" type="Label" parent="Panel/OutputScrollContainer"]
+layout_mode = 2
+
+[node name="SubMenuHolder" type="Control" parent="." node_paths=PackedStringArray("default_menu", "server_menu", "client_menu")]
+layout_mode = 1
+anchor_left = 0.471
+anchor_top = 0.13
+anchor_right = 1.0
+anchor_bottom = 0.995
+offset_left = -2.59204
+offset_top = -0.240005
+offset_right = -1.0
+offset_bottom = 5.23993
+script = ExtResource("2_4n52h")
+default_menu = NodePath("DefaultDebugSubMenu")
+server_menu = NodePath("ServerDebugSubMenu")
+client_menu = NodePath("ClientDebugSubMenu")
+
+[node name="ServerDebugSubMenu" parent="SubMenuHolder" instance=ExtResource("4_khoy8")]
+layout_mode = 1
+
+[node name="DefaultDebugSubMenu" parent="SubMenuHolder" instance=ExtResource("3_ge4eg")]
+layout_mode = 1
+
+[node name="ClientDebugSubMenu" parent="SubMenuHolder" instance=ExtResource("5_gyndm")]
+layout_mode = 1

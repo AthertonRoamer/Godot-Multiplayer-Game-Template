@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://4wsghuk7i8ow"]
+
+[ext_resource type="Script" path="res://menu/debug_menu/client_debug_sub_menu.gd" id="1_q2diu"]
+
+[node name="ClientDebugSubMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q2diu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 96.0
+offset_top = 67.0
+offset_right = -96.0
+offset_bottom = -89.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Header" type="Label" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Enter IP:"
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "127.0.0.1"
+
+[node name="Join" type="Button" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Join"
+
+[node name="Back" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]
