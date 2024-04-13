@@ -1,4 +1,4 @@
-extends DebugSubMenu
+extends SubMenu
 
 
 func _on_launch_pressed():
@@ -14,3 +14,7 @@ func _on_launch_lan_pressed():
 func _on_back_pressed():
 	Main.main.mode.close()
 	holder.open_menu()
+
+
+func _on_launch_lobby_pressed():
+	Main.main.mode.lobby_manager.launch_lobby()

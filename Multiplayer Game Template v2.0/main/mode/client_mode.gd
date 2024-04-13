@@ -1,6 +1,9 @@
 class_name ClientMode
 extends Mode
 
+func _init() -> void:
+	id = "client"
+
 func open() -> void:
 	Main.main.output("Opening client mode") 
 	
@@ -9,6 +12,7 @@ func close() -> void:
 	Network.close_peer()
 	close_local_client()
 	Main.main.output("Closing client mode")
+	super()
 	
 	
 func join_server(ip : String):

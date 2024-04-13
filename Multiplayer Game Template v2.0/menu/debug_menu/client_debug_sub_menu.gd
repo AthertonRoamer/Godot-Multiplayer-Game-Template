@@ -1,4 +1,4 @@
-extends DebugSubMenu
+extends SubMenu
 
 @export var ip_line_edit : LineEdit
 @export var option_holder : Control

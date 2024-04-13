@@ -18,9 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 Network="*res://network/network.tscn"
-MainLobby="*res://lobby_system/lobby/lobby.tscn"
-LobbySync="*res://lobby_system/lobby_synchronizer/lobby_synchronizer.tscn"
-Multiplayer="*res://multiplayer_manager/multiplayer.tscn"
 
 [file_customization]
 

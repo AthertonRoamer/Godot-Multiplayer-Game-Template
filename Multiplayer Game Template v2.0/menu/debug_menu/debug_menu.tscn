@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdjakowaa7si1"]
+[gd_scene load_steps=7 format=3 uid="uid://cdjakowaa7si1"]
 
 [ext_resource type="Script" path="res://menu/debug_menu/debug_menu.gd" id="1_8wscq"]
 [ext_resource type="Script" path="res://menu/sub_menu/sub_menu_holder.gd" id="2_jbvk2"]
 [ext_resource type="PackedScene" uid="uid://c7atjd0hjlng3" path="res://menu/debug_menu/default_debug_sub_menu.tscn" id="3_ge4eg"]
 [ext_resource type="PackedScene" uid="uid://b5k33d222kp2n" path="res://menu/debug_menu/server_debug_sub_menu.tscn" id="4_khoy8"]
 [ext_resource type="PackedScene" uid="uid://4wsghuk7i8ow" path="res://menu/debug_menu/client_debug_sub_menu.tscn" id="5_gyndm"]
+[ext_resource type="PackedScene" uid="uid://ca23dreet0qr2" path="res://menu/debug_menu/lobby_debug_sub_menu.tscn" id="6_ihnt2"]
 
 [node name="DebugMenu" type="Control" node_paths=PackedStringArray("debug_output_label")]
 layout_mode = 3
@@ -83,4 +84,7 @@ layout_mode = 1
 layout_mode = 1
 
 [node name="ClientDebugSubMenu" parent="SubMenuHolder" instance=ExtResource("5_gyndm")]
+layout_mode = 1
+
+[node name="LobbyDebugSubMenu" parent="SubMenuHolder" instance=ExtResource("6_ihnt2")]
 layout_mode = 1
