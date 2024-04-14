@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://4wsghuk7i8ow"]
 
-[ext_resource type="Script" path="res://menu/debug_menu/client_debug_sub_menu.gd" id="1_q2diu"]
-[ext_resource type="PackedScene" uid="uid://bkkvybflamla1" path="res://menu/debug_menu/ip_option.tscn" id="2_ham3y"]
+[ext_resource type="Script" path="res://menu/debug_menu/debug_sub_menus/client_debug_sub_menu.gd" id="1_q2diu"]
+[ext_resource type="PackedScene" uid="uid://bkkvybflamla1" path="res://menu/debug_menu/debug_sub_menus/ip_option.tscn" id="2_ham3y"]
 
 [node name="ClientDebugSubMenu" type="Control" node_paths=PackedStringArray("ip_line_edit", "option_holder")]
 layout_mode = 3

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bkkvybflamla1"]
 
-[ext_resource type="Script" path="res://menu/debug_menu/ip_option.gd" id="1_e8acg"]
+[ext_resource type="Script" path="res://menu/debug_menu/debug_sub_menus/ip_option.gd" id="1_e8acg"]
 
 [node name="IPOption" type="Button"]
 offset_right = 8.0
