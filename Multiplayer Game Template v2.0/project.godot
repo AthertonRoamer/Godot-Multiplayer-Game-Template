@@ -22,7 +22,9 @@ Network="*res://network/network.tscn"
 [file_customization]
 
 folder_colors={
+"res://game_state/": "red",
 "res://menu/old_main_menu/": "red",
+"res://multiplayer_manager/": "red",
 "res://old_lobby_system/": "red"
 }
 

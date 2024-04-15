@@ -1,13 +1,16 @@
 class_name DedicatedServerMode
 extends Mode
 
+var lobby_manager : LobbyManager
+
 func _init() -> void:
 	id = "server"
 
-var lobby_manager : LobbyManager
 
 func open() -> void:
+	super()
 	lobby_manager = Main.main.lobby_manager_scene.instantiate()
+	lobby_manager.is_master = true
 	Main.main.add_child(lobby_manager)
 	Main.main.output("Opening server mode")
 	

@@ -4,7 +4,9 @@ extends Mode
 func _init() -> void:
 	id = "client"
 
+
 func open() -> void:
+	super()
 	Main.main.output("Opening client mode") 
 	
 	

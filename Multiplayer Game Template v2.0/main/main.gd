@@ -5,6 +5,7 @@ signal opening_mode(mode : Mode)
 
 @export var menu_scene : PackedScene = preload("res://menu/main_menu/main_menu.tscn")
 @export var lobby_manager_scene : PackedScene = preload("res://lobby_system/lobby_manager/lobby_manager.tscn")
+@export var lobby_scene : PackedScene = preload("res://lobby_system/lobby/lobby.tscn")
 
 static var main : Main #any node can access main, It'd be nice if godot let the main scene be globally accessed like an autoload
 var active_scene : Node
@@ -18,6 +19,9 @@ func _ready() -> void:
 	main = self
 	load_menu()
 	parse_arguments()
+	if mode != null and mode.id != "none" and !mode.is_open:
+		mode.open()
+		opening_mode.emit(mode)
 	
 	
 func load_menu() -> void:

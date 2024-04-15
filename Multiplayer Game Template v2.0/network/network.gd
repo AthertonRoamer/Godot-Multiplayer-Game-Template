@@ -22,7 +22,7 @@ signal peer_disconnected(id : int)
 signal server_disconnected
 
 
-var port = 3000
+@export var port = 3000
 
 @export var server_browser : ServerBrowser
 
@@ -46,6 +46,22 @@ func _ready():
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
+	
+	
+func set_scope(new_scope : Scope) -> void:
+	if new_scope != scope:
+		close_peer()
+		match new_scope:
+			Scope.Global:
+				get_tree().set_multiplayer(get_tree().root.multiplayer, get_path())
+			Scope.Local:
+				var multiplayerapi = SceneMultiplayer.new()
+				get_tree().set_multiplayer(multiplayerapi, get_path()) #sets multiplayer for this node
+		multiplayer.connected_to_server.connect(_on_connected_to_server)
+		multiplayer.connection_failed.connect(_on_connection_failed)
+		multiplayer.peer_connected.connect(_on_peer_connected)
+		multiplayer.peer_disconnected.connect(_on_peer_disconnected)
+		multiplayer.server_disconnected.connect(_on_server_disconnected)
 
 
 func initiate_enet_server() -> void:
@@ -63,7 +79,8 @@ func initiate_enet_server() -> void:
 	
 func initiate_local_enet_server() -> void:
 	initiate_enet_server()
-	server_browser.start_broadcast()
+	if is_instance_valid(server_browser):
+		server_browser.start_broadcast()
 
 
 func initiate_enet_client(ip : String) -> void:

@@ -4,3 +4,5 @@
 
 [node name="LobbyManager" type="Node"]
 script = ExtResource("1_bxlxr")
+port = 4000
+scope = 1

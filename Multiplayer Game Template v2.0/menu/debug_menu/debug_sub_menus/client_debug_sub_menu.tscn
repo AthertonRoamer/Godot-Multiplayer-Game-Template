@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_q2diu")
 ip_line_edit = NodePath("VBoxContainer/ManualIpInput/LineEdit")
-option_holder = NodePath("VBoxContainer/IPDisplay")
+option_holder = NodePath("VBoxContainer/ScrollContainer/IPDisplay")
 ip_option_scene = ExtResource("2_ham3y")
 menu_name = "client"
 
@@ -21,10 +21,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 96.0
-offset_top = 67.0
-offset_right = -96.0
-offset_bottom = -89.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -43,8 +39,14 @@ text = "127.0.0.1"
 layout_mode = 2
 text = "Join"
 
-[node name="IPDisplay" type="VBoxContainer" parent="VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+
+[node name="IPDisplay" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Back" type="Button" parent="VBoxContainer"]
 layout_mode = 2
