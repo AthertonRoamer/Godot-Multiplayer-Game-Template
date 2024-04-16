@@ -2,6 +2,7 @@ class_name Main #entry point for project
 extends Node
 
 signal opening_mode(mode : Mode)
+signal about_to_quit
 
 @export var menu_scene : PackedScene = preload("res://menu/main_menu/main_menu.tscn")
 @export var lobby_manager_scene : PackedScene = preload("res://lobby_system/lobby_manager/lobby_manager.tscn")
@@ -22,6 +23,7 @@ func _ready() -> void:
 	if mode != null and mode.id != "none" and !mode.is_open:
 		mode.open()
 		opening_mode.emit(mode)
+	get_tree().set_auto_accept_quit(false)
 	
 	
 func load_menu() -> void:
@@ -64,4 +66,11 @@ func parse_arguments() -> void:
 	if arg_dictionary.has("--mode") and modes.has(arg_dictionary["--mode"]):
 		open_mode(modes[arg_dictionary["--mode"]])
 		
+		
+func _notification(what):
+	match what:
+		NOTIFICATION_WM_CLOSE_REQUEST:
+			about_to_quit.emit()
+			get_tree().quit()
+			
 	

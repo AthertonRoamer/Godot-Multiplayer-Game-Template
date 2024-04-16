@@ -5,4 +5,5 @@
 [node name="LobbyManager" type="Node"]
 script = ExtResource("1_bxlxr")
 port = 4000
+max_clients = 10
 scope = 1

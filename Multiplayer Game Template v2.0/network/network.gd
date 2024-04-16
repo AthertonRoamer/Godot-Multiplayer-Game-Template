@@ -23,6 +23,7 @@ signal server_disconnected
 
 
 @export var port = 3000
+@export var max_clients = 32
 
 @export var server_browser : ServerBrowser
 
@@ -68,7 +69,7 @@ func initiate_enet_server() -> void:
 	close_peer()
 	is_server = true
 	peer = ENetMultiplayerPeer.new()
-	var ok = peer.create_server(port)
+	var ok = peer.create_server(port, max_clients)
 	if ok != OK:
 		Main.main.output("Failed to create server. Error " + str(ok))
 		server_failed.emit()
