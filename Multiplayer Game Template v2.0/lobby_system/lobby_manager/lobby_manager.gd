@@ -7,6 +7,7 @@ var master_ip : String = "127.0.0.1"
 
 var is_master : bool = false
 
+
 func _ready() -> void:
 	Main.main.about_to_quit.connect(_on_about_to_quit)
 	scope = Scope.Local
@@ -26,13 +27,13 @@ func _on_connection_to_server_failed() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST) #if satellite lobby fails to reach main lobby manager, kill the instance
 	
 	
-@rpc("reliable") 
-func quit_lobby() -> void:
+@rpc("reliable") func kill_lobby() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 	
 	
 func _on_about_to_quit() -> void:
 	if is_master:
-		quit_lobby.rpc()
+		kill_lobby.rpc()
+		OS.delay_msec(250) #delay allows time for remote procedural call to take place (I think - I know that without the delay the lobby satellites won't close
 		
 

@@ -26,6 +26,7 @@ func _ready() -> void:
 	get_tree().set_auto_accept_quit(false)
 	
 	
+	
 func load_menu() -> void:
 	clear_active_scene()
 	var m = menu_scene.instantiate()
