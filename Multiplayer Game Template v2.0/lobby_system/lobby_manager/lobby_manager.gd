@@ -12,6 +12,7 @@ func _ready() -> void:
 	Main.main.about_to_quit.connect(_on_about_to_quit)
 	multiplayer.peer_disconnected.connect(_lobby_disconnected)
 	multiplayer.connected_to_server.connect(_connected_to_master_lobby_manager)
+	multiplayer.server_disconnected.connect(_server_disconected)
 	scope = Scope.Local
 	if is_master:
 		initiate_enet_server()
@@ -37,6 +38,10 @@ func _lobby_disconnected(id : int) -> void:
 func _connected_to_master_lobby_manager() -> void:
 	Main.main.output("Connected to master lobby manager")
 	submit_update()
+	
+	
+func _server_disconected() -> void:
+	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 	
 	
 func submit_update() -> void:
