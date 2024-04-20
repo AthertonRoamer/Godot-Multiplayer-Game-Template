@@ -16,6 +16,7 @@ var instance_launcher : InstanceLauncher = InstanceLauncher.new()
 static var main : Main #so any node can access main. It'd be nice if godot let the main scene be globally accessed like an autoload
 var mode : Mode
 var active_scene : Node
+var arg_dictionary : Dictionary = {}
 
 func _ready() -> void:
 	get_tree().set_auto_accept_quit(false)
@@ -57,7 +58,6 @@ func output(m) -> void:
 	
 func parse_arguments() -> void:
 	var args  = OS.get_cmdline_args()
-	var arg_dictionary : Dictionary = {}
 	for a in args:
 		var arr = a.split(" ")
 		arg_dictionary[arr[0]] = ""

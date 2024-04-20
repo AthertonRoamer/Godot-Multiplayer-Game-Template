@@ -13,6 +13,7 @@ func open() -> void:
 	lobby_manager = Main.main.lobby_manager_scene.instantiate()
 	Main.main.add_child(lobby_manager)
 	lobby = Main.main.lobby_scene.instantiate()
+	lobby.is_master = true
 	Main.main.add_child(lobby)
 	Main.main.output("Opening lobby mode")
 
@@ -23,3 +24,8 @@ func close() -> void:
 	lobby.queue_free()
 	super()
 	Main.main.output("Closing lobby mode")
+	
+	
+func launch_server() -> void:
+	Network.port = lobby.stats.lobby_port
+	Network.initiate_enet_server()

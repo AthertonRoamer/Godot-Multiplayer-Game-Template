@@ -30,6 +30,7 @@ signal server_disconnected
 var peer : ENetMultiplayerPeer
 var is_server : bool = false
 var client_count : int = 0
+var active_ip : String = ""
 
 #global scope means this node changes the multiplayer_peer of the scene tree
 #local scope means this node gives itself a new MultiplayerApi
@@ -94,6 +95,7 @@ func initiate_enet_client(ip : String) -> void:
 		Main.main.output("Failed to create client. Error " + str(ok))
 		client_failed.emit()
 		return
+	active_ip = ip
 	multiplayer.multiplayer_peer = peer
 	Main.main.output("Created client")
 	
@@ -102,6 +104,7 @@ func close_peer() -> void:
 	multiplayer.multiplayer_peer.close()
 	is_server = false
 	client_count = 0
+	active_ip = ""
 	peer_closed.emit()
 	
 	

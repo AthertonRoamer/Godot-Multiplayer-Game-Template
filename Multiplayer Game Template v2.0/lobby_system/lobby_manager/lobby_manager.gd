@@ -6,6 +6,7 @@ extends NetworkManager
 var master_ip : String = "127.0.0.1"
 
 var is_master : bool = false
+var lobby_port : int = 5000 #each lobby should have a different lobby port
 
 
 func _ready() -> void:
@@ -24,7 +25,9 @@ func _ready() -> void:
 	
 func launch_lobby() -> void:
 	Main.main.output("Launching new lobby")
-	Main.main.instance_launcher.launch_instance(lobby_args)
+	var full_lobby_args : Array[String] = lobby_args.duplicate()
+	full_lobby_args.append(get_port_arg())
+	Main.main.instance_launcher.launch_instance(full_lobby_args)
 	
 	
 func _on_connection_to_server_failed() -> void:
@@ -76,3 +79,9 @@ func _on_about_to_quit() -> void:
 		kill_lobby.rpc()
 		OS.delay_msec(250) #delay allows time for remote procedural call to take place (I think - I know that without the delay the lobby satellites won't close
 
+
+func get_port_arg() -> String:
+	var header : String = "--lobby-port "
+	header += str(lobby_port)
+	lobby_port += 1
+	return header
