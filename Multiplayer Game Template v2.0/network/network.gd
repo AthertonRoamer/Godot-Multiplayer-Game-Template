@@ -11,15 +11,15 @@ signal peer_closed
 #The following are shadows of signals emitted by MultiplayerAPI. They are emitted here to allow Netowrk to intercept them if necessary. (For instance Network might not emit peer_connected if a banned peer tried to connect)
 
 #emitted on clients after successfully connecting to server
-#signal connected_to_server
-##emitted on clients if connection to server failed
-#signal connection_failed
-##emited when a new peer connects
-#signal peer_connected(id : int)
-##emitted when peer disconnected
-#signal peer_disconnected(id : int)
-##emitted on clients when disconnection with server occurs
-#signal server_disconnected
+signal connected_to_server
+#emitted on clients if connection to server failed
+signal connection_failed
+#emited when a new peer connects
+signal peer_connected(id : int)
+#emitted when peer disconnected
+signal peer_disconnected(id : int)
+#emitted on clients when disconnection with server occurs
+signal server_disconnected
 
 
 @export var port = 3000
@@ -38,6 +38,7 @@ enum Scope {Global, Local}
 @export var scope : Scope = Scope.Global
 
 
+#if you extend this class, it is imperative that you include the current _ready() function
 func _ready():
 	if scope == Scope.Local:
 		var multiplayerapi = SceneMultiplayer.new()
@@ -106,30 +107,30 @@ func close_peer() -> void:
 	
 func _on_connected_to_server() -> void:
 	Main.main.output("Connected to server")
-	#connected_to_server.emit()
+	connected_to_server.emit()
 	
 
 func _on_connection_failed() -> void:
 	Main.main.output("Connection to server failed")
-	#connection_failed.emit()
+	connection_failed.emit()
 	
 	
 func _on_peer_connected(id) -> void:
 	Main.main.output("Peer connected with id: " + str(id))
 	if is_server:
 		client_count += 1
-	#peer_connected.emit(id)
+	peer_connected.emit(id)
 	
 	
 func _on_peer_disconnected(id) -> void:
 	Main.main.output("Peer " + str(id) + " disconnected")
 	if is_server:
 		client_count -= 1
-	#peer_disconnected.emit(id)
+	peer_disconnected.emit(id)
 	
 	
 func _on_server_disconnected():
 	Main.main.output("Disconnected with server")
-	#server_disconnected.emit()
+	server_disconnected.emit()
 	
 	

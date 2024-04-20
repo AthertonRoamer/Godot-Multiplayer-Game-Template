@@ -9,15 +9,16 @@ var is_master : bool = false
 
 
 func _ready() -> void:
+	super()
 	Main.main.about_to_quit.connect(_on_about_to_quit)
-	multiplayer.peer_disconnected.connect(_lobby_disconnected)
-	multiplayer.connected_to_server.connect(_connected_to_master_lobby_manager)
-	multiplayer.server_disconnected.connect(_server_disconected)
+	peer_disconnected.connect(_lobby_disconnected)
+	connected_to_server.connect(_connected_to_master_lobby_manager)
+	server_disconnected.connect(_server_disconected)
 	scope = Scope.Local
 	if is_master:
 		initiate_enet_server()
 	else:
-		multiplayer.connection_failed.connect(_on_connection_to_server_failed)
+		connection_failed.connect(_on_connection_to_server_failed)
 		initiate_enet_client(master_ip)
 		
 	
