@@ -15,8 +15,8 @@ func open() -> void:
 	lobby = Main.main.lobby_scene.instantiate()
 	Main.main.add_child(lobby)
 	Main.main.output("Opening lobby mode")
-	
-	
+
+
 func close() -> void:
 	lobby_manager.close_peer()
 	lobby_manager.queue_free()

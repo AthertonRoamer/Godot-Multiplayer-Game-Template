@@ -1,4 +1,4 @@
-class_name LobbyData
+#class_name LobbyData
 extends RefCounted
 
 #class for the static data of a lobby

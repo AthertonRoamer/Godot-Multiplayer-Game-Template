@@ -32,6 +32,10 @@ text = "Launch Server with LAN"
 layout_mode = 2
 text = "Launch Lobby"
 
+[node name="PrintLobbyData" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Print Lobby Data"
+
 [node name="Back" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Back"
@@ -39,4 +43,5 @@ text = "Back"
 [connection signal="pressed" from="VBoxContainer/Launch" to="." method="_on_launch_pressed"]
 [connection signal="pressed" from="VBoxContainer/LaunchLAN" to="." method="_on_launch_lan_pressed"]
 [connection signal="pressed" from="VBoxContainer/LaunchLobby" to="." method="_on_launch_lobby_pressed"]
+[connection signal="pressed" from="VBoxContainer/PrintLobbyData" to="." method="_on_print_lobby_data_pressed"]
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]
