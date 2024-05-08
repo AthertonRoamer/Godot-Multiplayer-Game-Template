@@ -18,6 +18,7 @@ var mode : Mode
 var active_scene : Node
 var arg_dictionary : Dictionary = {}
 
+
 func _ready() -> void:
 	get_tree().set_auto_accept_quit(false)
 	main = self
@@ -26,17 +27,15 @@ func _ready() -> void:
 	if mode != null and mode.id != "none" and !mode.is_open:
 		mode.open()
 		opening_mode.emit(mode)
-	
-	
-	
-	
+
+
 func load_menu() -> void:
 	clear_active_scene()
 	var m = menu_scene.instantiate()
 	add_child(m)
 	active_scene = m
-	
-	
+
+
 func clear_active_scene() -> void:
 	if is_instance_valid(active_scene):
 		active_scene.queue_free()
@@ -59,15 +58,28 @@ func output(m) -> void:
 func parse_arguments() -> void:
 	var args  = OS.get_cmdline_args()
 	for a in args:
-		var arr = a.split(" ")
+		var arr : Array = a.split(" ")
 		arg_dictionary[arr[0]] = ""
 		if arr.size() > 1:
 			arg_dictionary[arr[0]] = arr[1]
 	Main.main.output("arguments:   " + str(arg_dictionary))
 	
 	var modes = {"lobby" : LobbyMode.new(), "server" : DedicatedServerMode.new(), "client" : ClientMode.new()}
-	if arg_dictionary.has("--mode") and modes.has(arg_dictionary["--mode"]):
-		open_mode(modes[arg_dictionary["--mode"]])
+	
+	var mode_parameter : String = get_arg_option_parameter("--mode")
+	if modes.has(mode_parameter):
+		open_mode(modes[mode_parameter])
+
+
+func has_arg_option(option : String) -> bool:
+	return arg_dictionary.has(option)
+	
+	
+func get_arg_option_parameter(option : String) -> String:
+	if has_arg_option(option):
+		return arg_dictionary[option]
+	else:
+		return ""
 		
 		
 func _notification(what):

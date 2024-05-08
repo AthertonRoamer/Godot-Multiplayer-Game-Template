@@ -8,6 +8,9 @@ var lobby_port : int = 5000
 var ip : String = ""
 
 
+#if more variables are added to an extention of this class, these methods will need to be extended
+#to include those values in the dictionary
+
 func serialize_to_dictionary() -> Dictionary:
 	return {"name" : name, "lobby_port": lobby_port, "ip": ip}
 	

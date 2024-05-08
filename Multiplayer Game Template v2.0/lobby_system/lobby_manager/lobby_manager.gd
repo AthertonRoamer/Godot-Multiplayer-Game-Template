@@ -64,7 +64,7 @@ func submit_updated_lobby_data(data : Dictionary) -> void:
 		
 		
 @rpc("reliable")
-func request_lobby_data() -> void:
+func request_lobby_data() -> void: #master requests updated lobby data from sattelite lobbies
 	if !is_master:
 		submit_update()
 	
@@ -72,6 +72,10 @@ func request_lobby_data() -> void:
 @rpc("reliable") 
 func kill_lobby() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
+	
+
+func _exit_tree() -> void:
+	kill_lobby.rpc()
 	
 	
 func _on_about_to_quit() -> void:

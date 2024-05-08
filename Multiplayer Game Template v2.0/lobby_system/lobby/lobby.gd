@@ -9,8 +9,9 @@ var is_master : bool = false
 
 
 func _ready() -> void:
-	if Main.main.arg_dictionary.has("--lobby-port"):
-		stats.lobby_port = int(Main.main.arg_dictionary["--lobby-port"])
+	if Main.main.has_arg_option("--lobby-port"):
+		stats.lobby_port = int(Main.main.get_arg_option_parameter("--lobby-port"))
+	
 	if is_master:
 		(Main.main.mode as LobbyMode).launch_server()
 	
