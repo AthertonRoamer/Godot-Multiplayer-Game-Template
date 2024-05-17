@@ -10,6 +10,7 @@ func _ready() -> void:
 
 func _on_back_pressed():
 	Main.main.mode.close()
+	ip_line_edit.text = "127.0.0.1"
 	holder.open_menu()
 
 

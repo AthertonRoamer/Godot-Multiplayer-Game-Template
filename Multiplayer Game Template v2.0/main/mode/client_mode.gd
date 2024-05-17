@@ -9,7 +9,7 @@ func _init() -> void:
 
 func open() -> void:
 	super()
-	lobby_database = Main.main.lobby_database_scene.instantiate()
+	lobby_database = Main.main.lobby_database_scene.instantiate() #TODO replace this with matchmaker which itself contains database
 	Main.main.add_child(lobby_database)
 	Main.main.output("Opening client mode") 
 	

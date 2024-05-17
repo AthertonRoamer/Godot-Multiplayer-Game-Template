@@ -11,7 +11,6 @@ var lobby_port : int = 5000 #each lobby should have a different lobby port
 
 func _ready() -> void:
 	super()
-	Main.main.about_to_quit.connect(_on_about_to_quit)
 	peer_disconnected.connect(_lobby_disconnected)
 	connected_to_server.connect(_connected_to_master_lobby_manager)
 	server_disconnected.connect(_server_disconected)
@@ -67,21 +66,6 @@ func submit_updated_lobby_data(data : Dictionary) -> void:
 func request_lobby_data() -> void: #master requests updated lobby data from sattelite lobbies
 	if !is_master:
 		submit_update()
-	
-
-@rpc("reliable") 
-func kill_lobby() -> void:
-	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
-	
-
-func _exit_tree() -> void:
-	kill_lobby.rpc()
-	
-	
-func _on_about_to_quit() -> void:
-	if is_master:
-		kill_lobby.rpc()
-		OS.delay_msec(250) #delay allows time for remote procedural call to take place (I think - I know that without the delay the lobby satellites won't close
 
 
 func get_port_arg() -> String:

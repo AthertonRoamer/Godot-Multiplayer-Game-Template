@@ -39,7 +39,7 @@ enum Scope {Global, Local}
 @export var scope : Scope = Scope.Global
 
 
-#if you extend this class, it is imperative that you include the current _ready() function
+#if you extend this class, it is imperative that you include the current _ready() and _exit_tree() functions, calling super() if necessary
 func _ready():
 	if scope == Scope.Local:
 		var multiplayerapi = SceneMultiplayer.new()
@@ -49,6 +49,10 @@ func _ready():
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
+	
+	
+func _exit_tree() -> void:
+	close_peer()
 	
 	
 func set_scope(new_scope : Scope) -> void:
@@ -84,6 +88,8 @@ func initiate_local_enet_server() -> void:
 	initiate_enet_server()
 	if is_instance_valid(server_browser):
 		server_browser.start_broadcast()
+	else:
+		push_warning("Network Manager is missing server browser node")
 
 
 func initiate_enet_client(ip : String) -> void:

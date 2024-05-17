@@ -32,13 +32,9 @@ func remove_data_by_id(id : int) -> void:
 	data.erase(id)
 	
 	
-@rpc("reliable")
-func update_data_by_remote_dictionary(dict : Dictionary) -> void:
-	update_data_from_dictionary(dict)
-	
-	
-@rpc("reliable", "any_peer")
-func request_lobby_data_refresh() -> void:
-	if Main.main.mode.id == "server":
-		var requester_id = multiplayer.get_remote_sender_id()
-		#for lobby_datum in 
+func get_data_by_id(id : int) -> LobbyData:
+	if data.has(id):
+		return data[id]
+	else:
+		return null
+
