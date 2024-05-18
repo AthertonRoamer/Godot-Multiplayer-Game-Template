@@ -40,3 +40,7 @@ func add_option(ip : String) -> void:
 	o.ip = ip
 	o.selected.connect(_on_option_pressed)
 	option_holder.add_child(o)
+
+
+func _on_print_lobby_data_pressed():
+	(Main.main.mode as ClientMode).matchmaker.database.output_data()

@@ -9,6 +9,7 @@ signal about_to_quit
 @export var lobby_manager_scene : PackedScene = preload("res://lobby_system/lobby_manager/lobby_manager.tscn")
 @export var lobby_scene : PackedScene = preload("res://lobby_system/lobby/lobby.tscn")
 @export var lobby_database_scene : PackedScene = preload("res://lobby_system/lobby_database/lobby_database.tscn")
+@export var matchmaker_scene : PackedScene = preload("res://lobby_system/matchmaker/matchmaker.tscn")
 
 var outputter : Output = Output.new() #module for debug output, by default if prints stuff normally
 var instance_launcher : InstanceLauncher = InstanceLauncher.new()

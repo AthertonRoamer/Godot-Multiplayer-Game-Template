@@ -47,8 +47,8 @@ func _server_disconected() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 	
 	
-func submit_update() -> void:
-	Main.main.output("Submitting update")
+func submit_update() -> void: #update from sattelite lobby to main lobby manager
+	Main.main.output("Submitting update") 
 	var data : Dictionary = (Main.main.mode as LobbyMode).lobby.serialize_to_lobby_data_dictionary()
 	submit_updated_lobby_data.rpc_id(1, data)
 	

@@ -48,9 +48,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="PrintLobbyData" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Print Lobby Data"
+
 [node name="Back" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Back"
 
 [connection signal="pressed" from="VBoxContainer/ManualIpInput/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="VBoxContainer/PrintLobbyData" to="." method="_on_print_lobby_data_pressed"]
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]

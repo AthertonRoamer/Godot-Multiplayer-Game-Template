@@ -21,10 +21,4 @@ func _on_launch_lobby_pressed():
 
 
 func _on_print_lobby_data_pressed():
-	Main.main.output("All lobby data:")
-	var dataset : Array = (Main.main.mode as DedicatedServerMode).lobby_database.data.values()
-	for datum in dataset:
-		Main.main.output(str((datum as LobbyData).serialize_to_dictionary()))
-	if dataset.is_empty():
-		Main.main.output("<No lobbys>")
-		
+	(Main.main.mode as DedicatedServerMode).lobby_database.output_data()
