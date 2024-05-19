@@ -4,6 +4,7 @@ extends Node
 
 var database : LobbyDatabase
 var is_master : bool = false
+var active : bool = true #to make sure this node doesn't fire of rpcs when in lobby
 
 
 func _ready() -> void:
@@ -36,6 +37,7 @@ func _on_data_changed() -> void:
 		
 		
 func _on_connected_to_server() -> void:
-	request_lobby_data.rpc_id(1)
+	if active:
+		request_lobby_data.rpc_id(1)
 
 

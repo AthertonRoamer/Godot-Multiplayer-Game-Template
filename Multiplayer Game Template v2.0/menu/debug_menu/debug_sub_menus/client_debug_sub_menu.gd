@@ -3,9 +3,15 @@ extends SubMenu
 @export var ip_line_edit : LineEdit
 @export var option_holder : Control
 @export var ip_option_scene : PackedScene
+@export var lobby_option_scene : PackedScene
+@export var lobby_option_display : Control
 
 func _ready() -> void:
 	Network.server_browser.found_server.connect(_on_server_list_updated)
+	
+	
+func opened() -> void:
+	(Main.main.mode as ClientMode).matchmaker.database.data_changed.connect(_on_lobby_data_changed)
 
 
 func _on_back_pressed():
@@ -44,3 +50,19 @@ func add_option(ip : String) -> void:
 
 func _on_print_lobby_data_pressed():
 	(Main.main.mode as ClientMode).matchmaker.database.output_data()
+	#update_lobby_options()
+	
+	
+func _on_lobby_data_changed() -> void:
+	update_lobby_options()
+	
+	
+func update_lobby_options() -> void:
+	var data : Array = (Main.main.mode as ClientMode).matchmaker.database.data.values()
+	for child in lobby_option_display.get_children():
+		child.queue_free()
+	for item in data:
+		var option : LobbyOption = lobby_option_scene.instantiate()
+		option.lobby_data = item
+		lobby_option_display.add_child(option)
+		
