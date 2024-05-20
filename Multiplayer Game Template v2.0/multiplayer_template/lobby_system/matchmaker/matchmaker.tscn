@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://fbv2gaggq1mq"]
+
+[ext_resource type="Script" path="res://multiplayer_template/lobby_system/matchmaker/matchmaker.gd" id="1_jpfin"]
+
+[node name="Matchmaker" type="Node"]
+script = ExtResource("1_jpfin")

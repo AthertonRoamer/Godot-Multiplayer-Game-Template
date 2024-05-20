@@ -11,21 +11,22 @@ config_version=5
 [application]
 
 config/name="Multiplayer Game Template v2"
-run/main_scene="res://main/main.tscn"
+run/main_scene="res://multiplayer_template/main/main.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Network="*res://network/network.tscn"
+Network="*res://multiplayer_template/network/network.tscn"
 
 [file_customization]
 
 folder_colors={
-"res://game_state/": "red",
-"res://menu/old_main_menu/": "red",
-"res://multiplayer_manager/": "red",
-"res://old_lobby_system/": "red"
+"res://deprecated_multiplayer_template/": "red",
+"res://deprecated_multiplayer_template/game_state/": "red",
+"res://deprecated_multiplayer_template/multiplayer_manager/": "red",
+"res://deprecated_multiplayer_template/old_lobby_system/": "red",
+"res://multiplayer_template/menu/old_main_menu/": "red"
 }
 
 [rendering]

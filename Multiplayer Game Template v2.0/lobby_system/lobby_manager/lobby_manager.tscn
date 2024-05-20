@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ctn47px6wv5sq"]
-
-[ext_resource type="Script" path="res://lobby_system/lobby_manager/lobby_manager.gd" id="1_bxlxr"]
-
-[node name="LobbyManager" type="Node"]
-script = ExtResource("1_bxlxr")
-port = 4000
-max_clients = 10
-scope = 1

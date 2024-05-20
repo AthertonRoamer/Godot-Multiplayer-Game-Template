@@ -1,0 +1,201 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbic0c1q88ikp"]
+
+[ext_resource type="Script" path="res://multiplayer_template/menu/old_main_menu/main_menu.gd" id="1_h7vh4"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h7vh4")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1971.0
+offset_bottom = 1823.0
+color = Color(0.337255, 0.372549, 0.462745, 1)
+
+[node name="Menu1" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -95.5
+offset_top = -110.0
+offset_right = 95.5
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameInput" type="LineEdit" parent="Menu1"]
+layout_mode = 2
+text = "Player"
+
+[node name="Control" type="Control" parent="Menu1"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+
+[node name="Host" type="Button" parent="Menu1"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Host"
+
+[node name="Control2" type="Control" parent="Menu1"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="FindServers" type="Button" parent="Menu1"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Find Server"
+
+[node name="Control3" type="Control" parent="Menu1"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="ErrorOutput" type="Label" parent="Menu1"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HostMenu" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Start" type="Button" parent="HostMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.0
+offset_top = -69.0
+offset_right = 79.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start Game"
+
+[node name="PlayersJoinedLabel" type="Label" parent="HostMenu"]
+layout_mode = 0
+offset_left = -40.0
+offset_top = -103.0
+offset_right = 78.0
+offset_bottom = -71.0
+text = "Players joined: 0"
+
+[node name="HostBack" type="Button" parent="HostMenu"]
+layout_mode = 0
+offset_left = -529.0
+offset_top = -276.0
+offset_right = -453.0
+offset_bottom = -236.0
+text = "Back"
+
+[node name="Panel" type="Panel" parent="HostMenu"]
+layout_mode = 0
+offset_left = -88.0
+offset_top = 50.0
+offset_right = 145.0
+offset_bottom = 219.0
+
+[node name="PlayerList" type="VBoxContainer" parent="HostMenu/Panel"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 45.0
+offset_right = 218.0
+offset_bottom = 167.0
+
+[node name="Label" type="Label" parent="HostMenu/Panel"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 9.0
+offset_right = 59.0
+offset_bottom = 35.0
+text = "Name"
+
+[node name="ClientMenu" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="ClientMenu"]
+layout_mode = 0
+offset_left = -290.0
+offset_top = -81.0
+offset_right = 292.0
+offset_bottom = 204.0
+
+[node name="ServerList" type="VBoxContainer" parent="ClientMenu/Panel"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 49.0
+offset_right = 566.0
+offset_bottom = 286.0
+
+[node name="Label" type="Label" parent="ClientMenu/Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 15.0
+offset_right = 77.0
+offset_bottom = 48.0
+text = "Name"
+
+[node name="Label2" type="Label" parent="ClientMenu/Panel"]
+layout_mode = 0
+offset_left = 265.0
+offset_top = 15.0
+offset_right = 347.0
+offset_bottom = 48.0
+text = "Ip Address"
+
+[node name="ClientBack" type="Button" parent="ClientMenu"]
+layout_mode = 0
+offset_left = -512.0
+offset_top = -266.0
+offset_right = -449.0
+offset_bottom = -231.0
+text = "Back"
+
+[node name="ListeningStatus" type="Label" parent="ClientMenu"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = -133.0
+offset_right = 84.0
+offset_bottom = -74.0
+text = "Listening for servers"
+
+[connection signal="pressed" from="Menu1/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Menu1/FindServers" to="." method="_on_find_servers_pressed"]
+[connection signal="pressed" from="HostMenu/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="HostMenu/HostBack" to="." method="_on_host_back_pressed"]
+[connection signal="pressed" from="ClientMenu/ClientBack" to="." method="_on_client_back_pressed"]

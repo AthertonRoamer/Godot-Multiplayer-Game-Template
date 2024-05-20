@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://d386gvf10eveo"]
-
-[ext_resource type="Script" path="res://menu/old_main_menu/player_info.gd" id="1_cd5km"]
-
-[node name="PlayerInfo" type="HBoxContainer"]
-script = ExtResource("1_cd5km")
-
-[node name="PlayerName" type="Label" parent="."]
-layout_mode = 2

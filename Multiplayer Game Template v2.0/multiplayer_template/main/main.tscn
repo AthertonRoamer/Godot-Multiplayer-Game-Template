@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://fa7axvvtup3f"]
+
+[ext_resource type="Script" path="res://multiplayer_template/main/main.gd" id="1_cj4ru"]
+[ext_resource type="PackedScene" uid="uid://cdjakowaa7si1" path="res://multiplayer_template/menu/debug_menu/debug_menu.tscn" id="2_e8wja"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_cj4ru")
+menu_scene = ExtResource("2_e8wja")

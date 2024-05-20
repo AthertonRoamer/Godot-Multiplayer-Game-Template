@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bicdyfsswgj06"]
+
+[ext_resource type="Script" path="res://multiplayer_template/network/network.gd" id="1_jcrxv"]
+[ext_resource type="Script" path="res://multiplayer_template/network/server_browser.gd" id="2_yf7ea"]
+
+[node name="Network" type="Node" node_paths=PackedStringArray("server_browser")]
+script = ExtResource("1_jcrxv")
+server_browser = NodePath("ServerBrowser")
+
+[node name="ServerBrowser" type="Node" parent="."]
+script = ExtResource("2_yf7ea")
+
+[node name="BroadcastTimer" type="Timer" parent="ServerBrowser"]
+
+[connection signal="timeout" from="ServerBrowser/BroadcastTimer" to="ServerBrowser" method="_on_broadcast_timer_timeout"]
