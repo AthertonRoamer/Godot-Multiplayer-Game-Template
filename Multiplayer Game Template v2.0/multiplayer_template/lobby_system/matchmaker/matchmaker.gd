@@ -14,6 +14,7 @@ func _ready() -> void:
 		database = Main.main.lobby_database_scene.instantiate() 
 		add_child(database)
 		Network.connected_to_server.connect(_on_connected_to_server)
+		Network.server_disconnected.connect(_on_server_disconnected)
 	database.data_changed.connect(_on_data_changed)
 
 
@@ -39,5 +40,8 @@ func _on_data_changed() -> void:
 func _on_connected_to_server() -> void:
 	if active:
 		request_lobby_data.rpc_id(1)
-
+		
+		
+func _on_server_disconnected() -> void:
+	database.clear_data()
 

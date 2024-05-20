@@ -50,7 +50,6 @@ func add_option(ip : String) -> void:
 
 func _on_print_lobby_data_pressed():
 	(Main.main.mode as ClientMode).matchmaker.database.output_data()
-	#update_lobby_options()
 	
 	
 func _on_lobby_data_changed() -> void:

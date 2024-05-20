@@ -28,4 +28,5 @@ func close() -> void:
 	
 func launch_server() -> void:
 	Network.port = lobby.stats.lobby_port
+	Network.max_clients = lobby.stats.max_members
 	Network.initiate_enet_server()

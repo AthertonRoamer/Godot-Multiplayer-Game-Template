@@ -22,8 +22,8 @@ signal peer_disconnected(id : int)
 signal server_disconnected
 
 
-@export var port = 3000
-@export var max_clients = 32
+@export var port : int = 3000
+@export var max_clients : int = 32
 
 @export var server_browser : ServerBrowser
 

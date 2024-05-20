@@ -57,6 +57,12 @@ func update_data_from_array(array : Array) -> void: #for recieving entire block 
 	data.clear()
 	for datum in array:
 		update_data_from_dictionary(datum)
+	data_changed.emit()
+	
+	
+func clear_data() -> void:
+	data.clear()
+	data_changed.emit()
 		
 		
 func output_data() -> void:

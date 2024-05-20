@@ -4,7 +4,7 @@ extends Node
 signal created_lobby(data : LobbyData)
 signal closed_lobby(data : LobbyData)
 
-@export var lobby_scene : PackedScene = preload("res://lobby_system/lobby/lobby.tscn")
+@export var lobby_scene : PackedScene = preload("res://multiplayer_template/lobby_system/lobby/lobby.tscn")
 
 var next_lobby_id : int = 0
 
@@ -21,7 +21,7 @@ func request_new_lobby(lobby_data : Dictionary) -> void:
 @rpc("call_local", "reliable")
 func create_lobby(lobby_data : Dictionary) -> void:
 	var lobby : Lobby = lobby_scene.instantiate()
-	lobby.data = LobbyData.deserialize_from_dictionary(lobby_data)
+	#lobby.data = LobbyData.deserialize_from_dictionary(lobby_data)
 	print("Creating new lobby - Id: ", lobby.data.id, " Name: ", lobby.data.name)
 	add_child(lobby)
 	created_lobby.emit(lobby.data)

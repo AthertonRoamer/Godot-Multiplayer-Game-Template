@@ -8,4 +8,4 @@ func _ready() -> void:
 	
 
 func _on_pressed():
-	pass # Replace with function body.
+	(Main.main.mode as ClientMode).join_lobby(lobby_data)
