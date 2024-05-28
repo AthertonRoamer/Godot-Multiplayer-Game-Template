@@ -11,7 +11,8 @@ func _ready() -> void:
 	
 	
 func opened() -> void:
-	(Main.main.mode as ClientMode).matchmaker.database.data_changed.connect(_on_lobby_data_changed)
+	if not (Main.main.mode as ClientMode).matchmaker.database.data_changed.is_connected(_on_lobby_data_changed):
+		(Main.main.mode as ClientMode).matchmaker.database.data_changed.connect(_on_lobby_data_changed)
 
 
 func _on_back_pressed():

@@ -3,11 +3,29 @@ class_name LobbyStats
 #class for holding all non player specific data of the lobby
 #this class will probably need to be extended to provide specific lobby stats for your game
 
-var name : String = "LobbyName"
-var lobby_port : int = 5000
-var ip : String = ""
-var max_members : int = 10
-var current_member_count : int = 0
+signal changed #emitted any time the stats are changed
+
+#if this class is extended with more variables it is recommended to add setter functions which emit changed as done here
+var name : String = "LobbyName":
+	set(v):
+		name = v
+		changed.emit()
+var lobby_port : int = 5000:
+	set(v):
+		lobby_port = v
+		changed.emit()
+var ip : String = "":
+	set(v):
+		ip = v
+		changed.emit()
+var max_members : int = 10:
+	set(v):
+		max_members = v
+		changed.emit()
+var current_member_count : int = 0:
+	set(v):
+		current_member_count = v
+		changed.emit()
 
 
 #if more variables are added to an extention of this class, these methods will need to be extended

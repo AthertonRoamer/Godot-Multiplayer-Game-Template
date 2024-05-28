@@ -1,7 +1,7 @@
 class_name ClientMode
 extends Mode
 
-#var lobby_database : LobbyDatabase
+var lobby : Lobby
 var matchmaker : Matchmaker
 
 func _init() -> void:
@@ -14,6 +14,9 @@ func open() -> void:
 	matchmaker = Main.main.matchmaker_scene.instantiate()
 	Main.main.add_child(matchmaker)
 	
+	lobby = Main.main.lobby_scene.instantiate()
+	Main.main.add_child(lobby)
+	
 	Main.main.output("Opening client mode") 
 	
 	
@@ -22,6 +25,7 @@ func close() -> void:
 	close_local_client()
 	
 	matchmaker.queue_free()
+	lobby.queue_free()
 	Main.main.output("Closing client mode")
 	super()
 	

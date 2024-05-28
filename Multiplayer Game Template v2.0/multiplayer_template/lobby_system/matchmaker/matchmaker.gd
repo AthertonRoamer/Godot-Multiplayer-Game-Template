@@ -15,6 +15,7 @@ func _ready() -> void:
 		add_child(database)
 		Network.connected_to_server.connect(_on_connected_to_server)
 		Network.server_disconnected.connect(_on_server_disconnected)
+		Network.peer_closed.connect(_on_peer_closed)
 	database.data_changed.connect(_on_data_changed)
 
 
@@ -43,5 +44,9 @@ func _on_connected_to_server() -> void:
 		
 		
 func _on_server_disconnected() -> void:
+	database.clear_data()
+	
+	
+func _on_peer_closed() -> void:
 	database.clear_data()
 

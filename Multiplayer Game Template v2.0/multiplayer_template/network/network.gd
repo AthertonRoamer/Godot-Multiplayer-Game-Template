@@ -107,11 +107,12 @@ func initiate_enet_client(ip : String) -> void:
 	
 	
 func close_peer() -> void:
-	multiplayer.multiplayer_peer.close()
+	if multiplayer.multiplayer_peer.get_connection_status() != MultiplayerPeer.CONNECTION_DISCONNECTED:
+		multiplayer.multiplayer_peer.close()
+		peer_closed.emit()
 	is_server = false
 	client_count = 0
 	active_ip = ""
-	peer_closed.emit()
 	
 	
 func _on_connected_to_server() -> void:

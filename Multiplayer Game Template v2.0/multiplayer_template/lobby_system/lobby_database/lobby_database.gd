@@ -10,25 +10,20 @@ var data : Dictionary = {} : #dictionary is in form:  key is lobby id (int), val
 		data = new_data
 		data_changed.emit()
 
-#these variables can be changed, so that the correct deserializers will be used
-var lobby_stats_class = LobbyStats
-var lobby_member_class = LobbyMember
-var lobby_data_class = LobbyData
-
 
 func deserialize_lobby_data(dict : Dictionary) -> LobbyData:
-	var lobby_data : LobbyData = lobby_data_class.new()
+	var lobby_data : LobbyData = Lobby.lobby_data_class.new()
 	if dict.has("stats"): #load LobbyStats from dictionary
-		lobby_data.stats = lobby_stats_class.desirialize_from_dictionary(dict["stats"])
+		lobby_data.stats = Lobby.lobby_stats_class.desirialize_from_dictionary(dict["stats"])
 	if dict.has("members"): #load LobbyMember(s) from dictionary
 		for member in dict["members"]:
-			lobby_data.members.append(lobby_member_class.desirialize_from_dictionary(member))
+			lobby_data.members.append(Lobby.lobby_member_class.desirialize_from_dictionary(member))
 	if dict.has("lobby_id"): #load lobby id from dictionary
 		lobby_data.lobby_id = dict["lobby_id"]
 	return lobby_data
 	
 	
-func update_data_from_dictionary(dict : Dictionary) -> void:
+func update_data_from_dictionary(dict : Dictionary) -> void: #takes a dictionary, turns it into a LobbyData, and adds it to data
 	var new_data : LobbyData = deserialize_lobby_data(dict)
 	data[new_data.lobby_id] = new_data
 	data_changed.emit()
@@ -46,8 +41,8 @@ func get_data_by_id(id : int) -> LobbyData:
 		return null
 		
 		
-func get_data_as_array() -> Array: #for sending entire block of data over network
-	var result : Array = []
+func get_data_as_array() -> Array[Dictionary]: #for sending entire block of data over network
+	var result : Array[Dictionary] = []
 	for datum in data.values():
 		result.append(datum.serialize_to_dictionary())
 	return result
