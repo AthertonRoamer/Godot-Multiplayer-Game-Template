@@ -15,7 +15,7 @@ func open() -> void:
 	lobby = Main.main.lobby_scene.instantiate()
 	lobby.is_master = true
 	Main.main.add_child(lobby)
-	Main.main.output("Opening lobby mode")
+	Main.output("Opening lobby mode")
 
 
 func close() -> void:
@@ -23,7 +23,7 @@ func close() -> void:
 	lobby_manager.queue_free()
 	lobby.queue_free()
 	super()
-	Main.main.output("Closing lobby mode")
+	Main.output("Closing lobby mode")
 	
 	
 func launch_server() -> void:

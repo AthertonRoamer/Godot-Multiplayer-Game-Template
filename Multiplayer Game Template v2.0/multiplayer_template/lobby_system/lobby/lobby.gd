@@ -6,6 +6,11 @@ extends Node
 var stats : LobbyStats = LobbyStats.new()
 var members : Array[LobbyMember] = []
 var is_master : bool = false #the master lobby is the node on the lobby process of the server, the other lobby nodes are on the clients
+var locked : bool = false:
+	set(b):
+		if b != locked:
+			locked = b
+			multiplayer.refuse_new_connections = b
 
 #these variables will need be changed if any of those classes are extended with more variables, so that the correct deserializers will be used
 static var lobby_stats_class = LobbyStats
@@ -13,11 +18,11 @@ static var lobby_member_class = LobbyMember
 static var lobby_data_class = LobbyData
 
 func _ready() -> void:
-	if Main.main.has_arg_option("--lobby-port"):
-		stats.lobby_port = int(Main.main.get_arg_option_parameter("--lobby-port"))
+	if Main.has_arg_option("--lobby-port"):
+		stats.lobby_port = int(Main.get_arg_option_parameter("--lobby-port"))
 		
-	if Main.main.has_arg_option("--lobby-max-members"):
-		stats.max_members = int(Main.main.get_arg_option_parameter("--lobby-max-members"))
+	if Main.has_arg_option("--lobby-max-members"):
+		stats.max_members = int(Main.get_arg_option_parameter("--lobby-max-members"))
 	
 	if is_master:
 		(Main.main.mode as LobbyMode).launch_server()
@@ -38,7 +43,7 @@ func serialize_to_lobby_data_dictionary() -> Dictionary:
 func _on_stats_changed() -> void:
 	if is_master:
 		get_lobby_manager().submit_update()
-		Main.main.output("Submitting stats update")
+		Main.output("Submitting stats update")
 		update_remote_lobby_stats.rpc(stats.serialize_to_dictionary())
 	
 	
@@ -46,11 +51,23 @@ func _on_stats_changed() -> void:
 func update_remote_lobby_stats(new_stats : Dictionary) -> void:
 	if not is_master:
 		stats = LobbyStats.desirialize_from_dictionary(new_stats)
-		Main.main.output("Received stats update")
+		Main.output("Received stats update")
 	
 	
-func update_remote_lobby_members() -> void:
+func update_remote_lobby_member_data() -> void:
 	pass
+
+
+func clear_unregistered_peers() -> void: #if peer isn't a member, kick it. Could be called at start of game to clear any unauthorized connections, especially in private lobbies
+	if is_master:
+		for peer_id in multiplayer.get_peers():
+			var peer_is_member : bool = false
+			for member in members:
+				if member.id == peer_id:
+					peer_is_member = true
+					break
+			if not peer_is_member:
+				multiplayer.multiplayer_peer.disconnect_peer(peer_id)
 
 
 func _on_peer_connected(_id) -> void:

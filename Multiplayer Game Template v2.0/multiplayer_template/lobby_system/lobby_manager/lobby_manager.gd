@@ -22,7 +22,7 @@ func _ready() -> void:
 		
 	
 func launch_lobby() -> void:
-	Main.main.output("Launching new lobby")
+	Main.output("Launching new lobby")
 	var full_lobby_args : Array[String] = lobby_args.duplicate()
 	full_lobby_args.append(get_port_arg())
 	Main.main.instance_launcher.launch_instance(full_lobby_args)
@@ -38,7 +38,7 @@ func _lobby_disconnected(id : int) -> void:
 		
 		
 func _connected_to_master_lobby_manager() -> void:
-	Main.main.output("Connected to master lobby manager")
+	Main.output("Connected to master lobby manager")
 	submit_update()
 	
 	
@@ -47,7 +47,7 @@ func _server_disconected() -> void:
 	
 	
 func submit_update() -> void: #update from sattelite lobby to main lobby manager
-	Main.main.output("Submitting update") 
+	Main.output("Submitting update") 
 	var data : Dictionary = (Main.main.mode as LobbyMode).lobby.serialize_to_lobby_data_dictionary()
 	submit_updated_lobby_data.rpc_id(1, data)
 	
@@ -55,7 +55,7 @@ func submit_update() -> void: #update from sattelite lobby to main lobby manager
 @rpc("reliable", "any_peer")
 func submit_updated_lobby_data(data : Dictionary) -> void:
 	if is_master:
-		Main.main.output("Recieved a lobby data update")
+		Main.output("Recieved a lobby data update")
 		var sender_id : int = multiplayer.get_remote_sender_id()
 		data["lobby_id"] = sender_id
 		(Main.main.mode as DedicatedServerMode).lobby_database.update_data_from_dictionary(data)

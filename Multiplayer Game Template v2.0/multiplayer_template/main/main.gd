@@ -11,35 +11,55 @@ signal about_to_quit
 @export var lobby_database_scene : PackedScene = preload("res://multiplayer_template/lobby_system/lobby_database/lobby_database.tscn")
 @export var matchmaker_scene : PackedScene = preload("res://multiplayer_template/lobby_system/matchmaker/matchmaker.tscn")
 
-var outputter : Output = Output.new() #module for debug output, by default if prints stuff normally
+static var outputter : Output = Output.new() #module for debug output, by default it prints stuff normally
 var instance_launcher : InstanceLauncher = InstanceLauncher.new()
 
-static var main : Main #so any node can access main. It'd be nice if godot let the main scene be globally accessed like an autoload
+static var main : Main #so any node can access main. It'd be nice if godot let the main scene be globally accessed like an autoload. What happens if an autoload is freed?
+static var arg_dictionary : Dictionary = {}
+
 var mode : Mode
 var active_scene : Node
-var arg_dictionary : Dictionary = {}
 
+
+static func output(m) -> void:
+	outputter.put(m)
+	
+	
+static func parse_arguments() -> void:
+	var args  = OS.get_cmdline_args()
+	for a in args:
+		var arr : Array = a.split(" ")
+		arg_dictionary[arr[0]] = ""
+		if arr.size() > 1:
+			arg_dictionary[arr[0]] = arr[1]
+	Main.output("arguments:   " + str(arg_dictionary))
+	
+	var modes = {"lobby" : LobbyMode.new(), "server" : DedicatedServerMode.new(), "client" : ClientMode.new()}
+	
+	var mode_parameter : String = get_arg_option_parameter("--mode")
+	if modes.has(mode_parameter):
+		main.open_mode(modes[mode_parameter])
+
+
+static func has_arg_option(option : String) -> bool:
+	return arg_dictionary.has(option)
+	
+	
+static func get_arg_option_parameter(option : String) -> String:
+	if has_arg_option(option):
+		return arg_dictionary[option]
+	else:
+		return ""
+	
 
 func _ready() -> void:
 	get_tree().set_auto_accept_quit(false)
 	main = self
 	load_menu()
-	parse_arguments()
+	Main.parse_arguments()
 	if mode != null and mode.id != "none" and !mode.is_open:
 		mode.open()
 		opening_mode.emit(mode)
-
-
-func load_menu() -> void:
-	clear_active_scene()
-	var m = menu_scene.instantiate()
-	add_child(m)
-	active_scene = m
-
-
-func clear_active_scene() -> void:
-	if is_instance_valid(active_scene):
-		active_scene.queue_free()
 		
 		
 func open_mode(new_mode : Mode) -> void:
@@ -52,35 +72,16 @@ func open_mode(new_mode : Mode) -> void:
 		opening_mode.emit(mode)
 		
 		
-func output(m) -> void:
-	outputter.put(m)
-	
-	
-func parse_arguments() -> void:
-	var args  = OS.get_cmdline_args()
-	for a in args:
-		var arr : Array = a.split(" ")
-		arg_dictionary[arr[0]] = ""
-		if arr.size() > 1:
-			arg_dictionary[arr[0]] = arr[1]
-	Main.main.output("arguments:   " + str(arg_dictionary))
-	
-	var modes = {"lobby" : LobbyMode.new(), "server" : DedicatedServerMode.new(), "client" : ClientMode.new()}
-	
-	var mode_parameter : String = get_arg_option_parameter("--mode")
-	if modes.has(mode_parameter):
-		open_mode(modes[mode_parameter])
+func load_menu() -> void:
+	clear_active_scene()
+	var m = menu_scene.instantiate()
+	add_child(m)
+	active_scene = m
 
 
-func has_arg_option(option : String) -> bool:
-	return arg_dictionary.has(option)
-	
-	
-func get_arg_option_parameter(option : String) -> String:
-	if has_arg_option(option):
-		return arg_dictionary[option]
-	else:
-		return ""
+func clear_active_scene() -> void:
+	if is_instance_valid(active_scene):
+		active_scene.queue_free()
 		
 		
 func _notification(what):

@@ -22,7 +22,7 @@ func open() -> void:
 	matchmaker.is_master = true
 	Main.main.add_child(matchmaker)
 	
-	Main.main.output("Opening server mode")
+	Main.output("Opening server mode")
 	
 	
 func close() -> void:
@@ -30,7 +30,7 @@ func close() -> void:
 	lobby_manager.queue_free()
 	lobby_database.queue_free()
 	matchmaker.queue_free()
-	Main.main.output("Closing server mode")
+	Main.output("Closing server mode")
 	super()
 
 

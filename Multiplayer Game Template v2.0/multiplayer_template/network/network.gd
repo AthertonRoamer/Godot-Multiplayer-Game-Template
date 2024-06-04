@@ -31,6 +31,12 @@ var peer : ENetMultiplayerPeer
 var is_server : bool = false
 var client_count : int = 0
 var active_ip : String = ""
+var refuse_new_connections : bool = false:
+	set(b):
+		if b != refuse_new_connections:
+			if peer != null:
+				peer.refuse_new_connections = b
+				refuse_new_connections = b
 
 #global scope means this node changes the multiplayer_peer of the scene tree
 #local scope means this node gives itself a new MultiplayerApi
@@ -77,11 +83,11 @@ func initiate_enet_server() -> void:
 	peer = ENetMultiplayerPeer.new()
 	var ok = peer.create_server(port, max_clients)
 	if ok != OK:
-		Main.main.output("Failed to create server. Error " + str(ok))
+		Main.output("Failed to create server. Error " + str(ok))
 		server_failed.emit()
 		return
 	multiplayer.multiplayer_peer = peer
-	Main.main.output("Created server")
+	Main.output("Created server")
 	
 	
 func initiate_local_enet_server() -> void:
@@ -98,49 +104,50 @@ func initiate_enet_client(ip : String) -> void:
 	peer = ENetMultiplayerPeer.new()
 	var ok = peer.create_client(ip, port)
 	if ok != OK:
-		Main.main.output("Failed to create client. Error " + str(ok))
+		Main.output("Failed to create client. Error " + str(ok))
 		client_failed.emit()
 		return
 	active_ip = ip
 	multiplayer.multiplayer_peer = peer
-	Main.main.output("Created client")
+	Main.output("Created client")
 	
 	
 func close_peer() -> void:
 	if multiplayer.multiplayer_peer.get_connection_status() != MultiplayerPeer.CONNECTION_DISCONNECTED:
 		multiplayer.multiplayer_peer.close()
 		peer_closed.emit()
+	refuse_new_connections = false
 	is_server = false
 	client_count = 0
 	active_ip = ""
 	
 	
 func _on_connected_to_server() -> void:
-	Main.main.output("Connected to server")
+	Main.output("Connected to server")
 	connected_to_server.emit()
 	
 
 func _on_connection_failed() -> void:
-	Main.main.output("Connection to server failed")
+	Main.output("Connection to server failed")
 	connection_failed.emit()
 	
 	
 func _on_peer_connected(id) -> void:
-	Main.main.output("Peer connected with id: " + str(id))
+	Main.output("Peer connected with id: " + str(id))
 	if is_server:
 		client_count += 1
 	peer_connected.emit(id)
 	
 	
 func _on_peer_disconnected(id) -> void:
-	Main.main.output("Peer " + str(id) + " disconnected")
+	Main.output("Peer " + str(id) + " disconnected")
 	if is_server:
 		client_count -= 1
 	peer_disconnected.emit(id)
 	
 	
 func _on_server_disconnected():
-	Main.main.output("Disconnected with server")
+	Main.output("Disconnected with server")
 	server_disconnected.emit()
 	
 	

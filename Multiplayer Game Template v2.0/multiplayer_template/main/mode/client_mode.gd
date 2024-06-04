@@ -17,7 +17,7 @@ func open() -> void:
 	lobby = Main.main.lobby_scene.instantiate()
 	Main.main.add_child(lobby)
 	
-	Main.main.output("Opening client mode") 
+	Main.output("Opening client mode") 
 	
 	
 func close() -> void:
@@ -26,7 +26,7 @@ func close() -> void:
 	
 	matchmaker.queue_free()
 	lobby.queue_free()
-	Main.main.output("Closing client mode")
+	Main.output("Closing client mode")
 	super()
 	
 	

@@ -22,7 +22,7 @@ func _ready() -> void:
 @rpc("reliable")
 func broadcast_lobby_data(data : Array) -> void:
 	if not is_master:
-		Main.main.output("Reiceived a lobby data update")
+		Main.output("Reiceived a lobby data update")
 		database.update_data_from_array(data)
 
 
