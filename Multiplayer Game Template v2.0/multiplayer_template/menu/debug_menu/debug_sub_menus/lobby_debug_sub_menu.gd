@@ -10,12 +10,12 @@ func _on_mode_changed(m : Mode) -> void:
 
 func _on_set_lobby_name_pressed():
 	var new_name : String = $VBoxContainer/VBoxContainer2/NameInput.text
-	(Main.main.mode as LobbyMode).lobby.stats.name = new_name
-	(Main.main.mode as LobbyMode).lobby_manager.submit_update()
+	(Main.mode as LobbyMode).lobby.stats.name = new_name
+	(Main.mode as LobbyMode).lobby_manager.submit_update()
 	
 	
 func _on_back_pressed():
-	Main.main.mode.close()
+	Main.mode.close()
 	holder.open_menu()
 
 

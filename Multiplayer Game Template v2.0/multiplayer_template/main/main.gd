@@ -12,12 +12,12 @@ signal about_to_quit
 @export var matchmaker_scene : PackedScene = preload("res://multiplayer_template/lobby_system/matchmaker/matchmaker.tscn")
 
 static var outputter : Output = Output.new() #module for debug output, by default it prints stuff normally
-var instance_launcher : InstanceLauncher = InstanceLauncher.new()
 
 static var main : Main #so any node can access main. It'd be nice if godot let the main scene be globally accessed like an autoload. What happens if an autoload is freed?
 static var arg_dictionary : Dictionary = {}
 
-var mode : Mode
+var instance_launcher : InstanceLauncher = InstanceLauncher.new()
+static var mode : Mode
 var active_scene : Node
 
 
@@ -38,7 +38,7 @@ static func parse_arguments() -> void:
 	
 	var mode_parameter : String = get_arg_option_parameter("--mode")
 	if modes.has(mode_parameter):
-		main.open_mode(modes[mode_parameter])
+		open_mode(modes[mode_parameter])
 
 
 static func has_arg_option(option : String) -> bool:
@@ -50,6 +50,16 @@ static func get_arg_option_parameter(option : String) -> String:
 		return arg_dictionary[option]
 	else:
 		return ""
+		
+		
+static func open_mode(new_mode : Mode) -> void:
+		if is_instance_valid(mode):
+			if mode.id == new_mode.id:
+				return
+			mode.close()
+		mode = new_mode
+		mode.open()
+		main.opening_mode.emit(mode)
 	
 
 func _ready() -> void:
@@ -57,18 +67,8 @@ func _ready() -> void:
 	main = self
 	load_menu()
 	Main.parse_arguments()
-	if mode != null and mode.id != "none" and !mode.is_open:
-		mode.open()
-		opening_mode.emit(mode)
-		
-		
-func open_mode(new_mode : Mode) -> void:
-		if is_instance_valid(mode):
-			if mode.id == new_mode.id:
-				return
-			mode.close()
-		mode = new_mode
-		mode.open()
+	if Main.mode != null and Main.mode.id != "none" and !Main.mode.is_open:
+		Main.mode.open()
 		opening_mode.emit(mode)
 		
 		

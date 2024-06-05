@@ -11,20 +11,20 @@ func _ready() -> void:
 	
 	
 func opened() -> void:
-	if not (Main.main.mode as ClientMode).matchmaker.database.data_changed.is_connected(_on_lobby_data_changed):
-		(Main.main.mode as ClientMode).matchmaker.database.data_changed.connect(_on_lobby_data_changed)
+	if not (Main.mode as ClientMode).matchmaker.database.data_changed.is_connected(_on_lobby_data_changed):
+		(Main.mode as ClientMode).matchmaker.database.data_changed.connect(_on_lobby_data_changed)
 
 
 func _on_back_pressed():
-	Main.main.mode.close()
+	Main.mode.close()
 	ip_line_edit.text = "127.0.0.1"
 	holder.open_menu()
 
 
 func _on_join_pressed():
 	var ip = ip_line_edit.text
-	if Main.main.mode is ClientMode:
-		(Main.main.mode as ClientMode).join_server(ip)
+	if Main.mode is ClientMode:
+		(Main.mode as ClientMode).join_server(ip)
 		
 		
 func _on_option_pressed(option : IPOption) -> void:
@@ -50,7 +50,7 @@ func add_option(ip : String) -> void:
 
 
 func _on_print_lobby_data_pressed():
-	(Main.main.mode as ClientMode).matchmaker.database.output_data()
+	(Main.mode as ClientMode).matchmaker.database.output_data()
 	
 	
 func _on_lobby_data_changed() -> void:
@@ -58,7 +58,7 @@ func _on_lobby_data_changed() -> void:
 	
 	
 func update_lobby_options() -> void:
-	var data : Array = (Main.main.mode as ClientMode).matchmaker.database.data.values()
+	var data : Array = (Main.mode as ClientMode).matchmaker.database.data.values()
 	for child in lobby_option_display.get_children():
 		child.queue_free()
 	for item in data:
