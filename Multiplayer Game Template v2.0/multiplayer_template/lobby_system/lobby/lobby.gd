@@ -18,11 +18,7 @@ static var lobby_member_class = LobbyMember
 static var lobby_data_class = LobbyData
 
 func _ready() -> void:
-	if Main.has_arg_option("--lobby-port"):
-		stats.lobby_port = int(Main.get_arg_option_parameter("--lobby-port"))
-		
-	if Main.has_arg_option("--lobby-max-members"):
-		stats.max_members = int(Main.get_arg_option_parameter("--lobby-max-members"))
+	parse_args()
 	
 	if is_master:
 		(Main.main.mode as LobbyMode).launch_server()
@@ -31,6 +27,14 @@ func _ready() -> void:
 	Network.peer_disconnected.connect(_on_peer_disconnected)
 	
 	stats.changed.connect(_on_stats_changed)
+	
+	
+func parse_args() -> void:
+	if Main.has_arg_option("--lobby-port"):
+		stats.lobby_port = int(Main.get_arg_option_parameter("--lobby-port"))
+		
+	if Main.has_arg_option("--lobby-max-members"):
+		stats.max_members = int(Main.get_arg_option_parameter("--lobby-max-members"))
 
 
 func serialize_to_lobby_data_dictionary() -> Dictionary:
@@ -71,12 +75,14 @@ func clear_unregistered_peers() -> void: #if peer isn't a member, kick it. Could
 
 
 func _on_peer_connected(_id) -> void:
-	stats.current_member_count = Network.client_count
+	#stats.current_member_count = Network.client_count
+	pass
 	
 	
 func _on_peer_disconnected(_id) -> void:
-	stats.current_member_count = Network.client_count
-
+	#stats.current_member_count = Network.client_count
+	pass
+	
 
 func get_lobby_manager() -> LobbyManager: #this function should only be called on the master lobby
 	if Main.main.mode is LobbyMode:

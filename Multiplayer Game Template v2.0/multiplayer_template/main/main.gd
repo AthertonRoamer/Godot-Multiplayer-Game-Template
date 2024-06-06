@@ -16,7 +16,7 @@ static var outputter : Output = Output.new() #module for debug output, by defaul
 static var main : Main #so any node can access main. It'd be nice if godot let the main scene be globally accessed like an autoload. What happens if an autoload is freed?
 static var arg_dictionary : Dictionary = {}
 
-var instance_launcher : InstanceLauncher = InstanceLauncher.new()
+static var instance_launcher : InstanceLauncher = InstanceLauncher.new()
 static var mode : Mode
 var active_scene : Node
 
