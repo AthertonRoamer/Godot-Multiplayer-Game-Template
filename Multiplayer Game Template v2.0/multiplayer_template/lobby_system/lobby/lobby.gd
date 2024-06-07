@@ -21,7 +21,7 @@ func _ready() -> void:
 	parse_args()
 	
 	if is_master:
-		(Main.main.mode as LobbyMode).launch_server()
+		(Main.mode as LobbyMode).launch_server()
 		
 	Network.peer_connected.connect(_on_peer_connected)
 	Network.peer_disconnected.connect(_on_peer_disconnected)
@@ -58,11 +58,15 @@ func update_remote_lobby_stats(new_stats : Dictionary) -> void:
 		Main.output("Received stats update")
 	
 	
-func update_remote_lobby_member_data() -> void:
-	pass
+@rpc("reliable")
+func update_remote_lobby_member_data(new_member_data : Array[Dictionary]) -> void:
+	if not is_master:
+		members.clear()
+		for member_dictionary in new_member_data:
+			members.append(lobby_member_class.desirialize_from_dictionary(member_dictionary))
 
 
-func clear_unregistered_peers() -> void: #if peer isn't a member, kick it. Could be called at start of game to clear any unauthorized connections, especially in private lobbies
+func clear_unregistered_peers() -> void: #if peer is n't a member, kick it. Could be called at start of game to clear any unauthorized connections, especially in private lobbies
 	if is_master:
 		for peer_id in multiplayer.get_peers():
 			var peer_is_member : bool = false
