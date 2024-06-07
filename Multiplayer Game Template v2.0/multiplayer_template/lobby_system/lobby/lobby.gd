@@ -23,7 +23,6 @@ func _ready() -> void:
 	if is_master:
 		(Main.mode as LobbyMode).launch_server()
 		
-	Network.peer_connected.connect(_on_peer_connected)
 	Network.peer_disconnected.connect(_on_peer_disconnected)
 	
 	stats.changed.connect(_on_stats_changed)
@@ -58,6 +57,44 @@ func update_remote_lobby_stats(new_stats : Dictionary) -> void:
 		Main.output("Received stats update")
 	
 	
+@rpc("reliable", "any_peer")
+func request_membership(member_dictionary : Dictionary) -> void:
+	if is_master:
+		var new_member : LobbyMember = lobby_member_class.desirialize_from_dictionary(member_dictionary)
+		new_member.id = multiplayer.get_remote_sender_id()
+		if not has_member_with_id(new_member.id):
+			if is_new_member_acceptable(new_member):
+				register_new_member(new_member)
+			else:
+				multiplayer.multiplayer_peer.disconnect_peer(new_member.id)
+		
+		
+func is_new_member_acceptable(_new_member : LobbyMember) -> bool:
+	return true
+	
+	
+func register_new_member(new_member : LobbyMember) -> void:
+	members.append(new_member)
+	stats.current_member_count = members.size() #because this causes update to be submitted
+	get_lobby_manager().submit_update() #WARNING may result in two updates being submitted
+	update_remote_lobby_member_data.rpc(get_serialized_members())
+	
+	
+func remove_member_by_id(id : int) -> void:
+	if is_master:
+		var member_to_remove : LobbyMember = null
+		for member in members:
+			if member.id == id:
+				member_to_remove = member
+				break
+		if member_to_remove != null:
+			members.erase(member_to_remove)
+			if multiplayer.get_peers().has(member_to_remove.id):
+				multiplayer.multiplayer_peer.disconnect_peer(member_to_remove.id)
+			get_lobby_manager().submit_update()
+			update_remote_lobby_member_data.rpc(get_serialized_members())
+	
+	 
 @rpc("reliable")
 func update_remote_lobby_member_data(new_member_data : Array[Dictionary]) -> void:
 	if not is_master:
@@ -66,7 +103,7 @@ func update_remote_lobby_member_data(new_member_data : Array[Dictionary]) -> voi
 			members.append(lobby_member_class.desirialize_from_dictionary(member_dictionary))
 
 
-func clear_unregistered_peers() -> void: #if peer is n't a member, kick it. Could be called at start of game to clear any unauthorized connections, especially in private lobbies
+func clear_unregistered_peers() -> void: #if peer isn't a member, kick it. Could be called at start of game to clear any unauthorized connections, especially in private lobbies
 	if is_master:
 		for peer_id in multiplayer.get_peers():
 			var peer_is_member : bool = false
@@ -78,14 +115,16 @@ func clear_unregistered_peers() -> void: #if peer is n't a member, kick it. Coul
 				multiplayer.multiplayer_peer.disconnect_peer(peer_id)
 
 
-func _on_peer_connected(_id) -> void:
-	#stats.current_member_count = Network.client_count
-	pass
+func _on_peer_disconnected(id) -> void:
+	if has_member_with_id(id):
+		remove_member_by_id(id)
 	
 	
-func _on_peer_disconnected(_id) -> void:
-	#stats.current_member_count = Network.client_count
-	pass
+func get_serialized_members() -> Array[Dictionary]:
+	var serialized_members : Array[Dictionary]
+	for member in members:
+		serialized_members.append(member.serialize_to_dictionary())
+	return serialized_members
 	
 
 func get_lobby_manager() -> LobbyManager: #this function should only be called on the master lobby
@@ -94,3 +133,12 @@ func get_lobby_manager() -> LobbyManager: #this function should only be called o
 	else:
 		push_error("get_lobby_manager called on a client lobby node which doesn't have a lobby manager")
 		return null
+
+
+func has_member_with_id(id : int) -> bool:
+	var has_member : bool = false
+	for member in members:
+		if member.id == id:
+			has_member = true
+			break
+	return has_member

@@ -67,6 +67,10 @@ func join_lobby(data : LobbyData) -> void:
 	Network.initiate_enet_client(ip)
 	
 	
+func request_membership_in_lobby(member : LobbyMember) -> void:
+	pass
+	
+	
 func _on_connected_to_server() -> void:
 	match state:
 		CLIENT_STATE.CONNECTING_TO_SERVER:

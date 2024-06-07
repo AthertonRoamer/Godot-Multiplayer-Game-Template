@@ -9,22 +9,10 @@ var data : Dictionary = {} : #dictionary is in form:  key is lobby id (int), val
 	set(new_data):
 		data = new_data
 		data_changed.emit()
-
-
-func deserialize_lobby_data(dict : Dictionary) -> LobbyData:
-	var lobby_data : LobbyData = Lobby.lobby_data_class.new()
-	if dict.has("stats"): #load LobbyStats from dictionary
-		lobby_data.stats = Lobby.lobby_stats_class.desirialize_from_dictionary(dict["stats"])
-	if dict.has("members"): #load LobbyMember(s) from dictionary
-		for member in dict["members"]:
-			lobby_data.members.append(Lobby.lobby_member_class.desirialize_from_dictionary(member))
-	if dict.has("lobby_id"): #load lobby id from dictionary
-		lobby_data.lobby_id = dict["lobby_id"]
-	return lobby_data
 	
 	
 func update_data_from_dictionary(dict : Dictionary) -> void: #takes a dictionary, turns it into a LobbyData, and adds it to data
-	var new_data : LobbyData = deserialize_lobby_data(dict)
+	var new_data : LobbyData = LobbyData.deserialize_from_dictionary(dict)
 	data[new_data.lobby_id] = new_data
 	data_changed.emit()
 	

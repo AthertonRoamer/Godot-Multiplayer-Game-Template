@@ -42,6 +42,17 @@ text = "127.0.0.1"
 layout_mode = 2
 text = "Join"
 
+[node name="ManualNameInput" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ManualNameInput"]
+layout_mode = 2
+text = "Enter Name:"
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/ManualNameInput"]
+layout_mode = 2
+text = "Player"
+
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
