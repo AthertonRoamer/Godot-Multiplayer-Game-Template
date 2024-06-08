@@ -5,6 +5,7 @@ extends SubMenu
 @export var ip_option_scene : PackedScene
 @export var lobby_option_scene : PackedScene
 @export var lobby_option_display : Control
+@export var name_line_edit : LineEdit
 
 func _ready() -> void:
 	Network.server_browser.found_server.connect(_on_server_list_updated)
@@ -27,25 +28,25 @@ func _on_join_pressed():
 		(Main.mode as ClientMode).join_server(ip)
 		
 		
-func _on_option_pressed(option : IPOption) -> void:
+func _on_ip_option_pressed(option : IPOption) -> void:
 	ip_line_edit.text = option.ip
 	
 	
 func _on_server_list_updated(_a, _b) -> void:
-	update_options()
+	update_ip_options()
 	
 	
-func update_options() -> void:
+func update_ip_options() -> void:
 	for child in option_holder.get_children():
 		child.queue_free()
 	for ip in Network.server_browser.found_servers:
-		add_option(ip)
+		add_ip_option(ip)
 	
 	
-func add_option(ip : String) -> void:
+func add_ip_option(ip : String) -> void:
 	var o : IPOption = ip_option_scene.instantiate()
 	o.ip = ip
-	o.selected.connect(_on_option_pressed)
+	o.selected.connect(_on_ip_option_pressed)
 	option_holder.add_child(o)
 
 
@@ -64,5 +65,11 @@ func update_lobby_options() -> void:
 	for item in data:
 		var option : LobbyOption = lobby_option_scene.instantiate()
 		option.lobby_data = item
+		option.selected.connect(_on_lobby_option_selected)
 		lobby_option_display.add_child(option)
 		
+
+func _on_lobby_option_selected(lobby_data : LobbyData) -> void:
+	var member : LobbyMember = Lobby.lobby_member_class.new()
+	member.name = name_line_edit.text
+	(Main.mode as ClientMode).join_lobby(lobby_data, member)

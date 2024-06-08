@@ -10,6 +10,7 @@ var matchmaker : Matchmaker
 var server_ip : String = ""
 var server_port : int = 3000
 
+var my_member_data : LobbyMember = null
 
 func _init() -> void:
 	id = "client"
@@ -55,8 +56,9 @@ func close_local_client() -> void:
 	Network.server_browser.stop_listening()
 	
 	
-func join_lobby(data : LobbyData) -> void:
+func join_lobby(data : LobbyData, member_data : LobbyMember) -> void:
 	state = CLIENT_STATE.CONNECTING_TO_LOBBY
+	my_member_data = member_data
 	var ip : String = data.stats.ip
 	if ip == "":
 		ip = "127.0.0.1"
@@ -68,7 +70,12 @@ func join_lobby(data : LobbyData) -> void:
 	
 	
 func request_membership_in_lobby(member : LobbyMember) -> void:
-	pass
+	if state == CLIENT_STATE.CONNECTED_TO_LOBBY:
+		var serialized_member : Dictionary = member.serialize_to_dictionary()
+		lobby.initiate_membership_request(serialized_member)
+		Main.output("Requesting membership in lobby")
+	else:
+		push_warning("In client mode tried to request membership in lobby while not connected to lobby")
 	
 	
 func _on_connected_to_server() -> void:
@@ -77,6 +84,7 @@ func _on_connected_to_server() -> void:
 			state = CLIENT_STATE.CONNECTED_TO_SERVER
 		CLIENT_STATE.CONNECTING_TO_LOBBY:
 			state = CLIENT_STATE.CONNECTED_TO_LOBBY
+			request_membership_in_lobby(my_member_data)
 			
 		
 func _on_connection_failed() -> void:

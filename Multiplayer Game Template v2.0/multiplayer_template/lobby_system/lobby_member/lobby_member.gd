@@ -5,7 +5,7 @@ class_name LobbyMember
 #this class is not intended to hold data that would change over the course of a game such as health etc 
 
 var name : String = "Player name"
-var id : int
+var id : int = 0
 
 func serialize_to_dictionary() -> Dictionary:
 	return {"name" : name, "id": id}
@@ -15,6 +15,6 @@ static func desirialize_from_dictionary(dict : Dictionary) -> LobbyMember: #effe
 	var member : LobbyMember = LobbyMember.new()
 	if dict.has("name"):
 		member.name = dict["name"]
-	elif dict.has("id"):
+	if dict.has("id"):
 		member.id = dict["id"]
 	return member

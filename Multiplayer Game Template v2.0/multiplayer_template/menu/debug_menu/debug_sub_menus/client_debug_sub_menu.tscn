@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bkkvybflamla1" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/ip_option.tscn" id="2_ham3y"]
 [ext_resource type="PackedScene" uid="uid://cenrsvhg8g7d2" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/lobby_option.tscn" id="3_em6vc"]
 
-[node name="ClientDebugSubMenu" type="Control" node_paths=PackedStringArray("ip_line_edit", "option_holder", "lobby_option_display")]
+[node name="ClientDebugSubMenu" type="Control" node_paths=PackedStringArray("ip_line_edit", "option_holder", "lobby_option_display", "name_line_edit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +17,7 @@ option_holder = NodePath("VBoxContainer/ScrollContainer/IPDisplay")
 ip_option_scene = ExtResource("2_ham3y")
 lobby_option_scene = ExtResource("3_em6vc")
 lobby_option_display = NodePath("VBoxContainer/ScrollContainer2/LobbyOptionDisplay")
+name_line_edit = NodePath("VBoxContainer/ManualNameInput/LineEdit")
 menu_name = "client"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -42,6 +43,15 @@ text = "127.0.0.1"
 layout_mode = 2
 text = "Join"
 
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="IPDisplay" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
 [node name="ManualNameInput" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
@@ -52,15 +62,6 @@ text = "Enter Name:"
 [node name="LineEdit" type="LineEdit" parent="VBoxContainer/ManualNameInput"]
 layout_mode = 2
 text = "Player"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-
-[node name="IPDisplay" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="PrintLobbyData" type="Button" parent="VBoxContainer"]
 layout_mode = 2

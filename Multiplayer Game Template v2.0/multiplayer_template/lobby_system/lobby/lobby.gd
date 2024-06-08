@@ -57,6 +57,11 @@ func update_remote_lobby_stats(new_stats : Dictionary) -> void:
 		Main.output("Received stats update")
 	
 	
+func initiate_membership_request(member_dictionary : Dictionary) -> void:
+	if not is_master:
+		request_membership.rpc_id(1, member_dictionary)
+	
+	
 @rpc("reliable", "any_peer")
 func request_membership(member_dictionary : Dictionary) -> void:
 	if is_master:
@@ -66,6 +71,7 @@ func request_membership(member_dictionary : Dictionary) -> void:
 			if is_new_member_acceptable(new_member):
 				register_new_member(new_member)
 			else:
+				Main.output("Rejecting a peer who wanted to become a member")
 				multiplayer.multiplayer_peer.disconnect_peer(new_member.id)
 		
 		
@@ -76,8 +82,9 @@ func is_new_member_acceptable(_new_member : LobbyMember) -> bool:
 func register_new_member(new_member : LobbyMember) -> void:
 	members.append(new_member)
 	stats.current_member_count = members.size() #because this causes update to be submitted
-	get_lobby_manager().submit_update() #WARNING may result in two updates being submitted
+	#get_lobby_manager().submit_update() #WARNING may result in two updates being submitted if uncommented
 	update_remote_lobby_member_data.rpc(get_serialized_members())
+	Main.output("Registering new member")
 	
 	
 func remove_member_by_id(id : int) -> void:
@@ -96,7 +103,7 @@ func remove_member_by_id(id : int) -> void:
 	
 	 
 @rpc("reliable")
-func update_remote_lobby_member_data(new_member_data : Array[Dictionary]) -> void:
+func update_remote_lobby_member_data(new_member_data : Array) -> void:
 	if not is_master:
 		members.clear()
 		for member_dictionary in new_member_data:
@@ -121,7 +128,7 @@ func _on_peer_disconnected(id) -> void:
 	
 	
 func get_serialized_members() -> Array[Dictionary]:
-	var serialized_members : Array[Dictionary]
+	var serialized_members : Array[Dictionary] = []
 	for member in members:
 		serialized_members.append(member.serialize_to_dictionary())
 	return serialized_members
