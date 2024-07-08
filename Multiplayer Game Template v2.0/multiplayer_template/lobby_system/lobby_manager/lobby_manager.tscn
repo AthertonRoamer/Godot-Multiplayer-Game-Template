@@ -4,7 +4,6 @@
 
 [node name="LobbyManager" type="Node"]
 script = ExtResource("1_17nyj")
-lobby_args = null
 port = 4000
 max_clients = 10
 scope = 1

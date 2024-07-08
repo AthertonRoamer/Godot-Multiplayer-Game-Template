@@ -12,16 +12,23 @@ var locked : bool = false:
 			locked = b
 			multiplayer.refuse_new_connections = b
 
+var game_manager : GameManager
+
 #these variables will need be changed if any of those classes are extended with more variables, so that the correct deserializers will be used
 static var lobby_stats_class = LobbyStats
 static var lobby_member_class = LobbyMember
 static var lobby_data_class = LobbyData
+
+static var game_manager_scene : PackedScene = preload("res://multiplayer_template/game_manager/game_manager.tscn")
 
 func _ready() -> void:
 	parse_args()
 	
 	if is_master:
 		(Main.mode as LobbyMode).launch_server()
+		
+	game_manager = game_manager_scene.instantiate()
+	add_child(game_manager)
 		
 	Network.peer_disconnected.connect(_on_peer_disconnected)
 	
@@ -59,12 +66,14 @@ func update_remote_lobby_stats(new_stats : Dictionary) -> void:
 	
 func initiate_membership_request(member_dictionary : Dictionary) -> void:
 	if not is_master:
+		Main.output("Initiating member request")
 		request_membership.rpc_id(1, member_dictionary)
 	
 	
 @rpc("reliable", "any_peer")
 func request_membership(member_dictionary : Dictionary) -> void:
 	if is_master:
+		Main.output("Received membership request")
 		var new_member : LobbyMember = lobby_member_class.desirialize_from_dictionary(member_dictionary)
 		new_member.id = multiplayer.get_remote_sender_id()
 		if not has_member_with_id(new_member.id):
@@ -76,13 +85,13 @@ func request_membership(member_dictionary : Dictionary) -> void:
 		
 		
 func is_new_member_acceptable(_new_member : LobbyMember) -> bool:
-	return true
+	return stats.current_member_count < stats.max_members
 	
 	
 func register_new_member(new_member : LobbyMember) -> void:
 	members.append(new_member)
-	stats.current_member_count = members.size() #because this causes update to be submitted
-	#get_lobby_manager().submit_update() #WARNING may result in two updates being submitted if uncommented
+	stats.current_member_count = members.size() 
+	#dont call get_lobby_manager().submit_update() because changings the stats has triggered this already
 	update_remote_lobby_member_data.rpc(get_serialized_members())
 	Main.output("Registering new member")
 	
@@ -100,6 +109,7 @@ func remove_member_by_id(id : int) -> void:
 				multiplayer.multiplayer_peer.disconnect_peer(member_to_remove.id)
 			get_lobby_manager().submit_update()
 			update_remote_lobby_member_data.rpc(get_serialized_members())
+			Main.output("Removed member with id: " + str(id))
 	
 	 
 @rpc("reliable")
@@ -120,6 +130,7 @@ func clear_unregistered_peers() -> void: #if peer isn't a member, kick it. Could
 					break
 			if not peer_is_member:
 				multiplayer.multiplayer_peer.disconnect_peer(peer_id)
+				Main.output("Removed peer who lacked membership")
 
 
 func _on_peer_disconnected(id) -> void:
