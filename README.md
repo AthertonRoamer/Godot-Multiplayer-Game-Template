@@ -23,5 +23,5 @@ Connection Sequence:
         They disconnect from the dedicated server and connect to the lobby (The lobby may reject them)
         They have a lobby node that communicates with the lobby node on the lobby
         
-    The lobby starts the game, telling every client connected to it to load the game 
+Then the lobby starts the game, telling every client connected to it to load the game 
         
