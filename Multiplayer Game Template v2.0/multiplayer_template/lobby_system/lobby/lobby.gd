@@ -160,3 +160,13 @@ func has_member_with_id(id : int) -> bool:
 			has_member = true
 			break
 	return has_member
+	
+	
+func load_game() -> void:
+	Main.output("Loading game")
+	game_manager.load_game()
+	
+	
+func start_game() -> void:
+	Main.output("Starting game")
+	game_manager.start_game()

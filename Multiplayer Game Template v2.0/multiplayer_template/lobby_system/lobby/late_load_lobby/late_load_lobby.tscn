@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7aa1yhhk54h2"]
+
+[ext_resource type="Script" path="res://multiplayer_template/lobby_system/lobby/late_load_lobby/late_load_lobby.gd" id="1_qxfsx"]
+[ext_resource type="PackedScene" uid="uid://bw48v8sq3ooyq" path="res://multiplayer_template/lobby_system/lobby/late_load_lobby/game_load_syncroniser/game_load_syncroniser.tscn" id="2_epp2w"]
+
+[node name="LateLoadLobby" type="Node" node_paths=PackedStringArray("game_load_syncroniser")]
+script = ExtResource("1_qxfsx")
+game_load_syncroniser = NodePath("GameLoadSyncroniser")
+
+[node name="GameLoadSyncroniser" parent="." instance=ExtResource("2_epp2w")]

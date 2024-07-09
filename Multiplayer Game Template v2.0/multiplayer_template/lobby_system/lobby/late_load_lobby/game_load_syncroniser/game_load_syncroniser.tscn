@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bw48v8sq3ooyq"]
+
+[ext_resource type="Script" path="res://multiplayer_template/lobby_system/lobby/late_load_lobby/game_load_syncroniser/game_load_syncroniser.gd" id="1_wtd4l"]
+
+[node name="GameLoadSyncroniser" type="Node"]
+script = ExtResource("1_wtd4l")
