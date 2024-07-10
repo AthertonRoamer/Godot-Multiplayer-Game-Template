@@ -1,5 +1,5 @@
 This a template for a multiplayer lobby system and a LAN server browser in the Godot game engine. <br>
-Version 2.0 is a work in progress.<br><br><br>
+It is still a work in progress.<br><br><br>
 General Structure:
 
 Main is main scene <br>
