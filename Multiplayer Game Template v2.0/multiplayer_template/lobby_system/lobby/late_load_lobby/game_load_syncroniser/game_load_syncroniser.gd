@@ -1,6 +1,8 @@
 class_name GameLoadSyncroniser
 extends Node
-#class for keeping track of how many clients have loaded
+#class for keeping track of how many peers have loaded the game and alerting lobby when all loading is complete
+
+signal all_loading_complete
 
 var lobby : Lobby
 var on_game_loaded : Signal
@@ -17,14 +19,23 @@ func load_game() -> void:
 	lobby.load_game()
 	
 	
+func _on_loading_complete() -> void:
+	#on loading complete for this one peer, not all peers
+	if lobby.is_master:
+		loaded_game_count += 1
+		review_loading_status()
+	else:
+		submit_game_loaded.rpc_id(1)
+		
+		
 @rpc("any_peer")
 func submit_game_loaded() -> void:
 	if lobby.is_master:
 		loaded_game_count += 1
-	
-	
-func _on_loading_complete() -> void:
-	if lobby.is_master:
-		loaded_game_count += 1
-	else:
-		submit_game_loaded.rpc_id(1)
+		review_loading_status()
+
+
+func review_loading_status() -> void:
+	if loaded_game_count == lobby.members.size() + 1:
+		#loading complete for all peers
+		all_loading_complete.emit()
