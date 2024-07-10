@@ -1,7 +1,6 @@
 class_name BasicGameManager
 extends GameManager
-
-#minimalistic implimentation of game manager
+##Minimalistic implimentation of game manager which can be easily used without extending it first
 
 #To Use:
 #Set game_scene to the "main scene" of your game, i.e. the scene which is the root of your game itself
