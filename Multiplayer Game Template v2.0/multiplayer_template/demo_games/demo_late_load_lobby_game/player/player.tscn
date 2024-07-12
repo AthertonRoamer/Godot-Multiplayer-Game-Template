@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://cei8euq0h4tek"]
+
+[ext_resource type="Script" path="res://multiplayer_template/demo_games/demo_late_load_lobby_game/player/player.gd" id="1_tgbgt"]
+[ext_resource type="Texture2D" uid="uid://4f4aitciwkwv" path="res://icon.svg" id="2_dkpcl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b8330"]
+size = Vector2(64, 64)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("name_display")]
+script = ExtResource("1_tgbgt")
+name_display = NodePath("NameDisplay")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_dkpcl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_b8330")
+
+[node name="NameDisplay" type="Label" parent="."]
+offset_left = -33.0
+offset_top = -66.0
+offset_right = 31.0
+offset_bottom = -43.0
+text = "Player"
+horizontal_alignment = 1
+vertical_alignment = 1

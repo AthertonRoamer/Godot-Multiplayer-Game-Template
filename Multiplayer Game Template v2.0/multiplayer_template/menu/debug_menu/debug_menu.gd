@@ -11,3 +11,11 @@ func _ready() -> void:
 	Main.outputter = output
 	
 	
+func _on_game_started() -> void:
+	visible = false
+	
+	
+func _on_game_ended() -> void:
+	visible = true
+	
+	

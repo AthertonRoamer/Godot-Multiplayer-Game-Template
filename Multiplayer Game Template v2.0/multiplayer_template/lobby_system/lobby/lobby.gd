@@ -19,7 +19,7 @@ static var lobby_stats_class = LobbyStats
 static var lobby_member_class = LobbyMember
 static var lobby_data_class = LobbyData
 
-static var game_manager_scene : PackedScene = preload("res://multiplayer_template/game_manager/game_manager.tscn")
+static var game_manager_scene : PackedScene = preload("res://multiplayer_template/game_manager/basic_game_manager/basic_game_manager.tscn")
 
 func _ready() -> void:
 	parse_args()
@@ -28,6 +28,7 @@ func _ready() -> void:
 		(Main.mode as LobbyMode).launch_server()
 		
 	game_manager = game_manager_scene.instantiate()
+	game_manager.lobby = self
 	add_child(game_manager)
 		
 	Network.peer_disconnected.connect(_on_peer_disconnected)
@@ -170,3 +171,18 @@ func load_game() -> void:
 func start_game() -> void:
 	Main.output("Starting game")
 	game_manager.start_game()
+	if Main.mode is ClientMode:
+		(Main.mode as ClientMode).game_started.emit()
+	
+
+
+func trigger_end_game() -> void:
+	end_game.rpc()
+	
+
+@rpc()
+func end_game() -> void:
+	Main.output("Ending game")
+	game_manager.end_game()
+	if Main.mode is ClientMode:
+		(Main.mode as ClientMode).game_ended.emit()

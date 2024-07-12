@@ -1,6 +1,6 @@
 class_name Matchmaker
 extends Node
-#node on client which receives lobby data from server and determines which lobby to join, or requests new lobby etc
+##node on client which receives lobby data from server and determines which lobby to join, or requests new lobby etc
 
 var database : LobbyDatabase
 var is_master : bool = false

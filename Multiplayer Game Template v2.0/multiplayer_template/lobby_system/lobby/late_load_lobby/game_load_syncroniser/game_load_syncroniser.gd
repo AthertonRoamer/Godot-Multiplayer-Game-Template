@@ -15,7 +15,8 @@ func initiate_loading() -> void:
 	
 @rpc("authority", "call_local")
 func load_game() -> void:
-	on_game_loaded.connect(_on_loading_complete)
+	if not on_game_loaded.is_connected(_on_loading_complete):
+		on_game_loaded.connect(_on_loading_complete)
 	lobby.load_game()
 	
 	

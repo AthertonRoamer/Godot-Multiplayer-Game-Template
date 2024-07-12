@@ -3,6 +3,9 @@ extends Mode
 
 enum CLIENT_STATE {NOT_CONNECTED, CONNECTING_TO_SERVER, CONNECTED_TO_SERVER, CONNECTING_TO_LOBBY, CONNECTED_TO_LOBBY}
 
+signal game_started
+signal game_ended
+
 var state : int = CLIENT_STATE.NOT_CONNECTED
 var lobby : Lobby
 var matchmaker : Matchmaker
@@ -22,7 +25,8 @@ func _init() -> void:
 func open() -> void:
 	super()
 	
-	matchmaker = Main.main.matchmaker_scene.instantiate()
+	#FIXME use a variable in main instead of a direct path
+	matchmaker = preload("res://multiplayer_template/lobby_system/matchmaker/matchmaker.tscn").instantiate() #
 	Main.main.add_child(matchmaker)
 	
 	lobby = Main.main.lobby_scene.instantiate()

@@ -8,11 +8,15 @@ extends Node
 signal game_loaded
 
 var lobby : Lobby
+var in_game : bool = false
 
 func load_game() -> void:
 	game_loaded.emit()
 	
 	
 func start_game() -> void:
-	pass
-
+	in_game = true
+	
+	
+func end_game() -> void:
+	in_game = false

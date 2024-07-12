@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://ye22u6x1her8"]
+
+[ext_resource type="Script" path="res://multiplayer_template/demo_games/demo_late_load_lobby_game/demo_one.gd" id="1_ncbwj"]
+[ext_resource type="PackedScene" uid="uid://cei8euq0h4tek" path="res://multiplayer_template/demo_games/demo_late_load_lobby_game/player/player.tscn" id="2_wgbo7"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_hirhj"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_eq8uu"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_hksnq"]
+normal = Vector2(-0.99987, -0.0161269)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2ym6e"]
+
+[node name="DemoOne" type="Node2D"]
+script = ExtResource("1_ncbwj")
+player_scene = ExtResource("2_wgbo7")
+
+[node name="Terrain" type="Node2D" parent="."]
+
+[node name="Background" type="Polygon2D" parent="Terrain"]
+color = Color(0.439216, 0.45098, 0.701961, 1)
+polygon = PackedVector2Array(-136, -86, 1253, -87, 1253, 735, -137, 735)
+
+[node name="Boundary" type="StaticBody2D" parent="Terrain"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Boundary"]
+shape = SubResource("WorldBoundaryShape2D_hirhj")
+
+[node name="Boundary2" type="StaticBody2D" parent="Terrain"]
+position = Vector2(0, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Boundary2"]
+shape = SubResource("WorldBoundaryShape2D_eq8uu")
+
+[node name="Boundary3" type="StaticBody2D" parent="Terrain"]
+position = Vector2(0, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Boundary3"]
+position = Vector2(1151, 13)
+shape = SubResource("WorldBoundaryShape2D_hksnq")
+
+[node name="Boundary4" type="StaticBody2D" parent="Terrain"]
+position = Vector2(0, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Boundary4"]
+position = Vector2(1151, 347)
+shape = SubResource("WorldBoundaryShape2D_2ym6e")

@@ -14,6 +14,10 @@ func _ready() -> void:
 func opened() -> void:
 	if not (Main.mode as ClientMode).matchmaker.database.data_changed.is_connected(_on_lobby_data_changed):
 		(Main.mode as ClientMode).matchmaker.database.data_changed.connect(_on_lobby_data_changed)
+	var menu_root : Control = get_parent().get_parent()
+	(Main.mode as ClientMode).game_started.connect(menu_root._on_game_started)
+	(Main.mode as ClientMode).game_ended.connect(menu_root._on_game_ended)
+	
 
 
 func _on_back_pressed():
