@@ -10,6 +10,7 @@ var loaded_game_count : int = 0
 
 
 func initiate_loading() -> void:
+	reset()
 	load_game.rpc()
 	
 	
@@ -40,3 +41,7 @@ func review_loading_status() -> void:
 	if loaded_game_count == lobby.members.size() + 1:
 		#loading complete for all peers
 		all_loading_complete.emit()
+		
+		
+func reset() -> void:
+	loaded_game_count = 0

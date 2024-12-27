@@ -17,6 +17,10 @@ func initiate_loading() -> void:
 	game_load_syncroniser.initiate_loading()
 	
 	
+func start_game() -> void:
+	initiate_loading()
+	
+	
 func _on_all_loading_complete() -> void:
 	if is_master:
 		trigger_game_start.rpc()
@@ -24,7 +28,6 @@ func _on_all_loading_complete() -> void:
 	
 @rpc("call_local")
 func trigger_game_start() -> void:
-	start_game()
+	super.start_game()
 	
 	
-

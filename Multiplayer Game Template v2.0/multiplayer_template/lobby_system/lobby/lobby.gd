@@ -32,6 +32,7 @@ func _ready() -> void:
 	add_child(game_manager)
 		
 	Network.peer_disconnected.connect(_on_peer_disconnected)
+	Network.server_disconnected.connect(_on_server_disconnected)
 	
 	stats.changed.connect(_on_stats_changed)
 	
@@ -137,6 +138,11 @@ func clear_unregistered_peers() -> void: #if peer isn't a member, kick it. Could
 func _on_peer_disconnected(id) -> void:
 	if has_member_with_id(id):
 		remove_member_by_id(id)
+		
+		
+func _on_server_disconnected() -> void:
+	if not is_master:
+		end_game()
 	
 	
 func get_serialized_members() -> Array[Dictionary]:

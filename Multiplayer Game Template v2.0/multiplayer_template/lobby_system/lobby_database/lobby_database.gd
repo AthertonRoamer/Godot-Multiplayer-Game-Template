@@ -55,4 +55,3 @@ func output_data() -> void:
 		Main.output(str((datum as LobbyData).serialize_to_dictionary()))
 	if dataset.is_empty():
 		Main.output("<No lobbys>")
-

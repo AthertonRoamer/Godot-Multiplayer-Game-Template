@@ -26,6 +26,7 @@ func close() -> void:
 	lobby_manager.close_peer()
 	lobby_manager.queue_free()
 	lobby.queue_free()
+	Network.close_peer()
 	super()
 	Main.output("Closing lobby mode")
 	

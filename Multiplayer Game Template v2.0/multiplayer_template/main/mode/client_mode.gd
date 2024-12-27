@@ -33,6 +33,7 @@ func open() -> void:
 	Main.main.add_child(lobby)
 	
 	Main.output("Opening client mode") 
+	server_port = Network.port #save default port so we can put it back when we close the mode
 	
 	
 func close() -> void:
@@ -41,6 +42,9 @@ func close() -> void:
 	
 	matchmaker.queue_free()
 	lobby.queue_free()
+	
+	Network.port = server_port #reset Network port to default
+	
 	Main.output("Closing client mode")
 	super()
 	
@@ -48,7 +52,6 @@ func close() -> void:
 func join_server(ip : String):
 	state = CLIENT_STATE.CONNECTING_TO_SERVER
 	server_ip = ip #save server ip for later
-	server_port = Network.port #save server port for later
 	Network.initiate_enet_client(ip)
 	
 	

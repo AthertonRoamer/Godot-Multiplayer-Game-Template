@@ -11,7 +11,6 @@ extends GameManager
 #if you need to access lobby data (such as the stats or the member's data), BasicGameManager (GameManager) 
 #has a lobby variable - you can acces the BasicGameManager by using get_parent() on the root node of the game_scene
 
-#I'm sorry if I offended your intelligence with this overly thorough tutorial
 
 @export var game_scene : PackedScene = preload("res://multiplayer_template/demo_games/demo_late_load_lobby_game/DemoOne.tscn")
 var game : Node

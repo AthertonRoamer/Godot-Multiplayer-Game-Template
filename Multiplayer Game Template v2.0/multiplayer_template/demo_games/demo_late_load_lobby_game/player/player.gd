@@ -5,7 +5,7 @@ var player_name : String = "Player"
 var id : int
 @export var name_display : Label 
 
-@export var local : bool = false
+@export var local : bool = false #this player node is running on the player who controls it
 @export var active : bool = false
 
 @export var speed : int = 250

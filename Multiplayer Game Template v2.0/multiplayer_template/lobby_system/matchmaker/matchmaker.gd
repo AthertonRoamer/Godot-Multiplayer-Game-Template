@@ -49,4 +49,3 @@ func _on_server_disconnected() -> void:
 	
 func _on_peer_closed() -> void:
 	database.clear_data()
-
