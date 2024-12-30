@@ -7,7 +7,7 @@ Main opens the initial mode<br>
 The mode loads the nodes necessary for that mode<br>
 <br>
 Connection Sequence:<br>
-    <Dedicated server opens:<br>
+    Dedicated server opens:<br>
         Has a node in charge of managing all lobbies: LobbyManager<br>
         Has a matchmaker which has access each of the lobbys data <br>
         Dedicated server launches lobbies <br>
