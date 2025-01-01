@@ -4,6 +4,8 @@ extends Node
 signal opening_mode(mode : Mode)
 signal about_to_quit
 
+@export var configuration : Configuration
+
 #various elements of the system are exported here so each element can easily be switched out with other versions of that element
 @export var menu_scene : PackedScene = preload("res://multiplayer_template/menu/main_menu/main_menu.tscn")
 @export var lobby_manager_scene : PackedScene = preload("res://multiplayer_template/lobby_system/lobby_manager/lobby_manager.tscn")
@@ -18,6 +20,7 @@ static var arg_dictionary : Dictionary = {}
 
 static var instance_launcher : InstanceLauncher = InstanceLauncher.new()
 static var mode : Mode
+static var simulated_args : Array[String] = []
 var active_scene : Node
 
 
@@ -26,7 +29,8 @@ static func output(m) -> void:
 	
 	
 static func parse_arguments() -> void:
-	var args  = OS.get_cmdline_args()
+	var args = simulated_args.duplicate()
+	args.append_array(OS.get_cmdline_args())
 	for a in args:
 		var arr : Array = a.split(" ")
 		arg_dictionary[arr[0]] = ""
@@ -63,6 +67,8 @@ static func open_mode(new_mode : Mode) -> void:
 	
 
 func _ready() -> void:
+	if configuration != null:
+		configuration.configure(self)
 	get_tree().set_auto_accept_quit(false)
 	main = self
 	load_menu()

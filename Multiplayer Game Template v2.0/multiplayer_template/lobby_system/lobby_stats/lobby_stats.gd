@@ -26,6 +26,10 @@ var current_member_count : int = 0:
 	set(v):
 		current_member_count = v
 		changed.emit()
+var available_to_join : bool = true:
+	set(v):
+		available_to_join = v
+		changed.emit()
 
 
 #if more variables are added to an extention of this class, these methods will need to be extended
@@ -37,6 +41,7 @@ func serialize_to_dictionary() -> Dictionary:
 			"ip": ip,
 			"max_members" : max_members,
 			"current_member_count" : current_member_count,
+			"available_to_join" : available_to_join,
 			}
 
 
@@ -52,4 +57,6 @@ static func desirialize_from_dictionary(dict : Dictionary) -> LobbyStats: #effec
 		stats.max_members = dict["max_members"]
 	if dict.has("current_member_count"):
 		stats.current_member_count = dict["current_member_count"]
+	if dict.has("available_to_join"):
+		stats.available_to_join = dict["available_to_join"]
 	return stats

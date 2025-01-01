@@ -9,16 +9,17 @@ var lobby_port : int = 5000 #each lobby should have a different lobby port
 
 
 func _ready() -> void:
+	port = 4000
+	scope = Scope.Local
 	super()
 	peer_disconnected.connect(_lobby_disconnected)
 	connected_to_server.connect(_connected_to_master_lobby_manager)
 	server_disconnected.connect(_server_disconected)
-	scope = Scope.Local
 	if is_master:
 		initiate_enet_server()
 	else:
 		connection_failed.connect(_on_connection_to_server_failed)
-		initiate_enet_client(master_ip)
+		initiate_enet_client(get_master_ip())
 		
 	
 func launch_lobby() -> void:
@@ -43,6 +44,7 @@ func _connected_to_master_lobby_manager() -> void:
 	
 	
 func _server_disconected() -> void:
+	Main.output("server diconnected")
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 	
 	
@@ -72,3 +74,7 @@ func get_port_arg() -> String:
 	header += str(lobby_port)
 	lobby_port += 1
 	return header
+	
+	
+func get_master_ip() -> String:
+	return master_ip

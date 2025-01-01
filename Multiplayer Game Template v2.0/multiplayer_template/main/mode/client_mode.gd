@@ -3,9 +3,6 @@ extends Mode
 
 enum CLIENT_STATE {NOT_CONNECTED, CONNECTING_TO_SERVER, CONNECTED_TO_SERVER, CONNECTING_TO_LOBBY, CONNECTED_TO_LOBBY}
 
-signal game_started
-signal game_ended
-
 var state : int = CLIENT_STATE.NOT_CONNECTED
 var lobby : Lobby
 var matchmaker : Matchmaker

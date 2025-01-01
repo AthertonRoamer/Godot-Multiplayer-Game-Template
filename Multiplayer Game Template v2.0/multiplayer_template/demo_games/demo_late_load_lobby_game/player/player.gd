@@ -29,7 +29,6 @@ func _physics_process(_delta) -> void:
 			vel.x += 1
 			
 		velocity = vel * speed
-		
 		move_and_slide()
 		update_position.rpc(position)
 		

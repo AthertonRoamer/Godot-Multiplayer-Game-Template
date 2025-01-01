@@ -28,6 +28,6 @@ func _on_start_end_pressed():
 		(Main.mode as LobbyMode).lobby.trigger_end_game()
 		start_end_button.text = "Start Game"
 	else:
-		(Main.mode as LobbyMode).lobby.start_game()
+		(Main.mode as LobbyMode).lobby.trigger_begin_game()
 		start_end_button.text = "End Game"
 	in_game = !in_game

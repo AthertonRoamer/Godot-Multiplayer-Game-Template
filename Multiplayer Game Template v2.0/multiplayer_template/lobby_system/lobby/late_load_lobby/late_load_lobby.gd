@@ -17,8 +17,12 @@ func initiate_loading() -> void:
 	game_load_syncroniser.initiate_loading()
 	
 	
-func start_game() -> void:
-	initiate_loading()
+func begin_game() -> void:
+	Network.refuse_new_connections = true
+	stats.available_to_join = false
+	if is_master:
+		initiate_loading()
+	game_began.emit()
 	
 	
 func _on_all_loading_complete() -> void:
@@ -28,6 +32,12 @@ func _on_all_loading_complete() -> void:
 	
 @rpc("call_local")
 func trigger_game_start() -> void:
-	super.start_game()
+	start_game()
+	
+	
+func end_game() -> void:
+	Network.refuse_new_connections = false
+	stats.available_to_join = true
+	super()
 	
 	

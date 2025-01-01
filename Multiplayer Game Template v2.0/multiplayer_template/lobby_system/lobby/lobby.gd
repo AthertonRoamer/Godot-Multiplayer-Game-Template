@@ -3,6 +3,9 @@ extends Node
 
 #class for a lobby, lobby is parent of the game scene and controls the game start etc
 
+signal game_began
+signal game_ended
+
 var stats : LobbyStats = LobbyStats.new()
 var members : Array[LobbyMember] = []
 var is_master : bool = false #the master lobby is the node on the lobby process of the server, the other lobby nodes are on the clients
@@ -169,6 +172,19 @@ func has_member_with_id(id : int) -> bool:
 	return has_member
 	
 	
+func trigger_begin_game() -> void:
+	if is_master:
+		begin_game.rpc()
+	
+	
+@rpc("reliable", "call_local")
+func begin_game() -> void:
+	Main.output("Setting up game")
+	load_game()
+	start_game()
+	game_began.emit()
+	
+	
 func load_game() -> void:
 	Main.output("Loading game")
 	game_manager.load_game()
@@ -177,8 +193,6 @@ func load_game() -> void:
 func start_game() -> void:
 	Main.output("Starting game")
 	game_manager.start_game()
-	if Main.mode is ClientMode:
-		(Main.mode as ClientMode).game_started.emit()
 	
 
 
@@ -186,9 +200,8 @@ func trigger_end_game() -> void:
 	end_game.rpc()
 	
 
-@rpc()
+@rpc("call_local")
 func end_game() -> void:
 	Main.output("Ending game")
 	game_manager.end_game()
-	if Main.mode is ClientMode:
-		(Main.mode as ClientMode).game_ended.emit()
+	game_ended.emit()
