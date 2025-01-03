@@ -1,7 +1,7 @@
 class_name LobbyManager
 extends NetworkManager
 
-@export var lobby_args : Array[String] = ["--mode lobby"]
+var lobby_args : Array[String] = ["--mode lobby"]
 var master_ip : String = "127.0.0.1"
 
 var is_master : bool = false
@@ -9,7 +9,9 @@ var lobby_port : int = 5000 #each lobby should have a different lobby port
 
 
 func _ready() -> void:
-	port = 4000
+	lobby_args = Main.main.configuration.lobby_args
+	port = Main.main.configuration.lobby_manager_port
+	lobby_port = Main.main.configuration.starting_lobby_port
 	scope = Scope.Local
 	super()
 	peer_disconnected.connect(_lobby_disconnected)

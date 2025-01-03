@@ -9,7 +9,9 @@ var ceased_data : Dictionary = {}
 var server_ceased : bool = false
 
 func initiate_unload() -> void:
-	if multiplayer.is_server():
+	if multiplayer.multiplayer_peer.get_connection_status() == MultiplayerPeer.ConnectionStatus.CONNECTION_DISCONNECTED:
+		get_parent().queue_free()
+	elif multiplayer.is_server():
 		cease_rpcs.rpc()
 	
 	

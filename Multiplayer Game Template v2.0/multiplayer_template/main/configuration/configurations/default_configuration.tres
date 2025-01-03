@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Configuration" load_steps=7 format=3 uid="uid://crv6v03st6lul"]
+
+[ext_resource type="PackedScene" uid="uid://b0dta0o2snoho" path="res://multiplayer_template/lobby_system/lobby_database/lobby_database.tscn" id="1_svfp7"]
+[ext_resource type="PackedScene" uid="uid://ctn47px6wv5sq" path="res://multiplayer_template/lobby_system/lobby_manager/lobby_manager.tscn" id="2_6gvdv"]
+[ext_resource type="PackedScene" uid="uid://w45wdv05n7pq" path="res://multiplayer_template/lobby_system/lobby/lobby.tscn" id="3_ilt07"]
+[ext_resource type="PackedScene" uid="uid://fbv2gaggq1mq" path="res://multiplayer_template/lobby_system/matchmaker/matchmaker.tscn" id="4_sxxh5"]
+[ext_resource type="PackedScene" uid="uid://cwenqtdpvtw5d" path="res://multiplayer_template/menu/main_menu/main_menu.tscn" id="5_q72ms"]
+[ext_resource type="Script" path="res://multiplayer_template/main/configuration/configuration.gd" id="6_5ytir"]
+
+[resource]
+script = ExtResource("6_5ytir")
+menu_scene = ExtResource("5_q72ms")
+lobby_manager_scene = ExtResource("2_6gvdv")
+lobby_scene = ExtResource("3_ilt07")
+lobby_database_scene = ExtResource("1_svfp7")
+matchmaker_scene = ExtResource("4_sxxh5")

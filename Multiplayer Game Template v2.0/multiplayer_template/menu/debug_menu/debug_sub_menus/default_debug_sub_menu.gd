@@ -13,3 +13,8 @@ func _on_open_client_pressed():
 
 func _on_test_pressed():
 	pass
+
+
+func _on_open_p_2p_host_pressed() -> void:
+	Main.open_mode(P2PHostMode.new())
+	holder.open_menu("p2p_host")

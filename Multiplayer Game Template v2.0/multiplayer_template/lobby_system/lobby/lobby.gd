@@ -22,10 +22,17 @@ static var lobby_stats_class = LobbyStats
 static var lobby_member_class = LobbyMember
 static var lobby_data_class = LobbyData
 
-static var game_manager_scene : PackedScene = preload("res://multiplayer_template/game_manager/basic_game_manager/basic_game_manager.tscn")
+var game_manager_scene : PackedScene = preload("res://multiplayer_template/game_manager/game_manager.tscn")
 
 func _ready() -> void:
 	parse_args()
+	
+	#set components from config
+	lobby_stats_class = Main.main.configuration.lobby_stats_script
+	lobby_member_class = Main.main.configuration.lobby_member_script
+	lobby_data_class = Main.main.configuration.lobby_data_script
+	
+	game_manager_scene = Main.main.configuration.game_manager_scene
 	
 	if is_master:
 		(Main.mode as LobbyMode).launch_server()
@@ -102,19 +109,23 @@ func register_new_member(new_member : LobbyMember) -> void:
 	
 	
 func remove_member_by_id(id : int) -> void:
-	if is_master:
-		var member_to_remove : LobbyMember = null
-		for member in members:
-			if member.id == id:
-				member_to_remove = member
-				break
-		if member_to_remove != null:
-			members.erase(member_to_remove)
-			if multiplayer.get_peers().has(member_to_remove.id):
-				multiplayer.multiplayer_peer.disconnect_peer(member_to_remove.id)
-			get_lobby_manager().submit_update()
-			update_remote_lobby_member_data.rpc(get_serialized_members())
-			Main.output("Removed member with id: " + str(id))
+	if not is_master:
+		return
+		
+	var member_to_remove : LobbyMember = null
+	for member in members:
+		if member.id == id:
+			member_to_remove = member
+			break
+	if member_to_remove != null:
+		members.erase(member_to_remove)
+		if multiplayer.get_peers().has(member_to_remove.id):
+			multiplayer.multiplayer_peer.disconnect_peer(member_to_remove.id)
+		get_lobby_manager().submit_update()
+		update_remote_lobby_member_data.rpc(get_serialized_members())
+		Main.output("Removed member with id: " + str(id))
+	stats.current_member_count = members.size() 
+	update_remote_lobby_member_data.rpc(get_serialized_members())
 	
 	 
 @rpc("reliable")
@@ -144,7 +155,7 @@ func _on_peer_disconnected(id) -> void:
 		
 		
 func _on_server_disconnected() -> void:
-	if not is_master:
+	if game_manager.is_game_loaded:
 		end_game()
 	
 	

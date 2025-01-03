@@ -19,6 +19,7 @@ func initiate_loading() -> void:
 	
 func begin_game() -> void:
 	Network.refuse_new_connections = true
+	clear_unregistered_peers()
 	stats.available_to_join = false
 	if is_master:
 		initiate_loading()

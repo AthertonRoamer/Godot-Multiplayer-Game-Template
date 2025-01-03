@@ -12,8 +12,11 @@ extends GameManager
 #has a lobby variable - you can acces the BasicGameManager by using get_parent() on the root node of the game_scene
 
 
-@export var game_scene : PackedScene = preload("res://multiplayer_template/demo_games/demo_late_load_lobby_game/DemoOne.tscn")
+var game_scene : PackedScene
 var game : Node
+
+func _ready() -> void:
+	game_scene = Main.main.configuration.game_scene
 
 func load_game() -> void:
 	super()

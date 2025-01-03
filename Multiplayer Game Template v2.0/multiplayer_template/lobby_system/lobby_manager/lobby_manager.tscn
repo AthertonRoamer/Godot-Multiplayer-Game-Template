@@ -6,4 +6,3 @@
 script = ExtResource("1_17nyj")
 port = 4000
 max_clients = 10
-scope = 1

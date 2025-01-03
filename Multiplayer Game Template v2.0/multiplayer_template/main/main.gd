@@ -4,14 +4,14 @@ extends Node
 signal opening_mode(mode : Mode)
 signal about_to_quit
 
-@export var configuration : Configuration
+#the many components that make up this project structure are stored and can be set by using a configuration resource
+@export var configuration : Configuration = preload("res://multiplayer_template/main/configuration/configurations/default_configuration.tres")
 
-#various elements of the system are exported here so each element can easily be switched out with other versions of that element
-@export var menu_scene : PackedScene = preload("res://multiplayer_template/menu/main_menu/main_menu.tscn")
-@export var lobby_manager_scene : PackedScene = preload("res://multiplayer_template/lobby_system/lobby_manager/lobby_manager.tscn")
-@export var lobby_scene : PackedScene = preload("res://multiplayer_template/lobby_system/lobby/lobby.tscn")
-@export var lobby_database_scene : PackedScene = preload("res://multiplayer_template/lobby_system/lobby_database/lobby_database.tscn")
-@export var matchmaker_scene : PackedScene = preload("res://multiplayer_template/lobby_system/matchmaker/matchmaker.tscn")
+var menu_scene : PackedScene = preload("res://multiplayer_template/menu/main_menu/main_menu.tscn")
+var lobby_manager_scene : PackedScene = preload("res://multiplayer_template/lobby_system/lobby_manager/lobby_manager.tscn")
+var lobby_scene : PackedScene = preload("res://multiplayer_template/lobby_system/lobby/lobby.tscn")
+var lobby_database_scene : PackedScene = preload("res://multiplayer_template/lobby_system/lobby_database/lobby_database.tscn")
+var matchmaker_scene : PackedScene = preload("res://multiplayer_template/lobby_system/matchmaker/matchmaker.tscn")
 
 static var outputter : Output = Output.new() #module for debug output, by default it prints stuff normally
 
@@ -20,7 +20,6 @@ static var arg_dictionary : Dictionary = {}
 
 static var instance_launcher : InstanceLauncher = InstanceLauncher.new()
 static var mode : Mode
-static var simulated_args : Array[String] = []
 var active_scene : Node
 
 
@@ -29,8 +28,7 @@ static func output(m) -> void:
 	
 	
 static func parse_arguments() -> void:
-	var args = simulated_args.duplicate()
-	args.append_array(OS.get_cmdline_args())
+	var args = OS.get_cmdline_args()
 	for a in args:
 		var arr : Array = a.split(" ")
 		arg_dictionary[arr[0]] = ""
@@ -67,10 +65,23 @@ static func open_mode(new_mode : Mode) -> void:
 	
 
 func _ready() -> void:
-	if configuration != null:
-		configuration.configure(self)
 	get_tree().set_auto_accept_quit(false)
 	main = self
+	
+	assert(configuration != null, "Configuration file in main is null")
+	configuration.configure(self)
+	
+	#load components from configuration
+	menu_scene = configuration.menu_scene
+	lobby_manager_scene = configuration.lobby_manager_scene
+	lobby_scene = configuration.lobby_scene
+	lobby_database_scene = configuration.lobby_database_scene
+	matchmaker_scene = configuration.matchmaker_scene
+	
+	Network.port = configuration.server_port
+	Network.server_browser.listen_port = configuration.listen_port
+	Network.server_browser.broadcast_port = configuration.broadcast_port
+
 	load_menu()
 	Main.parse_arguments()
 	if Main.mode != null and Main.mode.id != "none" and !Main.mode.is_open:

@@ -4,8 +4,8 @@ signal found_server(name : String, ip : String)
 signal broadcast_failed
 signal listener_failed
 
-const LISTEN_PORT = 3001
-const BROADCAST_PORT = 3002
+var listen_port : int = 3001
+var broadcast_port : int = 3002
 
 var listener : PacketPeerUDP
 var broadcaster : PacketPeerUDP
@@ -35,7 +35,7 @@ func _process(_delta):
 			
 func start_listening():
 	listener = PacketPeerUDP.new()
-	var ok = listener.bind(LISTEN_PORT)
+	var ok = listener.bind(listen_port)
 	if ok != OK:
 		Main.output("Failed to bind listener to listen port")
 		listener_failed.emit()
@@ -47,16 +47,16 @@ func start_listening():
 func start_broadcast():
 	broadcaster = PacketPeerUDP.new()
 	broadcaster.set_broadcast_enabled(true)
-	var ok = broadcaster.bind(BROADCAST_PORT)
+	var ok = broadcaster.bind(broadcast_port)
 	broadcast_address = get_broadcast_address()
-	broadcaster.set_dest_address(broadcast_address, LISTEN_PORT)
+	broadcaster.set_dest_address(broadcast_address, listen_port)
 	
 	if ok != OK:
 		Main.output("Failed to bind broadcaster to broadcast port")
 		broadcast_failed.emit()
 		return
 		
-	Main.output("Bound broadcaster to broadcast Port: " + str(BROADCAST_PORT) + " successfully!")
+	Main.output("Bound broadcaster to broadcast Port: " + str(broadcast_port) + " successfully!")
 	$BroadcastTimer.start()
 	
 	

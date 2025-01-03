@@ -9,8 +9,10 @@ signal game_loaded
 
 var lobby : Lobby
 var in_game : bool = false
+var is_game_loaded : bool = false
 
 func load_game() -> void:
+	is_game_loaded = true
 	game_loaded.emit()
 	
 	
@@ -20,3 +22,4 @@ func start_game() -> void:
 	
 func end_game() -> void:
 	in_game = false
+	is_game_loaded = false
