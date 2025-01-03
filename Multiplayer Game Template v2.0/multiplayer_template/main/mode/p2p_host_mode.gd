@@ -26,10 +26,14 @@ func open() -> void:
 	Main.main.add_child(lobby)
 	
 	lobby_manager = Main.main.lobby_manager_scene.instantiate()
+	lobby_manager.is_master = true
 	Main.main.add_child(lobby_manager)
 	
 	lobby_database = Main.main.lobby_database_scene.instantiate()
 	Main.main.add_child(lobby_database)
+	lobby_database.data_changed.connect(_on_lobby_data_changed)
+	
+	my_member_data = Lobby.lobby_member_class.new()
 	
 	Main.output("Opening p2p host mode") 
 	
@@ -47,8 +51,9 @@ func close() -> void:
 	super()
 	
 	
-func _on_lobby_data_changed() -> void:
-	Main.output("New lobby data:\n" + str(lobby_database.data))
+func host() -> void:
+	Main.output("Hosting p2p game")
+	launch_lobby()
 	
 	
 func launch_lobby() -> void:
@@ -75,6 +80,13 @@ func request_membership_in_lobby(member : LobbyMember) -> void:
 		Main.output("Requesting membership in lobby")
 	else:
 		push_warning("In p2p host mode tried to request membership in lobby while not connected to lobby")
+		
+		
+func _on_lobby_data_changed() -> void:
+	Main.output("New lobby data") 
+	match state:
+		CLIENT_STATE.NOT_CONNECTED:
+			join_lobby(lobby_database.data.values()[0], my_member_data)
 	
 	
 func _on_connected_to_server() -> void:

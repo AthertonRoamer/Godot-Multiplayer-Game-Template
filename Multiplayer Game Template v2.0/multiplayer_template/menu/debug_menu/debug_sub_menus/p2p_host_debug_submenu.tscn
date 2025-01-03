@@ -1,15 +1,15 @@
 [gd_scene load_steps=2 format=3 uid="uid://lu1e1sbvyq2w"]
 
-[ext_resource type="Script" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/p_2p_debug_submenu.gd" id="1_y6g3r"]
+[ext_resource type="Script" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/p_2p_host_debug_submenu.gd" id="1_t2d1k"]
 
-[node name="P2pDebugSubmenu" type="Control"]
+[node name="P2pHostDebugSubmenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_y6g3r")
+script = ExtResource("1_t2d1k")
 menu_name = "p2p_host"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -31,18 +31,19 @@ text = "Enter Name:"
 layout_mode = 2
 text = "Player"
 
-[node name="PrintLobbyData" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Print Lobby Data"
-
 [node name="Host" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Host"
+
+[node name="PrintLobbyData" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Print Lobby Data"
 
 [node name="Back" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Back"
 
-[connection signal="pressed" from="VBoxContainer/PrintLobbyData" to="." method="_on_print_lobby_data_pressed"]
+[connection signal="text_changed" from="VBoxContainer/ManualNameInput/LineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="pressed" from="VBoxContainer/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="VBoxContainer/PrintLobbyData" to="." method="_on_print_lobby_data_pressed"]
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]

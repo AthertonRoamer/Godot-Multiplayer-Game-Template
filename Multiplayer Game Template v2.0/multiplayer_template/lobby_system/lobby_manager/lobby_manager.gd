@@ -37,7 +37,7 @@ func _on_connection_to_server_failed() -> void:
 	
 func _lobby_disconnected(id : int) -> void:
 	if is_master:
-		(Main.mode as DedicatedServerMode).lobby_database.remove_data_by_id(id)
+		Main.mode.lobby_database.remove_data_by_id(id)
 		
 		
 func _connected_to_master_lobby_manager() -> void:
@@ -62,7 +62,7 @@ func submit_updated_lobby_data(data : Dictionary) -> void:
 		Main.output("Recieved a lobby data update")
 		var sender_id : int = multiplayer.get_remote_sender_id()
 		data["lobby_id"] = sender_id
-		(Main.main.mode as DedicatedServerMode).lobby_database.update_data_from_dictionary(data)
+		Main.main.mode.lobby_database.update_data_from_dictionary(data)
 		
 		
 @rpc("reliable")

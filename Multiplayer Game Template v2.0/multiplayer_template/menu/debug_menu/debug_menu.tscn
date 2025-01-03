@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c7atjd0hjlng3" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/default_debug_sub_menu.tscn" id="4_q4dtq"]
 [ext_resource type="PackedScene" uid="uid://4wsghuk7i8ow" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/client_debug_sub_menu.tscn" id="5_4vq6v"]
 [ext_resource type="PackedScene" uid="uid://ca23dreet0qr2" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/lobby_debug_sub_menu.tscn" id="6_amu5y"]
-[ext_resource type="PackedScene" uid="uid://lu1e1sbvyq2w" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/p2p_debug_submenu.tscn" id="7_mankq"]
+[ext_resource type="PackedScene" uid="uid://lu1e1sbvyq2w" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/p2p_host_debug_submenu.tscn" id="7_mankq"]
 
 [node name="DebugMenu" type="Control" node_paths=PackedStringArray("debug_output_label")]
 layout_mode = 3
