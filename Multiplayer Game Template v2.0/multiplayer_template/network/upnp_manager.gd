@@ -43,11 +43,11 @@ func setup_upnp(port : int, internal_port : int) -> void:
 	
 func attempt_forwarding(port : int, internal_port : int) -> int:
 	upnp_mutex.lock()
-	var err := upnp.add_port_mapping(port, internal_port, ProjectSettings.get_setting("application/config/name"), "UDP")
-	#upnp.add_port_mapping(port, internal_port, ProjectSettings.get_setting("application/config/name"), "TCP")
+	var err : int
+	err = upnp.add_port_mapping(port, internal_port, ProjectSettings.get_setting("application/config/name"), "UDP")
 	if err != OK:
 		push_error(str(err))
-		Main.output.bind("UPNP add port mapping error: " + str(err)).call_deferred()
+		Main.output.bind("UPNP add port mapping error for UDP: " + str(err)).call_deferred()
 		upnp_error.emit.bind(err).call_deferred()
 	else:
 		Main.output.bind("UPNP add port mapping successful on external port: " + str(port)).call_deferred()

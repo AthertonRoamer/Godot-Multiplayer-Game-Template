@@ -121,4 +121,7 @@ func _on_disconnected_to_server() -> void:
 			if lobby.game_manager.is_game_loaded:
 				lobby.end_game()
 			Network.port = server_port
-			join_server(server_ip)
+			if server_ip == "":
+				Main.output("Cannot rejoin main server because server ip is invalid")
+			else:
+				join_server(server_ip)
