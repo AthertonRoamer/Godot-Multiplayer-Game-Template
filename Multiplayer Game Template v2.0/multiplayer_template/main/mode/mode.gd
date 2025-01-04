@@ -3,6 +3,8 @@ class_name Mode #this class handles the initializations and deinitializations of
 var id : String = "none"
 var is_open : bool = false
 
+var tag_list : Array[String] = [] #analagous to groups
+
 func open() -> void:
 	is_open = true #loads necessary resources but does not activate them	
 	

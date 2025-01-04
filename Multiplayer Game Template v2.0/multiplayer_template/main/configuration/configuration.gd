@@ -1,6 +1,14 @@
 class_name Configuration
 extends Resource
 
+#@export_group("Modes")
+###form key: String ("lobby") value: Mode (lobby.gd)
+#@export var dedicated_server_mode : Script = DedicatedServerMode
+#@export var client_mode : Script = ClientMode
+#@export var p2p_host_mode : Script = P2PHostMode
+#@export var lobby_mode : Script = LobbyMode
+
+
 @export_group("Ports")
 @export var server_port : int = 3000 #port that dedicated server hosts game on
 @export var lobby_manager_port : int = 4000 #port that lobby manager on server/host uses to connect to sattelite lobby processes
@@ -35,6 +43,29 @@ extends Resource
 
 
 func configure(main : Main) -> void:
+	#region verify configuration data is valid
+	assert(lobby_data_script is Script, "Lobby data script isn't Script")
+	assert(lobby_data_script.new() is LobbyData, "Lobby data script doesn't extend LobbyData")
+	
+	assert(lobby_member_script is Script, "Lobby member script isn't Script")
+	assert(lobby_member_script.new() is LobbyMember, "Lobby member script doesn't extend LobbyMember")
+	
+	assert(lobby_stats_script is Script, "Lobby stats script isn't Script")
+	assert(lobby_stats_script.new() is LobbyStats, "Lobby stats script doesn't extend LobbyStats")
+	
+	#assert(dedicated_server_mode is Script, "Dedicated server mode isn't script")
+	#assert(dedicated_server_mode.new() is Mode, "Dedicated server mode doesn't extend Mode")
+	#
+	#assert(client_mode is Script, "Client mode isn't script")
+	#assert(client_mode.new() is Mode, "Client mode doesn't extend Mode")
+	#
+	#assert(p2p_host_mode is Script, "P2P Host mode isn't script")
+	#assert(p2p_host_mode.new() is Mode, "P2P Host mode mode doesn't extend Mode")
+	#
+	#assert(lobby_mode is Script, "Lobby mode isn't script")
+	#assert(lobby_mode.new() is Mode, "Lobby mode doesn't extend Mode")
+	#endregion
+	
 	if dynamic_config_script != null:
 		var dynamic_config = dynamic_config_script.new()
 		if dynamic_config != null:

@@ -182,15 +182,40 @@ func has_member_with_id(id : int) -> bool:
 			break
 	return has_member
 	
+
+#returns whether member has authority to boss lobby around (start/end game etc.)
+func is_member_authority(member_id : int) -> bool:
+	if not is_master:
+		return false
+	return members[0].id == member_id #default implementation gives authority to first client to join
+
+	
+func trigger_request_begin_game() -> void: #from client to server
+	Main.output("Requesting that lobby begin game")
+	request_begin_game.rpc_id(1)
+
+
+@rpc("reliable", "any_peer")
+func request_begin_game() -> void:
+	if is_master:
+		if is_member_authority(multiplayer.get_remote_sender_id()):
+			trigger_begin_game()
+
 	
 func trigger_begin_game() -> void:
 	if is_master:
+		if game_manager.in_game:
+			push_warning("trigger_begin_game() called on lobby while lobby is already in game")
+			return
 		begin_game.rpc()
 	
 	
 @rpc("reliable", "call_local")
 func begin_game() -> void:
-	Main.output("Setting up game")
+	if game_manager.in_game:
+		push_warning("begin_game() called on lobby while lobby is already in game")
+		return
+	Main.output("Beginning game")
 	load_game()
 	start_game()
 	game_began.emit()
@@ -205,6 +230,17 @@ func start_game() -> void:
 	Main.output("Starting game")
 	game_manager.start_game()
 	
+	
+func trigger_request_end_game() -> void: #from client to server
+	Main.output("Requesting that lobby end game")
+	request_end_game.rpc_id(1)
+
+
+@rpc("reliable", "any_peer")
+func request_end_game() -> void:
+	if is_master:
+		if is_member_authority(multiplayer.get_remote_sender_id()):
+			trigger_end_game()
 
 
 func trigger_end_game() -> void:

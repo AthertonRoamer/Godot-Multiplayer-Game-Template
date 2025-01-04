@@ -16,3 +16,7 @@ func _on_back_pressed() -> void:
 
 func _on_line_edit_text_changed(new_text: String) -> void:
 	(Main.main.mode as P2PHostMode).my_member_data.name = new_text
+
+
+func _on_start_pressed() -> void:
+	(Main.mode.lobby as Lobby).trigger_request_begin_game()

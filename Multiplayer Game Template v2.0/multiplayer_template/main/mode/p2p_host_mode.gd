@@ -82,8 +82,7 @@ func request_membership_in_lobby(member : LobbyMember) -> void:
 		push_warning("In p2p host mode tried to request membership in lobby while not connected to lobby")
 		
 		
-func _on_lobby_data_changed() -> void:
-	Main.output("New lobby data") 
+func _on_lobby_data_changed() -> void: 
 	match state:
 		CLIENT_STATE.NOT_CONNECTED:
 			join_lobby(lobby_database.data.values()[0], my_member_data)

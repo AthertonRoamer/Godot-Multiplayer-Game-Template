@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="Configuration" load_steps=7 format=3 uid="uid://crv6v03st6lul"]
+[gd_resource type="Resource" script_class="Configuration" load_steps=8 format=3 uid="uid://crv6v03st6lul"]
 
+[ext_resource type="PackedScene" uid="uid://bj5csl8cew8re" path="res://multiplayer_template/game_manager/basic_game_manager/basic_game_manager.tscn" id="1_l3boe"]
 [ext_resource type="PackedScene" uid="uid://b0dta0o2snoho" path="res://multiplayer_template/lobby_system/lobby_database/lobby_database.tscn" id="1_svfp7"]
 [ext_resource type="PackedScene" uid="uid://ctn47px6wv5sq" path="res://multiplayer_template/lobby_system/lobby_manager/lobby_manager.tscn" id="2_6gvdv"]
 [ext_resource type="PackedScene" uid="uid://w45wdv05n7pq" path="res://multiplayer_template/lobby_system/lobby/lobby.tscn" id="3_ilt07"]
@@ -9,8 +10,15 @@
 
 [resource]
 script = ExtResource("6_5ytir")
+server_port = 3000
+lobby_manager_port = 4000
+starting_lobby_port = 5000
+listen_port = 3001
+broadcast_port = 3002
 menu_scene = ExtResource("5_q72ms")
-lobby_manager_scene = ExtResource("2_6gvdv")
 lobby_scene = ExtResource("3_ilt07")
+lobby_manager_scene = ExtResource("2_6gvdv")
 lobby_database_scene = ExtResource("1_svfp7")
 matchmaker_scene = ExtResource("4_sxxh5")
+lobby_args = Array[String](["--mode lobby"])
+game_manager_scene = ExtResource("1_l3boe")

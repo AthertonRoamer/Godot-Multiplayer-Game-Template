@@ -39,6 +39,10 @@ text = "Host"
 layout_mode = 2
 text = "Print Lobby Data"
 
+[node name="Start" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Start"
+
 [node name="Back" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Back"
@@ -46,4 +50,5 @@ text = "Back"
 [connection signal="text_changed" from="VBoxContainer/ManualNameInput/LineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="pressed" from="VBoxContainer/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="VBoxContainer/PrintLobbyData" to="." method="_on_print_lobby_data_pressed"]
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]

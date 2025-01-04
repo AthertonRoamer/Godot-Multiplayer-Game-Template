@@ -7,7 +7,7 @@ func _ready():
 	
 	
 func _on_mode_changed(m : Mode) -> void: 
-	if m.id == "lobby":
+	if m.tag_list.has("lobby"):
 		holder.open_menu("lobby")
 
 

@@ -76,3 +76,7 @@ func _on_lobby_option_selected(lobby_data : LobbyData) -> void:
 	var member : LobbyMember = Lobby.lobby_member_class.new()
 	member.name = name_line_edit.text
 	(Main.mode as ClientMode).join_lobby(lobby_data, member)
+
+
+func _on_start_pressed() -> void:
+	(Main.mode.lobby as Lobby).trigger_request_begin_game()

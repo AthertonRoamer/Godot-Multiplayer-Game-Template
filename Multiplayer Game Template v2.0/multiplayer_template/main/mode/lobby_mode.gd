@@ -8,6 +8,7 @@ var default_port : int
 
 func _init() -> void:
 	id = "lobby"
+	tag_list.append("lobby")
 
 
 func open() -> void:
