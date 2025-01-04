@@ -6,6 +6,7 @@ extends SubMenu
 @export var lobby_option_scene : PackedScene
 @export var lobby_option_display : Control
 @export var name_line_edit : LineEdit
+@export var port_line_edit : LineEdit
 
 func _ready() -> void:
 	Network.server_browser.found_server.connect(_on_server_list_updated)
@@ -80,3 +81,11 @@ func _on_lobby_option_selected(lobby_data : LobbyData) -> void:
 
 func _on_start_pressed() -> void:
 	(Main.mode.lobby as Lobby).trigger_request_begin_game()
+
+
+func _on_join_lobby_pressed() -> void:
+	var member : LobbyMember = Lobby.lobby_member_class.new()
+	member.name = name_line_edit.text
+	var ip = ip_line_edit.text
+	var port : int = int(port_line_edit.text)
+	(Main.mode as ClientMode).direct_join_lobby(ip, port, member)

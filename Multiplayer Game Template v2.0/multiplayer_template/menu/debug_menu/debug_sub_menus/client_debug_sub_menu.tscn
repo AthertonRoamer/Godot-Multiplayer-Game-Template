@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bkkvybflamla1" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/ip_option.tscn" id="2_ham3y"]
 [ext_resource type="PackedScene" uid="uid://cenrsvhg8g7d2" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/lobby_option.tscn" id="3_em6vc"]
 
-[node name="ClientDebugSubMenu" type="Control" node_paths=PackedStringArray("ip_line_edit", "option_holder", "lobby_option_display", "name_line_edit")]
+[node name="ClientDebugSubMenu" type="Control" node_paths=PackedStringArray("ip_line_edit", "option_holder", "lobby_option_display", "name_line_edit", "port_line_edit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,6 +18,7 @@ ip_option_scene = ExtResource("2_ham3y")
 lobby_option_scene = ExtResource("3_em6vc")
 lobby_option_display = NodePath("VBoxContainer/ScrollContainer2/LobbyOptionDisplay")
 name_line_edit = NodePath("VBoxContainer/ManualNameInput/LineEdit")
+port_line_edit = NodePath("VBoxContainer/DirectLobbyContainer/PortLineEdit")
 menu_name = "client"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -39,9 +40,9 @@ text = "Enter IP:"
 layout_mode = 2
 text = "127.0.0.1"
 
-[node name="Join" type="Button" parent="VBoxContainer/ManualIpInput"]
+[node name="JoinServer" type="Button" parent="VBoxContainer/ManualIpInput"]
 layout_mode = 2
-text = "Join"
+text = "Join Server"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
@@ -51,6 +52,21 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="DirectLobbyContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/DirectLobbyContainer"]
+layout_mode = 2
+text = "Port:"
+
+[node name="PortLineEdit" type="LineEdit" parent="VBoxContainer/DirectLobbyContainer"]
+layout_mode = 2
+text = "5000"
+
+[node name="JoinLobby" type="Button" parent="VBoxContainer/DirectLobbyContainer"]
+layout_mode = 2
+text = "Join Lobby Directly"
 
 [node name="ManualNameInput" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -84,7 +100,8 @@ text = "Start"
 layout_mode = 2
 text = "Back"
 
-[connection signal="pressed" from="VBoxContainer/ManualIpInput/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="VBoxContainer/ManualIpInput/JoinServer" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="VBoxContainer/DirectLobbyContainer/JoinLobby" to="." method="_on_join_lobby_pressed"]
 [connection signal="pressed" from="VBoxContainer/PrintLobbyData" to="." method="_on_print_lobby_data_pressed"]
 [connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]

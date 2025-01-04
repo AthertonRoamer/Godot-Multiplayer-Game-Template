@@ -59,6 +59,19 @@ func close_local_client() -> void:
 	Network.server_browser.stop_listening()
 	
 	
+func direct_join_lobby(ip : String, port : int, member_data : LobbyMember) -> void:
+	state = CLIENT_STATE.CONNECTING_TO_LOBBY
+	my_member_data = member_data
+	if ip == "server":
+		ip = server_ip
+	if ip == "":
+		ip = "127.0.0.1"
+	Network.close_peer()
+	server_port = Network.port #save server port for rejoining server later
+	Network.port = port
+	Network.initiate_enet_client(ip)
+	
+	
 func join_lobby(data : LobbyData, member_data : LobbyMember) -> void:
 	state = CLIENT_STATE.CONNECTING_TO_LOBBY
 	my_member_data = member_data
