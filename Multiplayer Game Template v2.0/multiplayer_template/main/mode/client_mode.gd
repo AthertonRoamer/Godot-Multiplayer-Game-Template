@@ -63,10 +63,11 @@ func join_lobby(data : LobbyData, member_data : LobbyMember) -> void:
 	state = CLIENT_STATE.CONNECTING_TO_LOBBY
 	my_member_data = member_data
 	var ip : String = data.stats.ip
+	if ip == "server":
+		ip = server_ip
 	if ip == "":
 		ip = "127.0.0.1"
 	Network.close_peer()
-	#server_ip = Network.active_ip
 	server_port = Network.port #save server port for rejoining server later
 	Network.port = data.stats.lobby_port
 	Network.initiate_enet_client(ip)

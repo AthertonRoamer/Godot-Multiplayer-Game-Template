@@ -14,7 +14,7 @@ var lobby_port : int = 5000:
 	set(v):
 		lobby_port = v
 		changed.emit()
-var ip : String = "":
+var ip : String = "server":
 	set(v):
 		ip = v
 		changed.emit()

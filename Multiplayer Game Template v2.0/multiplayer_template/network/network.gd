@@ -87,7 +87,7 @@ func initiate_enet_server() -> void:
 		server_failed.emit()
 		return
 	multiplayer.multiplayer_peer = peer
-	Main.output("Created server")
+	Main.output("Created server on port: " + str(port))
 	
 	
 func initiate_local_enet_server() -> void:
@@ -109,7 +109,7 @@ func initiate_enet_client(ip : String) -> void:
 		return
 	active_ip = ip
 	multiplayer.multiplayer_peer = peer
-	Main.output("Created client")
+	Main.output("Created client at ip: " + ip + ", port: " + str(port)) 
 	
 	
 func close_peer() -> void:
