@@ -2,6 +2,7 @@ class_name UPNPManager
 extends QueuedThread
 
 signal upnp_error(err : int)
+signal upnp_bound_successfully
 signal retrieved_external_ip(ip : String)
 
 var upnp : UPNP
@@ -55,6 +56,7 @@ func attempt_forwarding(port : int, internal_port : int) -> int:
 		external_port = port
 		data_mutex.unlock()
 		query_external_ip_address()
+		upnp_bound_successfully.emit.call_deferred()
 	upnp_error.emit.bind(err).call_deferred()
 	upnp_mutex.unlock()
 	return err

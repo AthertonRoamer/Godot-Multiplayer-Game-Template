@@ -10,6 +10,7 @@ var server_ceased : bool = false
 
 func initiate_unload() -> void:
 	if multiplayer.multiplayer_peer.get_connection_status() == MultiplayerPeer.ConnectionStatus.CONNECTION_DISCONNECTED:
+		cease_rpcs()
 		get_parent().queue_free()
 	elif multiplayer.is_server():
 		cease_rpcs.rpc()
@@ -21,9 +22,10 @@ func cease_rpcs() -> void:
 	
 	
 func register_as_ceased() -> void:
-	if multiplayer.is_server():
-		server_ceased = true
-	peer_ceased.rpc()
+	if multiplayer.multiplayer_peer.get_connection_status() != MultiplayerPeer.ConnectionStatus.CONNECTION_DISCONNECTED:
+		if multiplayer.is_server():
+			server_ceased = true
+		peer_ceased.rpc()
 	
 	
 @rpc("any_peer", "reliable")

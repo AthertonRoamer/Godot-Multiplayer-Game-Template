@@ -53,4 +53,19 @@ shape = SubResource("WorldBoundaryShape2D_2ym6e")
 [node name="NetworkUnloader" type="Node" parent="."]
 script = ExtResource("3_wqaiw")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Quit Game" type="Button" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.822
+anchor_top = 0.057
+anchor_right = 0.955
+anchor_bottom = 0.114
+offset_left = 0.0559692
+offset_top = 0.0639992
+offset_right = -0.160034
+offset_bottom = 0.127998
+text = "Quit Game"
+
 [connection signal="cease_rpcs_request_received" from="NetworkUnloader" to="." method="_on_network_unloader_cease_rpcs_request_received"]
+[connection signal="pressed" from="CanvasLayer/Quit Game" to="." method="_on_quit_game_pressed"]

@@ -11,6 +11,7 @@ func _init() -> void:
 
 func open() -> void:
 	upnp_manager = UPNPManager.new()
+	upnp_manager.upnp_bound_successfully.connect(_on_upnp_bound_successfully)
 	Main.main.add_child(upnp_manager)
 	super()
 	
@@ -27,3 +28,9 @@ func launch_server() -> void:
 	super()
 	upnp_manager.trigger_setup_upnp(Network.port, Network.port)
 	Network.server_browser.start_broadcast()
+	
+	
+func _on_upnp_bound_successfully() -> void:
+	if not lobby.members.is_empty():
+		var authoritative_member_id = lobby.members[0].id
+		lobby.deliver_external_address.rpc_id(authoritative_member_id, upnp_manager.external_ip, upnp_manager.external_port)

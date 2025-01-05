@@ -8,9 +8,9 @@ var lobby : Lobby
 var lobby_manager : LobbyManager 
 var lobby_database : LobbyDatabase
 
-var my_member_data : LobbyMember = null
+var my_member_data : LobbyMember = LobbyMember.new()
 
-#var has_lobby_up_and_running
+var has_authority : bool = false
 
 func _init() -> void:
 	id = "p2p_host"
@@ -23,6 +23,9 @@ func open() -> void:
 	super()
 	
 	lobby = Main.main.lobby_scene.instantiate()
+	lobby.accepted_into_lobby.connect(_on_accepted_into_lobby)
+	lobby.received_external_address.connect(_on_lobby_external_address_received)
+	lobby.authority_acknowleged.connect(_on_authority_acknowleged)
 	Main.main.add_child(lobby)
 	
 	lobby_manager = Main.main.lobby_manager_scene.instantiate()
@@ -66,7 +69,7 @@ func join_lobby(data : LobbyData, member_data : LobbyMember) -> void:
 	state = CLIENT_STATE.CONNECTING_TO_LOBBY
 	my_member_data = member_data
 	var ip : String = data.stats.ip
-	if ip == "":
+	if ip == "" or ip == "server":
 		ip = "127.0.0.1"
 	Network.close_peer()
 	Network.port = data.stats.lobby_port
@@ -82,10 +85,27 @@ func request_membership_in_lobby(member : LobbyMember) -> void:
 		push_warning("In p2p host mode tried to request membership in lobby while not connected to lobby")
 		
 		
+func _on_accepted_into_lobby() -> void:
+	pass
+	
+	
+func _on_authority_acknowleged(member_has_authority : bool) -> void:
+	has_authority = member_has_authority
+	Main.output("Authority: " + str(has_authority))
+	
+	
+func _on_lobby_external_address_received(ip : String, port : int) -> void:
+	Main.output("Lobby external ip: " + ip + " external port: " + str(port))
+		
+		
 func _on_lobby_data_changed() -> void: 
 	match state:
 		CLIENT_STATE.NOT_CONNECTED:
 			join_lobby(lobby_database.data.values()[0], my_member_data)
+			
+			
+func leave_lobby() -> void:
+	lobby.leave_lobby()
 	
 	
 func _on_connected_to_server() -> void:

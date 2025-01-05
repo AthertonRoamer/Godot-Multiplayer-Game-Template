@@ -11,6 +11,7 @@ func _ready() -> void:
 			load_player(member)
 		if get_parent().lobby.is_master:
 			visible = false
+			$"CanvasLayer/Quit Game".visible = false
 
 
 func start() -> void:
@@ -38,3 +39,10 @@ func load_player(member : LobbyMember) -> void:
 func _on_network_unloader_cease_rpcs_request_received() -> void:
 	set_players_active(false)
 	($NetworkUnloader as NetworkUnloader).register_as_ceased()
+
+
+func _on_quit_game_pressed() -> void:
+	if get_parent().lobby.has_authority:
+		get_parent().lobby.trigger_request_end_game()
+	else:
+		Main.mode.leave_lobby()

@@ -10,6 +10,7 @@ var matchmaker : Matchmaker
 var server_ip : String = ""
 var server_port : int = 3000
 
+var has_authority : bool = false
 var my_member_data : LobbyMember = null
 
 func _init() -> void:
@@ -26,6 +27,8 @@ func open() -> void:
 	Main.main.add_child(matchmaker)
 	
 	lobby = Main.main.lobby_scene.instantiate()
+	lobby.authority_acknowleged.connect(_on_authority_acknowleged)
+	lobby.accepted_into_lobby.connect(_on_accepted_into_lobby)
 	Main.main.add_child(lobby)
 	
 	Main.output("Opening client mode") 
@@ -93,6 +96,19 @@ func request_membership_in_lobby(member : LobbyMember) -> void:
 		Main.output("Requesting membership in lobby")
 	else:
 		push_warning("In client mode tried to request membership in lobby while not connected to lobby")
+		
+		
+func _on_accepted_into_lobby() -> void:
+	pass
+	
+	
+func _on_authority_acknowleged(member_has_authority : bool) -> void:
+	has_authority = member_has_authority
+	Main.output("Authority: " + str(has_authority))
+	
+	
+func leave_lobby() -> void:
+	lobby.leave_lobby()
 	
 	
 func _on_connected_to_server() -> void:

@@ -5,6 +5,9 @@ extends Node
 
 signal game_began
 signal game_ended
+signal received_external_address(ip : String, port : int)
+signal accepted_into_lobby
+signal authority_acknowleged(member_has_authority : bool)
 
 var stats : LobbyStats = LobbyStats.new()
 var members : Array[LobbyMember] = []
@@ -14,6 +17,8 @@ var locked : bool = false:
 		if b != locked:
 			locked = b
 			multiplayer.refuse_new_connections = b
+			
+var has_authority : bool = false
 
 var game_manager : GameManager
 
@@ -105,7 +110,15 @@ func register_new_member(new_member : LobbyMember) -> void:
 	stats.current_member_count = members.size() 
 	#dont call get_lobby_manager().submit_update() because changings the stats has triggered this already
 	update_remote_lobby_member_data.rpc(get_serialized_members())
+	alert_accpetance.rpc_id(new_member.id)
 	Main.output("Registering new member")
+	
+	
+@rpc("reliable")
+func alert_accpetance() -> void:
+	if not is_master:
+		trigger_inquire_authority()
+		accepted_into_lobby.emit()
 	
 	
 func remove_member_by_id(id : int) -> void:
@@ -252,3 +265,57 @@ func end_game() -> void:
 	Main.output("Ending game")
 	game_manager.end_game()
 	game_ended.emit()
+	
+	
+func trigger_request_external_address() -> void:
+	if not is_master:
+		request_external_address.rpc_id(1)
+	
+	
+@rpc("any_peer", "reliable")
+func request_external_address() -> void:
+	if not is_master:
+		return
+	if not is_member_authority(multiplayer.get_remote_sender_id()):
+		push_warning("Member without authority requested external address")
+	if not Main.mode.get("upnp"):
+		push_warning("Cannot get external address because mode does not have upnp")
+		return
+	var ip : String = Main.mode.upnp.external_ip
+	var port : int = Main.mode.external_port
+	deliver_external_address.rpc_id(multiplayer.get_remote_sender_id(), ip, port)
+
+		
+@rpc("reliable")
+func deliver_external_address(ip : String, port : int) -> void:
+	received_external_address.emit(ip, port)
+	
+	
+func trigger_inquire_authority() -> void:
+	if not is_master:
+		inquire_authority.rpc_id(1)
+	
+	
+@rpc("any_peer", "reliable")
+func inquire_authority() -> void:
+	if is_master:
+		var member_has_authority : bool = is_member_authority(multiplayer.get_remote_sender_id())
+		acknowledge_authority.rpc_id(multiplayer.get_remote_sender_id(), member_has_authority)
+		
+		
+@rpc("reliable")
+func acknowledge_authority(member_has_authority : bool) -> void:
+	if not is_master:
+		has_authority = member_has_authority
+		authority_acknowleged.emit(member_has_authority)
+		
+		
+func leave_lobby() -> void:
+	if is_master:
+		push_warning("Master lobby cannot leave lobby")
+		return
+	Network.close_peer()
+	if game_manager.in_game:
+		end_game()
+	
+	
