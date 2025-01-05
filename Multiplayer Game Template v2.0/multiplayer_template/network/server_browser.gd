@@ -1,6 +1,6 @@
 class_name ServerBrowser
 extends Node
-signal found_server(name : String, ip : String)
+signal found_server(name : String, ip : String, data : Dictionary)
 signal broadcast_failed
 signal listener_failed
 
@@ -16,7 +16,8 @@ var broadcast_data : Dictionary
 
 var listening := false
 
-var found_servers := []
+#form: key: ip (String), value: data (Dictionary)
+var found_servers : Dictionary = {}
 
 
 func _process(_delta):
@@ -24,13 +25,13 @@ func _process(_delta):
 		var bytes = listener.get_packet()
 		var server_ip = listener.get_packet_ip()
 		if not found_servers.has(server_ip):
-			found_servers.append(server_ip)
 			var json_string = bytes.get_string_from_ascii()
 			var data = JSON.parse_string(json_string)
+			found_servers[server_ip] = data
 			var server_name = ""
 			if data.has("server_name"):
 				server_name = data.server_name
-			found_server.emit(server_name, server_ip)
+			found_server.emit(server_name, server_ip, data)
 			
 			
 func start_listening():
@@ -63,7 +64,7 @@ func start_broadcast():
 func stop_listening(): #this function may be called even if not listening
 	listening = false
 	listener = null
-	found_servers = []
+	found_servers = {}
 	Main.output("Stopped listening")
 	
 	

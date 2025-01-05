@@ -9,6 +9,9 @@ signal received_external_address(ip : String, port : int)
 signal accepted_into_lobby
 signal authority_acknowleged(member_has_authority : bool)
 
+signal member_joined(new_member : LobbyMember)
+signal member_left
+
 var stats : LobbyStats = LobbyStats.new()
 var members : Array[LobbyMember] = []
 var is_master : bool = false #the master lobby is the node on the lobby process of the server, the other lobby nodes are on the clients
@@ -58,6 +61,9 @@ func parse_args() -> void:
 		
 	if Main.has_arg_option("--lobby-max-members"):
 		stats.max_members = int(Main.get_arg_option_parameter("--lobby-max-members"))
+		
+	if Main.has_arg_option("--name"):
+		stats.name = Main.get_arg_option_parameter("--name")
 
 
 func serialize_to_lobby_data_dictionary() -> Dictionary:
@@ -110,6 +116,7 @@ func register_new_member(new_member : LobbyMember) -> void:
 	stats.current_member_count = members.size() 
 	#dont call get_lobby_manager().submit_update() because changings the stats has triggered this already
 	update_remote_lobby_member_data.rpc(get_serialized_members())
+	member_joined.emit(new_member)
 	alert_accpetance.rpc_id(new_member.id)
 	Main.output("Registering new member")
 	
@@ -135,6 +142,7 @@ func remove_member_by_id(id : int) -> void:
 		if multiplayer.get_peers().has(member_to_remove.id):
 			multiplayer.multiplayer_peer.disconnect_peer(member_to_remove.id)
 		get_lobby_manager().submit_update()
+		member_left.emit(member_to_remove)
 		update_remote_lobby_member_data.rpc(get_serialized_members())
 		Main.output("Removed member with id: " + str(id))
 	stats.current_member_count = members.size() 
@@ -144,9 +152,27 @@ func remove_member_by_id(id : int) -> void:
 @rpc("reliable")
 func update_remote_lobby_member_data(new_member_data : Array) -> void:
 	if not is_master:
+		var old_members : Array[LobbyMember] = members.duplicate()
 		members.clear()
 		for member_dictionary in new_member_data:
 			members.append(lobby_member_class.desirialize_from_dictionary(member_dictionary))
+		
+		#check if members left - ie check for old_members not in members
+		var absent_members : Array[LobbyMember] = old_members.filter( \
+				func(old_m): return not members.any( \
+					func(new_m): return new_m.id == old_m.id))
+		for absent_member in absent_members:
+			Main.output("Member left: " + str(absent_member.serialize_to_dictionary()))
+			member_left.emit(absent_member)
+		
+		#check if new members joined - ie check for members not in old members
+		var new_members : Array[LobbyMember] = members.filter(\
+				func(new_m): return not old_members.any( \
+					func(old_m): return old_m.id == new_m.id))
+		for new_member in new_members:
+			if new_member.id != multiplayer.get_unique_id():
+				Main.output("Member joined: " + str(new_member.serialize_to_dictionary()))
+				member_joined.emit(new_member)
 
 
 func clear_unregistered_peers() -> void: #if peer isn't a member, kick it. Could be called at start of game to clear any unauthorized connections, especially in private lobbies

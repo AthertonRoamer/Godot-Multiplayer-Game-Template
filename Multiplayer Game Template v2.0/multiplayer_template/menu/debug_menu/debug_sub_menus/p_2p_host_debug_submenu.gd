@@ -1,5 +1,11 @@
 extends SubMenu
 
+func opened() -> void:
+	super()
+	(Main.mode as P2PHostMode).lobby.game_began.connect(Main.main.active_scene._on_game_started)
+	(Main.mode as P2PHostMode).lobby.game_ended.connect(Main.main.active_scene._on_game_ended)
+	(Main.main.mode as P2PHostMode).my_member_data.name = $VBoxContainer/ManualNameInput/LineEdit.text
+	
 
 func _on_print_lobby_data_pressed() -> void:
 	(Main.mode as P2PHostMode).lobby_database.output_data()

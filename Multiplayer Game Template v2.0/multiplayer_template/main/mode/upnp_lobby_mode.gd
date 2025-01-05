@@ -27,6 +27,9 @@ func close() -> void:
 func launch_server() -> void:
 	super()
 	upnp_manager.trigger_setup_upnp(Network.port, Network.port)
+	Network.server_browser.broadcast_data["type"] = "lobby"
+	Network.server_browser.broadcast_data["port"] = Network.port
+	Network.server_browser.broadcast_data["server_name"] = lobby.stats.name
 	Network.server_browser.start_broadcast()
 	
 	

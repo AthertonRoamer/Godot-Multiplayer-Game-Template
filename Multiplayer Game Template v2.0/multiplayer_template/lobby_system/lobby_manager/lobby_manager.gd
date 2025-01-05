@@ -28,6 +28,8 @@ func launch_lobby() -> void:
 	Main.output("Launching new lobby")
 	var full_lobby_args : Array[String] = lobby_args.duplicate()
 	full_lobby_args.append(get_port_arg())
+	if Main.mode.has_method("get_additional_lobby_args"):
+		full_lobby_args.append_array(Main.mode.get_additional_lobby_args())
 	Main.instance_launcher.launch_instance(full_lobby_args)
 	
 	

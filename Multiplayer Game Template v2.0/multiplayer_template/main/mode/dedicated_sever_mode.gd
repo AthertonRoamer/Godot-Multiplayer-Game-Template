@@ -39,6 +39,7 @@ func launch_server() -> void:
 	
 	
 func launch_local_server() -> void:
+	Network.server_browser.broadcast_data["type"] = "server"
 	Network.initiate_local_enet_server()
 	
 	
@@ -49,3 +50,7 @@ func close_server() -> void:
 	
 func launch_lobby() -> void:
 	lobby_manager.launch_lobby()
+	
+	
+func get_additional_lobby_args() -> Array[String]:
+	return []

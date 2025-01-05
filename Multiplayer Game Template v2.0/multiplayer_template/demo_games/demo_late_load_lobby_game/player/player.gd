@@ -14,6 +14,7 @@ func _ready():
 	name = str(id)
 	name_display.text = player_name
 	local = id == multiplayer.get_unique_id()
+	Main.mode.lobby.member_left.connect(_on_member_left)
 	
 	
 func _physics_process(_delta) -> void:
@@ -36,3 +37,8 @@ func _physics_process(_delta) -> void:
 @rpc("any_peer")
 func update_position(new_position : Vector2) -> void:
 	position = new_position
+	
+	
+func _on_member_left(member : LobbyMember) -> void:
+	if member.id == id:
+		queue_free()

@@ -20,7 +20,8 @@ func start() -> void:
 		
 func set_players_active(active : bool) -> void:
 	for player in players:
-		player.active = active
+		if is_instance_valid(player):
+			player.active = active
 
 
 func end() -> void:

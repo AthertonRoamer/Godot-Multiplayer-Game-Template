@@ -36,14 +36,15 @@ func _on_ip_option_pressed(option : IPOption) -> void:
 	ip_line_edit.text = option.ip
 	
 	
-func _on_server_list_updated(_a, _b) -> void:
+func _on_server_list_updated(_name, ip, data) -> void:
 	update_ip_options()
+	Main.output("New server found at ip: " + ip + " with data: " + str(data))
 	
 	
 func update_ip_options() -> void:
 	for child in option_holder.get_children():
 		child.queue_free()
-	for ip in Network.server_browser.found_servers:
+	for ip in Network.server_browser.found_servers.keys():
 		add_ip_option(ip)
 	
 	

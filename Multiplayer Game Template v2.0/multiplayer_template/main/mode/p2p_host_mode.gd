@@ -108,6 +108,10 @@ func leave_lobby() -> void:
 	lobby.leave_lobby()
 	
 	
+func get_additional_lobby_args() -> Array[String]:
+	return ["--name " + my_member_data.name]
+	
+	
 func _on_connected_to_server() -> void:
 	match state:
 		CLIENT_STATE.CONNECTING_TO_LOBBY:

@@ -22,7 +22,7 @@ lobby_scene = ExtResource("3_sipkh")
 lobby_manager_scene = ExtResource("4_yyevb")
 lobby_database_scene = ExtResource("3_tr6gn")
 matchmaker_scene = ExtResource("6_xiws1")
-lobby_args = Array[String](["--mode upnp_lobby"])
+lobby_args = Array[String](["--mode upnp_lobby", "--headless"])
 game_manager_scene = ExtResource("2_kmuox")
 game_scene = ExtResource("3_nsir7")
 
