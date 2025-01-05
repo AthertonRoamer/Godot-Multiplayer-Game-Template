@@ -1,11 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://uhp71olnmg6x"]
+[gd_scene load_steps=6 format=3 uid="uid://uhp71olnmg6x"]
 
 [ext_resource type="Script" path="res://multiplayer_template/menu/p2p_menu/p_2p_menu.gd" id="1_f7v0p"]
 [ext_resource type="Script" path="res://multiplayer_template/menu/p2p_menu/sub_menu_holder.gd" id="2_ghga8"]
 [ext_resource type="Script" path="res://multiplayer_template/menu/p2p_menu/main.gd" id="3_hkvt7"]
 [ext_resource type="Script" path="res://multiplayer_template/menu/p2p_menu/host_page.gd" id="4_0g0k8"]
+[ext_resource type="Script" path="res://multiplayer_template/menu/p2p_menu/setup_lobby.gd" id="4_pquuw"]
 
-[node name="P2pMenu" type="Control" node_paths=PackedStringArray("sub_menu_holder")]
+[node name="P2pMenu" type="Control" node_paths=PackedStringArray("sub_menu_holder", "player_name_edit", "host_lobby_name_edit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +15,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_f7v0p")
 sub_menu_holder = NodePath("SubMenuHolder")
+player_name_edit = NodePath("SubMenuHolder/MainPage/VBoxContainer/PlayerName")
+host_lobby_name_edit = NodePath("SubMenuHolder/SetupLobby/VBoxContainer/LobbyName")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -34,6 +37,7 @@ grow_vertical = 2
 script = ExtResource("2_ghga8")
 
 [node name="MainPage" type="Control" parent="SubMenuHolder"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -56,6 +60,14 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Label" type="Label" parent="SubMenuHolder/MainPage/VBoxContainer"]
+layout_mode = 2
+text = "Enter Name:"
+
+[node name="PlayerName" type="LineEdit" parent="SubMenuHolder/MainPage/VBoxContainer"]
+layout_mode = 2
+text = "Player"
+
 [node name="Host" type="Button" parent="SubMenuHolder/MainPage/VBoxContainer"]
 layout_mode = 2
 text = "Host"
@@ -64,12 +76,82 @@ text = "Host"
 layout_mode = 2
 text = "Join"
 
+[node name="SetupLobby" type="Control" parent="SubMenuHolder"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_pquuw")
+menu_name = "setup_lobby"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubMenuHolder/SetupLobby"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label2" type="Label" parent="SubMenuHolder/SetupLobby/VBoxContainer"]
+layout_mode = 2
+text = "Enter Lobby Name"
+
+[node name="LobbyName" type="LineEdit" parent="SubMenuHolder/SetupLobby/VBoxContainer"]
+layout_mode = 2
+text = "Lobby Name"
+
+[node name="StartLobbyButton" type="Button" parent="SubMenuHolder/SetupLobby/VBoxContainer"]
+layout_mode = 2
+text = "Create Lobby"
+
+[node name="ReturnToMain" type="Button" parent="SubMenuHolder/SetupLobby/VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
 [node name="HostPage" type="Control" parent="SubMenuHolder"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("4_0g0k8")
 menu_name = "host"
 
+[node name="VBoxContainer" type="VBoxContainer" parent="SubMenuHolder/HostPage"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -20.0
+offset_right = 23.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartButton" type="Button" parent="SubMenuHolder/HostPage/VBoxContainer"]
+layout_mode = 2
+text = "Start"
+
+[node name="HostCloseLobbyButton" type="Button" parent="SubMenuHolder/HostPage/VBoxContainer"]
+layout_mode = 2
+text = "Close Lobby"
+
 [connection signal="pressed" from="SubMenuHolder/MainPage/VBoxContainer/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="SubMenuHolder/MainPage/VBoxContainer/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="SubMenuHolder/SetupLobby/VBoxContainer/StartLobbyButton" to="." method="_on_start_lobby_button_pressed"]
+[connection signal="pressed" from="SubMenuHolder/SetupLobby/VBoxContainer/ReturnToMain" to="." method="_on_return_to_main_pressed"]
+[connection signal="pressed" from="SubMenuHolder/HostPage/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="SubMenuHolder/HostPage/VBoxContainer/HostCloseLobbyButton" to="." method="_on_host_close_lobby_button_pressed"]

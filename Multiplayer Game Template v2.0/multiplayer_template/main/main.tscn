@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://fa7axvvtup3f"]
+[gd_scene load_steps=12 format=3 uid="uid://fa7axvvtup3f"]
 
 [ext_resource type="Script" path="res://multiplayer_template/main/main.gd" id="1_cj4ru"]
 [ext_resource type="PackedScene" uid="uid://cdjakowaa7si1" path="res://multiplayer_template/menu/debug_menu/debug_menu.tscn" id="2_e8wja"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ctn47px6wv5sq" path="res://multiplayer_template/lobby_system/lobby_manager/lobby_manager.tscn" id="4_yyevb"]
 [ext_resource type="PackedScene" uid="uid://fbv2gaggq1mq" path="res://multiplayer_template/lobby_system/matchmaker/matchmaker.tscn" id="6_xiws1"]
 [ext_resource type="Script" path="res://multiplayer_template/main/configuration/configuration.gd" id="8_2oxh0"]
+[ext_resource type="PackedScene" uid="uid://uhp71olnmg6x" path="res://multiplayer_template/menu/p2p_menu/p2p_menu.tscn" id="8_f5q6b"]
 
 [sub_resource type="Resource" id="Resource_2117q"]
 script = ExtResource("8_2oxh0")
@@ -17,12 +18,13 @@ lobby_manager_port = 4000
 starting_lobby_port = 5000
 listen_port = 3001
 broadcast_port = 3002
-menu_scene = ExtResource("2_e8wja")
+menu_scene = ExtResource("8_f5q6b")
+debug_menu_scene = ExtResource("2_e8wja")
 lobby_scene = ExtResource("3_sipkh")
 lobby_manager_scene = ExtResource("4_yyevb")
 lobby_database_scene = ExtResource("3_tr6gn")
 matchmaker_scene = ExtResource("6_xiws1")
-lobby_args = Array[String](["--mode upnp_lobby", "--headless"])
+lobby_args = Array[String](["--mode upnp_lobby", "--debug-menu", "--headless"])
 game_manager_scene = ExtResource("2_kmuox")
 game_scene = ExtResource("3_nsir7")
 

@@ -1,13 +1,6 @@
 class_name Configuration
 extends Resource
 
-#@export_group("Modes")
-###form key: String ("lobby") value: Mode (lobby.gd)
-#@export var dedicated_server_mode : Script = DedicatedServerMode
-#@export var client_mode : Script = ClientMode
-#@export var p2p_host_mode : Script = P2PHostMode
-#@export var lobby_mode : Script = LobbyMode
-
 
 @export_group("Ports")
 @export var server_port : int = 3000 #port that dedicated server hosts game on
@@ -19,6 +12,7 @@ extends Resource
 
 @export_group("Menu")
 @export var menu_scene : PackedScene = preload("res://multiplayer_template/menu/main_menu/main_menu.tscn")
+@export var debug_menu_scene : PackedScene = preload("res://multiplayer_template/menu/debug_menu/debug_menu.tscn")
 
 @export_group("Lobby")
 @export var lobby_scene : PackedScene = preload("res://multiplayer_template/lobby_system/lobby/lobby.tscn")
@@ -52,18 +46,6 @@ func configure(main : Main) -> void:
 	
 	assert(lobby_stats_script is Script, "Lobby stats script isn't Script")
 	assert(lobby_stats_script.new() is LobbyStats, "Lobby stats script doesn't extend LobbyStats")
-	
-	#assert(dedicated_server_mode is Script, "Dedicated server mode isn't script")
-	#assert(dedicated_server_mode.new() is Mode, "Dedicated server mode doesn't extend Mode")
-	#
-	#assert(client_mode is Script, "Client mode isn't script")
-	#assert(client_mode.new() is Mode, "Client mode doesn't extend Mode")
-	#
-	#assert(p2p_host_mode is Script, "P2P Host mode isn't script")
-	#assert(p2p_host_mode.new() is Mode, "P2P Host mode mode doesn't extend Mode")
-	#
-	#assert(lobby_mode is Script, "Lobby mode isn't script")
-	#assert(lobby_mode.new() is Mode, "Lobby mode doesn't extend Mode")
 	#endregion
 	
 	if dynamic_config_script != null:

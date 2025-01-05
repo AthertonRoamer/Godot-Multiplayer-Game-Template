@@ -9,6 +9,9 @@ func _ready() -> void:
 	var output = LabelOutput.new()
 	output.label = debug_output_label
 	Main.outputter = output
+	if Main.mode:
+		if Main.mode.tag_list.has("lobby"):
+			$SubMenuHolder.open_menu("lobby")
 	
 	
 func _on_game_started() -> void:

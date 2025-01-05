@@ -10,6 +10,7 @@ var lobby_port : int = 5000 #each lobby should have a different lobby port
 
 func _ready() -> void:
 	lobby_args = Main.main.configuration.lobby_args
+	print(lobby_args)
 	port = Main.main.configuration.lobby_manager_port
 	lobby_port = Main.main.configuration.starting_lobby_port
 	scope = Scope.Local
@@ -30,6 +31,7 @@ func launch_lobby() -> void:
 	full_lobby_args.append(get_port_arg())
 	if Main.mode.has_method("get_additional_lobby_args"):
 		full_lobby_args.append_array(Main.mode.get_additional_lobby_args())
+	print(full_lobby_args)
 	Main.instance_launcher.launch_instance(full_lobby_args)
 	
 	
@@ -82,3 +84,17 @@ func get_port_arg() -> String:
 	
 func get_master_ip() -> String:
 	return master_ip
+
+
+func close_all_lobbys() -> void:
+	if not is_master:
+		push_warning("Subordinate lobby manager tried to close all lobbys")
+		return
+	force_close.rpc()
+	lobby_port = Main.main.configuration.starting_lobby_port
+	
+	
+@rpc("reliable")
+func force_close() -> void:
+	if not is_master:
+		get_tree().quit()

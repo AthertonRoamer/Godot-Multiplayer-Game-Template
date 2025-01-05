@@ -12,6 +12,8 @@ var my_member_data : LobbyMember = LobbyMember.new()
 
 var has_authority : bool = false
 
+var lobby_name : String = "Lobby Name"
+
 func _init() -> void:
 	id = "p2p_host"
 	Network.connected_to_server.connect(_on_connected_to_server)
@@ -101,7 +103,12 @@ func _on_lobby_external_address_received(ip : String, port : int) -> void:
 func _on_lobby_data_changed() -> void: 
 	match state:
 		CLIENT_STATE.NOT_CONNECTED:
-			join_lobby(lobby_database.data.values()[0], my_member_data)
+			if lobby_database.data.values().size() > 0:
+				join_lobby(lobby_database.data.values()[0], my_member_data)
+			
+			
+func shut_down_lobby() -> void:
+	lobby_manager.close_all_lobbys()
 			
 			
 func leave_lobby() -> void:
@@ -109,7 +116,7 @@ func leave_lobby() -> void:
 	
 	
 func get_additional_lobby_args() -> Array[String]:
-	return ["--name " + my_member_data.name]
+	return ["--name " + lobby_name]
 	
 	
 func _on_connected_to_server() -> void:
@@ -123,6 +130,7 @@ func _on_connection_failed() -> void:
 	match state:
 		CLIENT_STATE.CONNECTING_TO_LOBBY:
 			Network.port = Main.main.configuration.server_port
+	state = CLIENT_STATE.NOT_CONNECTED
 			
 		
 func _on_disconnected_to_server() -> void:
@@ -131,3 +139,4 @@ func _on_disconnected_to_server() -> void:
 			if lobby.game_manager.is_game_loaded:
 				lobby.end_game()
 			Network.port = Main.main.configuration.server_port
+	state = CLIENT_STATE.NOT_CONNECTED

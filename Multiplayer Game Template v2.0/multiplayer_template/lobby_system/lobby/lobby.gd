@@ -196,6 +196,15 @@ func _on_peer_disconnected(id) -> void:
 func _on_server_disconnected() -> void:
 	if game_manager.is_game_loaded:
 		end_game()
+	if not is_master:
+		reset_data()
+		
+		
+func reset_data() -> void:
+	stats = LobbyStats.new()
+	members.clear()
+	locked = false
+	has_authority = false
 	
 	
 func get_serialized_members() -> Array[Dictionary]:

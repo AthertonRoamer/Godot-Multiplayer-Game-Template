@@ -34,14 +34,6 @@ static func parse_arguments() -> void:
 		arg_dictionary[arr[0]] = ""
 		if arr.size() > 1:
 			arg_dictionary[arr[0]] = arr[1]
-	Main.output("arguments:   " + str(arg_dictionary))
-	
-	##TODO delete this and in config is officially obsolete
-	#var modes = {"lobby" : main.configuration.lobby_mode.new(), 
-			#"server" : main.configuration.dedicated_server_mode.new(), 
-			#"client" : main.configuration.client_mode.new(), 
-			#"P2PHostMode" : main.configuration.p2p_host_mode.new(),
-			#}
 			
 	var modes = {"lobby" : LobbyMode.new(), 
 			"upnp_lobby" : UPNPLobbyMode.new(),
@@ -53,6 +45,8 @@ static func parse_arguments() -> void:
 	var mode_parameter : String = get_arg_option_parameter("--mode")
 	if modes.has(mode_parameter):
 		open_mode(modes[mode_parameter])
+	if has_arg_option("--debug-menu") and OS.is_debug_build():
+		main.menu_scene = main.configuration.debug_menu_scene
 
 
 static func has_arg_option(option : String) -> bool:
@@ -94,8 +88,10 @@ func _ready() -> void:
 	Network.server_browser.listen_port = configuration.listen_port
 	Network.server_browser.broadcast_port = configuration.broadcast_port
 
-	load_menu()
+	
 	Main.parse_arguments()
+	load_menu()
+	Main.output("arguments:   " + str(arg_dictionary))
 	if Main.mode != null and Main.mode.id != "none" and !Main.mode.is_open:
 		Main.mode.open()
 		opening_mode.emit(mode)
