@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cdjakowaa7si1"]
 
-[ext_resource type="Script" path="res://multiplayer_template/menu/debug_menu/debug_menu.gd" id="1_8wscq"]
-[ext_resource type="Script" path="res://multiplayer_template/menu/sub_menu/sub_menu_holder.gd" id="2_jbvk2"]
+[ext_resource type="Script" uid="uid://cgpjs5gst4swt" path="res://multiplayer_template/menu/debug_menu/debug_menu.gd" id="1_8wscq"]
+[ext_resource type="Script" uid="uid://i3nmldkulyvj" path="res://multiplayer_template/menu/sub_menu/sub_menu_holder.gd" id="2_jbvk2"]
 [ext_resource type="PackedScene" uid="uid://b5k33d222kp2n" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/server_debug_sub_menu.tscn" id="3_athcv"]
 [ext_resource type="PackedScene" uid="uid://c7atjd0hjlng3" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/default_debug_sub_menu.tscn" id="4_q4dtq"]
 [ext_resource type="PackedScene" uid="uid://4wsghuk7i8ow" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/client_debug_sub_menu.tscn" id="5_4vq6v"]

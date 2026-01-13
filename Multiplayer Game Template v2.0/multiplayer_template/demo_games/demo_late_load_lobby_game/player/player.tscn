@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cei8euq0h4tek"]
 
-[ext_resource type="Script" path="res://multiplayer_template/demo_games/demo_late_load_lobby_game/player/player.gd" id="1_tgbgt"]
+[ext_resource type="Script" uid="uid://djikj2r2v2rhm" path="res://multiplayer_template/demo_games/demo_late_load_lobby_game/player/player.gd" id="1_tgbgt"]
 [ext_resource type="Texture2D" uid="uid://4f4aitciwkwv" path="res://icon.svg" id="2_dkpcl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b8330"]

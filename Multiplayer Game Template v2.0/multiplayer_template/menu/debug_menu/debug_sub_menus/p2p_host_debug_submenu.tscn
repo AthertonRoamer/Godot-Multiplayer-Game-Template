@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://lu1e1sbvyq2w"]
 
-[ext_resource type="Script" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/p_2p_host_debug_submenu.gd" id="1_t2d1k"]
+[ext_resource type="Script" uid="uid://dmcwgmyqoxt3d" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/p_2p_host_debug_submenu.gd" id="1_t2d1k"]
 
 [node name="P2pHostDebugSubmenu" type="Control"]
 layout_mode = 3

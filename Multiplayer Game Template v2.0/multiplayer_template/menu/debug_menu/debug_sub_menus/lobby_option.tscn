@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cenrsvhg8g7d2"]
 
-[ext_resource type="Script" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/lobby_option.gd" id="1_8furr"]
+[ext_resource type="Script" uid="uid://bem1q2c61rnuo" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/lobby_option.gd" id="1_8furr"]
 
 [node name="LobbyOption" type="Button"]
 anchors_preset = -1

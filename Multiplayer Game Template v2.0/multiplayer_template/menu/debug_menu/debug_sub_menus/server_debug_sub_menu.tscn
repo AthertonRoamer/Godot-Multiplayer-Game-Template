@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b5k33d222kp2n"]
 
-[ext_resource type="Script" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/server_debug_sub_menu.gd" id="1_cpykq"]
+[ext_resource type="Script" uid="uid://q0lk24hwvmxw" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/server_debug_sub_menu.gd" id="1_cpykq"]
 
 [node name="ServerDebugSubMenu" type="Control"]
 layout_mode = 3

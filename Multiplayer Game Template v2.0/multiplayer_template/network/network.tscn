@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bicdyfsswgj06"]
 
-[ext_resource type="Script" path="res://multiplayer_template/network/network.gd" id="1_jcrxv"]
-[ext_resource type="Script" path="res://multiplayer_template/network/server_browser.gd" id="2_yf7ea"]
+[ext_resource type="Script" uid="uid://8yp01hqs6g66" path="res://multiplayer_template/network/network.gd" id="1_jcrxv"]
+[ext_resource type="Script" uid="uid://vglq8yyb73x" path="res://multiplayer_template/network/server_browser.gd" id="2_yf7ea"]
 
 [node name="Network" type="Node" node_paths=PackedStringArray("server_browser")]
 script = ExtResource("1_jcrxv")

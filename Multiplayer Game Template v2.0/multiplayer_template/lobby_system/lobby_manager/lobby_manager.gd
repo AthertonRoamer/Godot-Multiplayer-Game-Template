@@ -10,7 +10,7 @@ var lobby_port : int = 5000 #each lobby should have a different lobby port
 
 func _ready() -> void:
 	lobby_args = Main.main.configuration.lobby_args
-	print(lobby_args)
+	Main.main.output(str(lobby_args))
 	port = Main.main.configuration.lobby_manager_port
 	lobby_port = Main.main.configuration.starting_lobby_port
 	scope = Scope.Local
@@ -33,8 +33,8 @@ func launch_lobby() -> void:
 		full_lobby_args.append_array(Main.mode.get_additional_lobby_args())
 	print(full_lobby_args)
 	Main.instance_launcher.launch_instance(full_lobby_args)
-	
-	
+	#
+	#
 func _on_connection_to_server_failed() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST) #if satellite lobby fails to reach main lobby manager, kill the instance
 	
@@ -54,9 +54,10 @@ func _server_disconected() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 	
 	
-func submit_update() -> void: #update from sattelite lobby to main lobby manager
+func submit_update() -> void: #update from satelite lobby to main lobby manager
 	Main.output("Submitting update") 
-	var data : Dictionary = (Main.mode as LobbyMode).lobby.serialize_to_lobby_data_dictionary()
+	#var data : Dictionary = (Main.mode as LobbyMode).lobby.serialize_to_lobby_data_dictionary()
+	var data : Dictionary = Main.mode.lobby.serialize_to_lobby_data_dictionary()
 	submit_updated_lobby_data.rpc_id(1, data)
 	
 	
@@ -80,12 +81,12 @@ func get_port_arg() -> String:
 	header += str(lobby_port)
 	lobby_port += 1
 	return header
-	
-	
+	#
+	#
 func get_master_ip() -> String:
 	return master_ip
-
-
+#
+#
 func close_all_lobbys() -> void:
 	if not is_master:
 		push_warning("Subordinate lobby manager tried to close all lobbys")

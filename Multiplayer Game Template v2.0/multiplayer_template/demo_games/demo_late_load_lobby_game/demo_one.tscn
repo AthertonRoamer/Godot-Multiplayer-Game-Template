@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://ye22u6x1her8"]
 
-[ext_resource type="Script" path="res://multiplayer_template/demo_games/demo_late_load_lobby_game/demo_one.gd" id="1_ncbwj"]
+[ext_resource type="Script" uid="uid://cu7kal1grolwv" path="res://multiplayer_template/demo_games/demo_late_load_lobby_game/demo_one.gd" id="1_ncbwj"]
 [ext_resource type="PackedScene" uid="uid://cei8euq0h4tek" path="res://multiplayer_template/demo_games/demo_late_load_lobby_game/player/player.tscn" id="2_wgbo7"]
-[ext_resource type="Script" path="res://multiplayer_template/network/network_unloader/network_unloader.gd" id="3_wqaiw"]
+[ext_resource type="Script" uid="uid://bhuu3dcyyuuys" path="res://multiplayer_template/network/network_unloader/network_unloader.gd" id="3_wqaiw"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_hirhj"]
 normal = Vector2(0, 1)

@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://uhp71olnmg6x"]
 
-[ext_resource type="Script" path="res://multiplayer_template/menu/p2p_menu/p_2p_menu.gd" id="1_f7v0p"]
-[ext_resource type="Script" path="res://multiplayer_template/menu/p2p_menu/sub_menu_holder.gd" id="2_ghga8"]
-[ext_resource type="Script" path="res://multiplayer_template/menu/p2p_menu/main.gd" id="3_hkvt7"]
-[ext_resource type="Script" path="res://multiplayer_template/menu/p2p_menu/host_page.gd" id="4_0g0k8"]
-[ext_resource type="Script" path="res://multiplayer_template/menu/p2p_menu/setup_lobby.gd" id="4_pquuw"]
+[ext_resource type="Script" uid="uid://hqeoyjw4dwc4" path="res://multiplayer_template/menu/p2p_menu/p_2p_menu.gd" id="1_f7v0p"]
+[ext_resource type="Script" uid="uid://ckhrshuckijeb" path="res://multiplayer_template/menu/p2p_menu/sub_menu_holder.gd" id="2_ghga8"]
+[ext_resource type="Script" uid="uid://b8gr0iheha8f7" path="res://multiplayer_template/menu/p2p_menu/main.gd" id="3_hkvt7"]
+[ext_resource type="Script" uid="uid://5yxob3b33rr4" path="res://multiplayer_template/menu/p2p_menu/host_page.gd" id="4_0g0k8"]
+[ext_resource type="Script" uid="uid://cmstikklpipls" path="res://multiplayer_template/menu/p2p_menu/setup_lobby.gd" id="4_pquuw"]
 
 [node name="P2pMenu" type="Control" node_paths=PackedStringArray("sub_menu_holder", "player_name_edit", "host_lobby_name_edit")]
 layout_mode = 3
