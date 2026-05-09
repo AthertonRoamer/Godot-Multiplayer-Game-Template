@@ -12,7 +12,7 @@ signal authority_acknowleged(member_has_authority : bool)
 signal member_joined(new_member : LobbyMember)
 signal member_left
 
-var stats : LobbyStats = LobbyStats.new()
+var stats : LobbyStatsNoray = LobbyStatsNoray.new()
 var members : Array[LobbyMember] = []
 var is_master : bool = false #the master lobby is the node on the lobby process of the server, the other lobby nodes are on the clients
 var locked : bool = false:
@@ -26,7 +26,7 @@ var has_authority : bool = false
 var game_manager : GameManager
 
 #these variables will need be changed if any of those classes are extended with more variables, so that the correct deserializers will be used
-static var lobby_stats_class = LobbyStats
+static var lobby_stats_class = LobbyStatsNoray
 static var lobby_member_class = LobbyMember
 static var lobby_data_class = LobbyData
 
@@ -42,9 +42,6 @@ func _ready() -> void:
 	
 	game_manager_scene = Main.main.configuration.game_manager_scene
 	
-	if is_master:
-		(Main.mode as LobbyMode).launch_server()
-		
 	game_manager = game_manager_scene.instantiate()
 	game_manager.lobby = self
 	add_child(game_manager)
@@ -53,6 +50,11 @@ func _ready() -> void:
 	Network.server_disconnected.connect(_on_server_disconnected)
 	
 	stats.changed.connect(_on_stats_changed)
+	
+	if is_master:
+		await (Main.mode as LobbyMode).launch_server()
+		
+	
 	
 	
 func parse_args() -> void:
@@ -83,7 +85,7 @@ func _on_stats_changed() -> void:
 @rpc("reliable")
 func update_remote_lobby_stats(new_stats : Dictionary) -> void:
 	if not is_master:
-		stats = LobbyStats.desirialize_from_dictionary(new_stats)
+		stats = lobby_stats_class.desirialize_from_dictionary(new_stats)
 		Main.output("Received stats update")
 	
 	
@@ -201,7 +203,7 @@ func _on_server_disconnected() -> void:
 		
 		
 func reset_data() -> void:
-	stats = LobbyStats.new()
+	stats = lobby_stats_class.new()
 	members.clear()
 	locked = false
 	has_authority = false

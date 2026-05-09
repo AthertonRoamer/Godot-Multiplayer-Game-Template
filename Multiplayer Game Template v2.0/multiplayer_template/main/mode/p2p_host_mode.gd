@@ -105,6 +105,11 @@ func _on_lobby_data_changed() -> void:
 		CLIENT_STATE.NOT_CONNECTED:
 			if lobby_database.data.values().size() > 0:
 				join_lobby(lobby_database.data.values()[0], my_member_data)
+				pass
+		CLIENT_STATE.CONNECTING_TO_LOBBY:
+			if lobby_database.data.values().size() > 0:
+				join_lobby(lobby_database.data.values()[0], my_member_data)
+				pass
 			
 			
 func shut_down_lobby() -> void:

@@ -2,7 +2,7 @@ class_name LobbyData
 
 #a container for the data of one lobby, used for sending all the data of a lobby over the network for the matchmaker
 var lobby_id : int
-var stats : LobbyStats
+var stats : LobbyStatsNoray
 var members : Array[LobbyMember]
 
 func serialize_to_dictionary() -> Dictionary:

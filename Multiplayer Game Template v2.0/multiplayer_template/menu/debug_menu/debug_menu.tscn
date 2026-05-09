@@ -34,7 +34,7 @@ offset_bottom = 23.0
 text = "Debug Menu"
 
 [node name="Panel" type="Panel" parent="."]
-layout_mode = 2
+layout_mode = 0
 anchor_left = 0.024
 anchor_top = 0.136
 anchor_right = 0.475
@@ -49,22 +49,33 @@ size_flags_vertical = 3
 [node name="OutputScrollContainer" type="ScrollContainer" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
+anchor_left = 0.030000001
 anchor_right = 1.002
 anchor_bottom = 1.057
-offset_right = -0.0160522
-offset_bottom = -26.36
+offset_left = -0.11000061
+offset_top = 1.0
+offset_right = -2.0739746
+offset_bottom = -26.359985
 vertical_scroll_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/OutputScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Header2" type="Label" parent="Panel/OutputScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Output:"
 
-[node name="Label" type="Label" parent="Panel/OutputScrollContainer/VBoxContainer"]
+[node name="Label" type="RichTextLabel" parent="Panel/OutputScrollContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 1
+size_flags_vertical = 3
+focus_mode = 2
+text = "
+"
+fit_content = true
+autowrap_mode = 0
+selection_enabled = true
 
 [node name="SubMenuHolder" type="Control" parent="."]
 layout_mode = 1

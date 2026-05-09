@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bkkvybflamla1" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/ip_option.tscn" id="2_ham3y"]
 [ext_resource type="PackedScene" uid="uid://cenrsvhg8g7d2" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/lobby_option.tscn" id="3_em6vc"]
 
-[node name="ClientDebugSubMenu" type="Control" node_paths=PackedStringArray("ip_line_edit", "option_holder", "lobby_option_display", "name_line_edit", "port_line_edit")]
+[node name="ClientDebugSubMenu" type="Control" node_paths=PackedStringArray("ip_line_edit", "option_holder", "lobby_option_display", "name_line_edit", "port_line_edit", "game_id_line_edit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,16 +12,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_q2diu")
-ip_line_edit = NodePath("VBoxContainer/ManualIpInput/LineEdit")
-option_holder = NodePath("VBoxContainer/ScrollContainer/IPDisplay")
+ip_line_edit = NodePath("ScrollContainer/VBoxContainer/ManualIpInput/LineEdit")
+option_holder = NodePath("ScrollContainer/VBoxContainer/ScrollContainer/IPDisplay")
 ip_option_scene = ExtResource("2_ham3y")
 lobby_option_scene = ExtResource("3_em6vc")
-lobby_option_display = NodePath("VBoxContainer/ScrollContainer2/LobbyOptionDisplay")
-name_line_edit = NodePath("VBoxContainer/ManualNameInput/LineEdit")
-port_line_edit = NodePath("VBoxContainer/DirectLobbyContainer/PortLineEdit")
+lobby_option_display = NodePath("ScrollContainer/VBoxContainer/ScrollContainer2/LobbyOptionDisplay")
+name_line_edit = NodePath("ScrollContainer/VBoxContainer/ManualNameInput/LineEdit")
+port_line_edit = NodePath("ScrollContainer/VBoxContainer/DirectLobbyContainer/PortLineEdit")
+game_id_line_edit = NodePath("ScrollContainer/VBoxContainer/NorayContainer/LineEdit")
 menu_name = "client"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,79 +30,97 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ManualIpInput" type="VBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Header" type="Label" parent="VBoxContainer/ManualIpInput"]
-layout_mode = 2
-text = "Enter IP:"
-
-[node name="LineEdit" type="LineEdit" parent="VBoxContainer/ManualIpInput"]
-layout_mode = 2
-text = "127.0.0.1"
-
-[node name="JoinServer" type="Button" parent="VBoxContainer/ManualIpInput"]
-layout_mode = 2
-text = "Join Server"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-
-[node name="IPDisplay" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="DirectLobbyContainer" type="VBoxContainer" parent="VBoxContainer"]
+[node name="ManualIpInput" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/DirectLobbyContainer"]
+[node name="Header" type="Label" parent="ScrollContainer/VBoxContainer/ManualIpInput"]
+layout_mode = 2
+text = "Enter IP:"
+
+[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/ManualIpInput"]
+layout_mode = 2
+text = "127.0.0.1"
+
+[node name="JoinServer" type="Button" parent="ScrollContainer/VBoxContainer/ManualIpInput"]
+layout_mode = 2
+text = "Join Server"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="IPDisplay" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="DirectLobbyContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/DirectLobbyContainer"]
 layout_mode = 2
 text = "Port:"
 
-[node name="PortLineEdit" type="LineEdit" parent="VBoxContainer/DirectLobbyContainer"]
+[node name="PortLineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/DirectLobbyContainer"]
 layout_mode = 2
 text = "5000"
 
-[node name="JoinLobby" type="Button" parent="VBoxContainer/DirectLobbyContainer"]
+[node name="JoinLobby" type="Button" parent="ScrollContainer/VBoxContainer/DirectLobbyContainer"]
 layout_mode = 2
 text = "Join Lobby Directly"
 
-[node name="ManualNameInput" type="VBoxContainer" parent="VBoxContainer"]
+[node name="ManualNameInput" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/ManualNameInput"]
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/ManualNameInput"]
 layout_mode = 2
 text = "Enter Name:"
 
-[node name="LineEdit" type="LineEdit" parent="VBoxContainer/ManualNameInput"]
+[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/ManualNameInput"]
 layout_mode = 2
 text = "Player"
 
-[node name="PrintLobbyData" type="Button" parent="VBoxContainer"]
+[node name="PrintLobbyData" type="Button" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Print Lobby Data"
 
-[node name="ScrollContainer2" type="ScrollContainer" parent="VBoxContainer"]
+[node name="ScrollContainer2" type="ScrollContainer" parent="ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
-[node name="LobbyOptionDisplay" type="VBoxContainer" parent="VBoxContainer/ScrollContainer2"]
+[node name="LobbyOptionDisplay" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/ScrollContainer2"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Start" type="Button" parent="VBoxContainer"]
+[node name="NorayContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/NorayContainer"]
+layout_mode = 2
+placeholder_text = "Noray game id"
+
+[node name="JoinNoray" type="Button" parent="ScrollContainer/VBoxContainer/NorayContainer"]
+layout_mode = 2
+text = "Join Noray Game"
+
+[node name="Start" type="Button" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Start"
 
-[node name="Back" type="Button" parent="VBoxContainer"]
+[node name="Back" type="Button" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "Back"
 
-[connection signal="pressed" from="VBoxContainer/ManualIpInput/JoinServer" to="." method="_on_join_pressed"]
-[connection signal="pressed" from="VBoxContainer/DirectLobbyContainer/JoinLobby" to="." method="_on_join_lobby_pressed"]
-[connection signal="pressed" from="VBoxContainer/PrintLobbyData" to="." method="_on_print_lobby_data_pressed"]
-[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/ManualIpInput/JoinServer" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/DirectLobbyContainer/JoinLobby" to="." method="_on_join_lobby_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/PrintLobbyData" to="." method="_on_print_lobby_data_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/NorayContainer/JoinNoray" to="." method="_on_join_noray_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]

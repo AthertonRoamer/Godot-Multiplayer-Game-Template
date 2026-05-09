@@ -1,7 +1,7 @@
 class_name DebugMenu #this is a menu exposes more than would usually be shown to the user
 extends Control
 
-@export var debug_output_label : Label
+@export var debug_output_label : RichTextLabel
 
 var active_sub_menu : Control
 

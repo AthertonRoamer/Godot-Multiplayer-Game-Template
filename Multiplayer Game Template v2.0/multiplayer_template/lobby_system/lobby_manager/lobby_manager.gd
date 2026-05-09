@@ -10,7 +10,7 @@ var lobby_port : int = 5000 #each lobby should have a different lobby port
 
 func _ready() -> void:
 	lobby_args = Main.main.configuration.lobby_args
-	Main.main.output(str(lobby_args))
+	Main.output(str(lobby_args))
 	port = Main.main.configuration.lobby_manager_port
 	lobby_port = Main.main.configuration.starting_lobby_port
 	scope = Scope.Local

@@ -40,6 +40,7 @@ static func parse_arguments() -> void:
 			"server" : DedicatedServerMode.new(), 
 			"client" : ClientMode.new(), 
 			"P2PHostMode" : P2PHostMode.new(),
+			"noray_lobby" : NorayLobbyMode.new(),
 			}
 	
 	var mode_parameter : String = get_arg_option_parameter("--mode")

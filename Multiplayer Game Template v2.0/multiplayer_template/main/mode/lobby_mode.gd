@@ -14,11 +14,12 @@ func _init() -> void:
 func open() -> void:
 	super()
 	default_port = Network.port #save default port for later
-	lobby_manager = Main.main.lobby_manager_scene.instantiate()
-	Main.main.add_child(lobby_manager)
 	lobby = Main.main.lobby_scene.instantiate()
 	lobby.is_master = true
 	Main.main.add_child(lobby)
+	lobby_manager = Main.main.lobby_manager_scene.instantiate()
+	Main.main.add_child(lobby_manager)
+	
 	Main.output("Opening lobby mode")
 
 

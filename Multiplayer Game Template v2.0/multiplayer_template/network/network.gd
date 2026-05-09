@@ -37,6 +37,8 @@ var refuse_new_connections : bool = false:
 			if peer != null:
 				peer.refuse_new_connections = b
 				refuse_new_connections = b
+				
+var noray : bool = false
 
 #global scope means this node changes the multiplayer_peer of the scene tree
 #local scope means this node gives itself a new MultiplayerApi
@@ -102,7 +104,11 @@ func initiate_enet_client(ip : String) -> void:
 	close_peer()
 	is_server = false
 	peer = ENetMultiplayerPeer.new()
-	var ok = peer.create_client(ip, port)
+	var ok
+	if noray:
+		ok = peer.create_client(ip, port, 0, 0, 0, Noray.local_port)
+	else:
+		ok = peer.create_client(ip, port)
 	if ok != OK:
 		Main.output("Failed to create client. Error " + str(ok))
 		client_failed.emit()
