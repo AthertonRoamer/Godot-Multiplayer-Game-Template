@@ -1,24 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://cei8euq0h4tek"]
+[gd_scene format=3 uid="uid://cei8euq0h4tek"]
 
 [ext_resource type="Script" uid="uid://djikj2r2v2rhm" path="res://multiplayer_template/demo_games/demo_late_load_lobby_game/player/player.gd" id="1_tgbgt"]
-[ext_resource type="Texture2D" uid="uid://4f4aitciwkwv" path="res://icon.svg" id="2_dkpcl"]
+[ext_resource type="Texture2D" uid="uid://gqmqpaagpccm" path="res://icon.svg" id="2_dkpcl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b8330"]
 size = Vector2(64, 64)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("name_display")]
+[node name="Player" type="CharacterBody2D" unique_id=2114153476 node_paths=PackedStringArray("name_display")]
 motion_mode = 1
 script = ExtResource("1_tgbgt")
 name_display = NodePath("NameDisplay")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=276802740]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_dkpcl")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1669686589]
 shape = SubResource("RectangleShape2D_b8330")
 
-[node name="NameDisplay" type="Label" parent="."]
+[node name="NameDisplay" type="Label" parent="." unique_id=809852702]
 offset_left = -33.0
 offset_top = -66.0
 offset_right = 31.0

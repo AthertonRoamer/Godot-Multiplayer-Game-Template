@@ -88,14 +88,24 @@ func _ready() -> void:
 	Network.port = configuration.server_port
 	Network.server_browser.listen_port = configuration.listen_port
 	Network.server_browser.broadcast_port = configuration.broadcast_port
-
 	
+	var output_stash : OutputStash = OutputStash.new()
+	var stash_outputted : bool = false
+	outputter = output_stash #saves output during parse args
 	Main.parse_arguments()
 	load_menu()
+	if outputter != output_stash: #outputs output if menu added new outputter
+		output_stash.output_all()
+		stash_outputted = true
+	
 	Main.output("arguments:   " + str(arg_dictionary))
 	if Main.mode != null and Main.mode.id != "none" and !Main.mode.is_open:
 		Main.mode.open()
 		opening_mode.emit(mode)
+		
+	if outputter != output_stash and not stash_outputted:
+		output_stash.output_all()
+		stash_outputted = true
 		
 		
 func load_menu() -> void:

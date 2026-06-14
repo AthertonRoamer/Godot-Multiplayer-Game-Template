@@ -15,6 +15,9 @@ extends GameManager
 var game_scene : PackedScene
 var game : Node
 
+func get_game() -> Node:
+	return game
+
 func _ready() -> void:
 	game_scene = Main.main.configuration.game_scene
 

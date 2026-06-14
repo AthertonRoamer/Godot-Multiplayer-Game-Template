@@ -12,7 +12,9 @@ var my_member_data : LobbyMember = LobbyMember.new()
 
 var has_authority : bool = false
 
-var lobby_name : String = "Lobby Name"
+var lobby_name : String = "LobbyName"
+
+var lobby_lan_broadcast : bool = false
 
 func _init() -> void:
 	id = "p2p_host"
@@ -58,6 +60,13 @@ func close() -> void:
 	
 func host() -> void:
 	Main.output("Hosting p2p game")
+	lobby_lan_broadcast = false
+	launch_lobby()
+	
+	
+func host_with_lan() -> void:
+	Main.output("Hosting p2p game")
+	lobby_lan_broadcast = true
 	launch_lobby()
 	
 	
@@ -121,7 +130,10 @@ func leave_lobby() -> void:
 	
 	
 func get_additional_lobby_args() -> Array[String]:
-	return ["--name " + lobby_name]
+	var args : Array[String] = ["--name " + lobby_name]
+	if lobby_lan_broadcast:
+		args.append("--lan-broadcast")
+	return args
 	
 	
 func _on_connected_to_server() -> void:
@@ -145,3 +157,10 @@ func _on_disconnected_to_server() -> void:
 				lobby.end_game()
 			Network.port = Main.main.configuration.server_port
 	state = CLIENT_STATE.NOT_CONNECTED
+	
+	
+func get_world() -> Node:
+	if lobby.game_manager.has_method("get_game"):
+		return lobby.game_manager.get_game()
+	else:
+		return null

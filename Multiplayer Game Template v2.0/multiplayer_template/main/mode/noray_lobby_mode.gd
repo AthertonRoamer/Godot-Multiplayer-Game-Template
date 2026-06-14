@@ -28,7 +28,10 @@ func launch_server() -> void:
 	Network.max_clients = lobby.stats.max_members
 	
 	#Network.initiate_enet_server()
+	
+	Main.output("about to initiate noray server")
 	await noray_manager.initiate_noray_server()
+	Main.output("Finished initiating noray server")
 	lobby.stats.lobby_port = Network.port
 	lobby.stats.game_id = noray_manager.game_id
 	
