@@ -4,6 +4,8 @@ extends Mode
 var lobby_manager : LobbyManager
 var lobby : Lobby
 
+var lan_broadcast : bool = false
+
 var default_port : int
 
 func _init() -> void:
@@ -37,3 +39,15 @@ func launch_server() -> void:
 	Network.port = lobby.stats.lobby_port
 	Network.max_clients = lobby.stats.max_members
 	Network.initiate_enet_server()
+	if lan_broadcast:
+		Network.server_browser.broadcast_data["type"] = "lobby"
+		Network.server_browser.broadcast_data["port"] = Network.port
+		Network.server_browser.broadcast_data["server_name"] = lobby.stats.name
+		Network.server_browser.start_broadcast()
+	
+	
+func get_world() -> Node:
+	if lobby.game_manager.has_method("get_game"):
+		return lobby.game_manager.get_game()
+	else:
+		return null

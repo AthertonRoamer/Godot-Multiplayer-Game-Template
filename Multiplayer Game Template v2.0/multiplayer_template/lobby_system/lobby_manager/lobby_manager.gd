@@ -31,10 +31,10 @@ func launch_lobby() -> void:
 	full_lobby_args.append(get_port_arg())
 	if Main.mode.has_method("get_additional_lobby_args"):
 		full_lobby_args.append_array(Main.mode.get_additional_lobby_args())
-	print(full_lobby_args)
+	print("Launching lobby with these args: ", full_lobby_args)
 	Main.instance_launcher.launch_instance(full_lobby_args)
-	#
-	#
+	
+	
 func _on_connection_to_server_failed() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST) #if satellite lobby fails to reach main lobby manager, kill the instance
 	

@@ -33,7 +33,7 @@ extends LobbyStats
 		#changed.emit()
 var game_id : String = "":
 	set(v):
-		Main.output("changing game id")
+		#Main.output("changing game id")
 		game_id = v
 		changed.emit()
 

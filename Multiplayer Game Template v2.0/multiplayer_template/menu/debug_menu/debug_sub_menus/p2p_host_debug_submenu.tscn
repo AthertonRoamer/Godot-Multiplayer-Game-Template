@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://lu1e1sbvyq2w"]
+[gd_scene format=3 uid="uid://lu1e1sbvyq2w"]
 
 [ext_resource type="Script" uid="uid://dmcwgmyqoxt3d" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/p_2p_host_debug_submenu.gd" id="1_t2d1k"]
 
-[node name="P2pHostDebugSubmenu" type="Control"]
+[node name="P2pHostDebugSubmenu" type="Control" unique_id=1335880923]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,7 @@ grow_vertical = 2
 script = ExtResource("1_t2d1k")
 menu_name = "p2p_host"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1274270386]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,35 +20,40 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ManualNameInput" type="VBoxContainer" parent="VBoxContainer"]
+[node name="ManualNameInput" type="VBoxContainer" parent="VBoxContainer" unique_id=1065993025]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/ManualNameInput"]
+[node name="Label" type="Label" parent="VBoxContainer/ManualNameInput" unique_id=1403858864]
 layout_mode = 2
 text = "Enter Name:"
 
-[node name="LineEdit" type="LineEdit" parent="VBoxContainer/ManualNameInput"]
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/ManualNameInput" unique_id=1075746931]
 layout_mode = 2
 text = "Player"
 
-[node name="Host" type="Button" parent="VBoxContainer"]
+[node name="Host" type="Button" parent="VBoxContainer" unique_id=847688565]
 layout_mode = 2
 text = "Host"
 
-[node name="PrintLobbyData" type="Button" parent="VBoxContainer"]
+[node name="HostLAN" type="Button" parent="VBoxContainer" unique_id=2017467693]
+layout_mode = 2
+text = "Host with Lan"
+
+[node name="PrintLobbyData" type="Button" parent="VBoxContainer" unique_id=626202251]
 layout_mode = 2
 text = "Print Lobby Data"
 
-[node name="Start" type="Button" parent="VBoxContainer"]
+[node name="Start" type="Button" parent="VBoxContainer" unique_id=605508270]
 layout_mode = 2
 text = "Start"
 
-[node name="Back" type="Button" parent="VBoxContainer"]
+[node name="Back" type="Button" parent="VBoxContainer" unique_id=1226253426]
 layout_mode = 2
 text = "Back"
 
 [connection signal="text_changed" from="VBoxContainer/ManualNameInput/LineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="pressed" from="VBoxContainer/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="VBoxContainer/HostLAN" to="." method="_on_host_lan_pressed"]
 [connection signal="pressed" from="VBoxContainer/PrintLobbyData" to="." method="_on_print_lobby_data_pressed"]
 [connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]

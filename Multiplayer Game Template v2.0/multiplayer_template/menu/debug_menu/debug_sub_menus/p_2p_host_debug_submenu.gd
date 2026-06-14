@@ -13,6 +13,10 @@ func _on_print_lobby_data_pressed() -> void:
 
 func _on_host_pressed() -> void:
 	(Main.main.mode as P2PHostMode).host()
+	
+	
+func _on_host_lan_pressed() -> void:
+	(Main.main.mode as P2PHostMode).host_with_lan()
 
 
 func _on_back_pressed() -> void:

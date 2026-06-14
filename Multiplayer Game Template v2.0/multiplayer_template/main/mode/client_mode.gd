@@ -153,3 +153,10 @@ func _on_disconnected_to_server() -> void:
 				Main.output("Cannot rejoin main server because server ip is invalid")
 			else:
 				join_server(server_ip)
+				
+
+func get_world() -> Node:
+	if lobby.game_manager.has_method("get_game"):
+		return lobby.game_manager.get_game()
+	else:
+		return null

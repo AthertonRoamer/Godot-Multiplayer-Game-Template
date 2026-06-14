@@ -13,7 +13,7 @@ var name : String = "LobbyName":
 var lobby_port : int = 5000:
 	set(v):
 		lobby_port = v
-		Main.output("Changing port")
+		#Main.output("Changing port")
 		changed.emit()
 var ip : String = "server":
 	set(v):

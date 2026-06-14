@@ -17,7 +17,9 @@ func initiate_noray_client(g_id : String = game_id) -> void:
 	Network.noray = true
 	setup_client_noray_connection_signals()
 	if await register_with_noray() != OK:
+		Main.output("Register with noray failed")
 		return
+		
 	#get game id
 	game_id = g_id
 	Noray.connect_nat(g_id)
@@ -25,24 +27,32 @@ func initiate_noray_client(g_id : String = game_id) -> void:
 
 
 func register_with_noray() -> Error:
-	var host = "tomfol.io"
+	Main.output("registering with noray")
+	var host = "159.89.237.170"
 	var port = 8890
 	var err = OK
 
 	# Connect to noray
+	Main.output("about to connect to host")
 	err = await Noray.connect_to_host(host, port)
 	if err != OK:
 		Main.output("Error %s connecting to noray" % err)
 		return err
+	else:
+		Main.output("No error connecting to noray")
 	 
 	# Register host
+	Main.output("Registering host")
 	Noray.register_host()
+	Main.output("awaiting pid")
 	await Noray.on_pid
+	Main.output("got pid")
 	game_id = Noray.oid
 	Main.output("Noray game_id: " + str(game_id))
 
 	# Register remote address
 	# This is where noray will direct traffic
+	Main.output("about to register remote")
 	err = await Noray.register_remote()
 	if err != OK:
 		Main.output("Error %s registering with noray" % err) # Failed to register
