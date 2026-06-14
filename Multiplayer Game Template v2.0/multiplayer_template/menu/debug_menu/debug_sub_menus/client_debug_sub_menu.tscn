@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://4wsghuk7i8ow"]
+[gd_scene format=3 uid="uid://4wsghuk7i8ow"]
 
 [ext_resource type="Script" uid="uid://y4kxh0gh08m5" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/client_debug_sub_menu.gd" id="1_q2diu"]
 [ext_resource type="PackedScene" uid="uid://bkkvybflamla1" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/ip_option.tscn" id="2_ham3y"]
 [ext_resource type="PackedScene" uid="uid://cenrsvhg8g7d2" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/lobby_option.tscn" id="3_em6vc"]
 
-[node name="ClientDebugSubMenu" type="Control" node_paths=PackedStringArray("ip_line_edit", "option_holder", "lobby_option_display", "name_line_edit", "port_line_edit", "game_id_line_edit")]
+[node name="ClientDebugSubMenu" type="Control" unique_id=892204641 node_paths=PackedStringArray("ip_line_edit", "option_holder", "lobby_option_display", "name_line_edit", "port_line_edit", "game_id_line_edit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,7 +22,7 @@ port_line_edit = NodePath("ScrollContainer/VBoxContainer/DirectLobbyContainer/Po
 game_id_line_edit = NodePath("ScrollContainer/VBoxContainer/NorayContainer/LineEdit")
 menu_name = "client"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1841584964]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,91 +30,91 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=781635103]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ManualIpInput" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="ManualIpInput" type="VBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=469478605]
 layout_mode = 2
 
-[node name="Header" type="Label" parent="ScrollContainer/VBoxContainer/ManualIpInput"]
+[node name="Header" type="Label" parent="ScrollContainer/VBoxContainer/ManualIpInput" unique_id=1486412416]
 layout_mode = 2
 text = "Enter IP:"
 
-[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/ManualIpInput"]
+[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/ManualIpInput" unique_id=613154290]
 layout_mode = 2
 text = "127.0.0.1"
 
-[node name="JoinServer" type="Button" parent="ScrollContainer/VBoxContainer/ManualIpInput"]
+[node name="JoinServer" type="Button" parent="ScrollContainer/VBoxContainer/ManualIpInput" unique_id=1082645970]
 layout_mode = 2
 text = "Join Server"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="ScrollContainer/VBoxContainer" unique_id=123938243]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="IPDisplay" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/ScrollContainer"]
+[node name="IPDisplay" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/ScrollContainer" unique_id=924983340]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="DirectLobbyContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="DirectLobbyContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=1005491905]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/DirectLobbyContainer"]
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/DirectLobbyContainer" unique_id=1735020913]
 layout_mode = 2
 text = "Port:"
 
-[node name="PortLineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/DirectLobbyContainer"]
+[node name="PortLineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/DirectLobbyContainer" unique_id=1748047656]
 layout_mode = 2
 text = "5000"
 
-[node name="JoinLobby" type="Button" parent="ScrollContainer/VBoxContainer/DirectLobbyContainer"]
+[node name="JoinLobby" type="Button" parent="ScrollContainer/VBoxContainer/DirectLobbyContainer" unique_id=1526571515]
 layout_mode = 2
 text = "Join Lobby Directly"
 
-[node name="ManualNameInput" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="ManualNameInput" type="VBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=1808742354]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/ManualNameInput"]
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/ManualNameInput" unique_id=1513805604]
 layout_mode = 2
 text = "Enter Name:"
 
-[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/ManualNameInput"]
+[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/ManualNameInput" unique_id=912950642]
 layout_mode = 2
 text = "Player"
 
-[node name="PrintLobbyData" type="Button" parent="ScrollContainer/VBoxContainer"]
+[node name="PrintLobbyData" type="Button" parent="ScrollContainer/VBoxContainer" unique_id=754095732]
 layout_mode = 2
 text = "Print Lobby Data"
 
-[node name="ScrollContainer2" type="ScrollContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="ScrollContainer2" type="ScrollContainer" parent="ScrollContainer/VBoxContainer" unique_id=83086265]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
-[node name="LobbyOptionDisplay" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/ScrollContainer2"]
+[node name="LobbyOptionDisplay" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/ScrollContainer2" unique_id=1717600864]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="NorayContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="NorayContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=1513320677]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/NorayContainer"]
+[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/NorayContainer" unique_id=1729030543]
 layout_mode = 2
 placeholder_text = "Noray game id"
 
-[node name="JoinNoray" type="Button" parent="ScrollContainer/VBoxContainer/NorayContainer"]
+[node name="JoinNoray" type="Button" parent="ScrollContainer/VBoxContainer/NorayContainer" unique_id=1858354075]
 layout_mode = 2
 text = "Join Noray Game"
 
-[node name="Start" type="Button" parent="ScrollContainer/VBoxContainer"]
+[node name="Start" type="Button" parent="ScrollContainer/VBoxContainer" unique_id=694973327]
 layout_mode = 2
 text = "Start"
 
-[node name="Back" type="Button" parent="ScrollContainer/VBoxContainer"]
+[node name="Back" type="Button" parent="ScrollContainer/VBoxContainer" unique_id=1400032747]
 layout_mode = 2
 text = "Back"
 
