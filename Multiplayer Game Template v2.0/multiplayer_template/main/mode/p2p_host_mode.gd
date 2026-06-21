@@ -30,14 +30,14 @@ func open() -> void:
 	lobby.accepted_into_lobby.connect(_on_accepted_into_lobby)
 	lobby.received_external_address.connect(_on_lobby_external_address_received)
 	lobby.authority_acknowleged.connect(_on_authority_acknowleged)
-	Main.main.add_child(lobby)
+	Main.main.add_child(lobby, true)
 	
 	lobby_manager = Main.main.lobby_manager_scene.instantiate()
 	lobby_manager.is_master = true
-	Main.main.add_child(lobby_manager)
+	Main.main.add_child(lobby_manager, true)
 	
 	lobby_database = Main.main.lobby_database_scene.instantiate()
-	Main.main.add_child(lobby_database)
+	Main.main.add_child(lobby_database, true)
 	lobby_database.data_changed.connect(_on_lobby_data_changed)
 	
 	my_member_data = Lobby.lobby_member_class.new()

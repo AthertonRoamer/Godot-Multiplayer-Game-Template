@@ -50,11 +50,10 @@ func _ready() -> void:
 	Network.server_disconnected.connect(_on_server_disconnected)
 	
 	stats.changed.connect(_on_stats_changed)
-	Main.output("Before launch server")
 	if is_master:
 		@warning_ignore("redundant_await")
 		await (Main.mode as LobbyMode).launch_server()
-	Main.output("After launch server")
+		Main.output("Completed launching server")
 		
 	
 func parse_args() -> void:
@@ -100,6 +99,7 @@ func initiate_membership_request(member_dictionary : Dictionary) -> void:
 	
 @rpc("reliable", "any_peer")
 func request_membership(member_dictionary : Dictionary) -> void:
+	Main.output("Multiplayer id " + str(multiplayer.get_unique_id()) + " alerted of membership request")
 	if is_master:
 		Main.output("Received membership request")
 		var new_member : LobbyMember = lobby_member_class.desirialize_from_dictionary(member_dictionary)
@@ -163,21 +163,40 @@ func update_remote_lobby_member_data(new_member_data : Array) -> void:
 			members.append(lobby_member_class.desirialize_from_dictionary(member_dictionary))
 		
 		#check if members left - ie check for old_members not in members
-		var absent_members : Array[LobbyMember] = old_members.filter( \
-				func(old_m): return not members.any( \
-					func(new_m): return new_m.id == old_m.id))
-		for absent_member in absent_members:
-			Main.output("Member left: " + str(absent_member.serialize_to_dictionary()))
-			member_left.emit(absent_member)
+		#var absent_members : Array[LobbyMember] = old_members.filter( \
+				#func(old_m): return not members.any( \
+					#func(new_m): return new_m.id == old_m.id))
+		#var absent_members : Array[LobbyMember]
+		for old_member in old_members:
+			var absent : bool = true
+			for member in members:
+				if member.id == old_member.id:
+					absent = false
+					break
+			if absent:
+				Main.output("Member left: " + str(old_member.serialize_to_dictionary()))
+				member_left.emit()
+		#for absent_member in absent_members:
+			#Main.output("Member left: " + str(absent_member.serialize_to_dictionary()))
+			#member_left.emit(absent_member)
 		
 		#check if new members joined - ie check for members not in old members
-		var new_members : Array[LobbyMember] = members.filter(\
-				func(new_m): return not old_members.any( \
-					func(old_m): return old_m.id == new_m.id))
-		for new_member in new_members:
-			if new_member.id != multiplayer.get_unique_id():
-				Main.output("Member joined: " + str(new_member.serialize_to_dictionary()))
-				member_joined.emit(new_member)
+		#var new_members : Array[LobbyMember] = members.filter(\
+				#func(new_m): return not old_members.any( \
+					#func(old_m): return old_m.id == new_m.id))
+		#for new_member in new_members:
+			#if new_member.id != multiplayer.get_unique_id():
+				#Main.output("Member joined: " + str(new_member.serialize_to_dictionary()))
+				#member_joined.emit(new_member)
+		for member in members:
+			var absent : bool = true
+			for old_member in old_members:
+				if member.id == old_member.id:
+					absent = false
+					break
+			if absent:
+				Main.output("Member joined: " + str(member.serialize_to_dictionary()))
+				member_joined.emit(member)
 
 
 func clear_unregistered_peers() -> void: #if peer isn't a member, kick it. Could be called at start of game to clear any unauthorized connections, especially in private lobbies
@@ -358,4 +377,7 @@ func leave_lobby() -> void:
 	if game_manager.in_game:
 		end_game()
 	
+	
+func _exit_tree() -> void:
+	Main.output("Lobby " + str(self) + " exiting tree")
 	

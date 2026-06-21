@@ -11,7 +11,7 @@ func _init() -> void:
 
 func open() -> void:
 	noray_manager = NorayManager.new()
-	Main.main.add_child(noray_manager)
+	Main.main.add_child(noray_manager, true)
 	super()
 	
 	Main.output("Opening noray lobby mode")

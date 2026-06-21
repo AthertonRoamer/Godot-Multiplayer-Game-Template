@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dhimo2aqdd6li"]
+
+[ext_resource type="Script" uid="uid://dh238mumalm4s" path="res://multiplayer_template/menu/p2p_host_noray_menu/local_lobby_display.gd" id="1_rjt1g"]
+
+[node name="LocalLobbyDisplay" type="Button" unique_id=861324260]
+text = "Join AthertonRoamer's Lobby"
+script = ExtResource("1_rjt1g")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

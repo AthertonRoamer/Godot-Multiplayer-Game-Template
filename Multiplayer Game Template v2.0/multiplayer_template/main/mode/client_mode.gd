@@ -4,6 +4,10 @@ extends Mode
 enum CLIENT_STATE {NOT_CONNECTED, CONNECTING_TO_SERVER, CONNECTED_TO_SERVER, CONNECTING_TO_LOBBY, CONNECTED_TO_LOBBY}
 
 var state : int = CLIENT_STATE.NOT_CONNECTED
+	#set(s):
+		#state = s
+		#print("State to ", state)
+		#print_stack()
 var lobby : Lobby
 var matchmaker : Matchmaker
 
@@ -11,7 +15,7 @@ var server_ip : String = ""
 var server_port : int = 3000
 
 var has_authority : bool = false
-var my_member_data : LobbyMember = null
+var my_member_data : LobbyMember = LobbyMember.new()
 
 var noray_manager : NorayManager
 
@@ -26,12 +30,12 @@ func open() -> void:
 	super()
 	
 	matchmaker = Main.main.matchmaker_scene.instantiate() #
-	Main.main.add_child(matchmaker)
+	Main.main.add_child(matchmaker, true)
 	
 	lobby = Main.main.lobby_scene.instantiate()
 	lobby.authority_acknowleged.connect(_on_authority_acknowleged)
 	lobby.accepted_into_lobby.connect(_on_accepted_into_lobby)
-	Main.main.add_child(lobby)
+	Main.main.add_child(lobby, true)
 	
 	Main.output("Opening client mode") 
 	server_port = Network.port #save default port so we can put it back when we close the mode
@@ -47,6 +51,7 @@ func close() -> void:
 	Network.port = server_port #reset Network port to default
 	
 	Main.output("Closing client mode")
+	
 	super()
 	
 	
@@ -64,7 +69,7 @@ func close_local_client() -> void:
 	Network.server_browser.stop_listening()
 	
 	
-func direct_join_lobby(ip : String, port : int, member_data : LobbyMember) -> void:
+func direct_join_lobby(ip : String, port : int, member_data : LobbyMember = my_member_data) -> void:
 	state = CLIENT_STATE.CONNECTING_TO_LOBBY
 	my_member_data = member_data
 	if ip == "server":
@@ -77,7 +82,7 @@ func direct_join_lobby(ip : String, port : int, member_data : LobbyMember) -> vo
 	Network.initiate_enet_client(ip)
 	
 	
-func join_noray_lobby(game_id : String, member_data : LobbyMember) -> void:
+func join_noray_lobby(game_id : String, member_data : LobbyMember = my_member_data) -> void:
 	Network.close_peer()
 	noray_manager = NorayManager.new()
 	my_member_data = member_data
@@ -87,7 +92,7 @@ func join_noray_lobby(game_id : String, member_data : LobbyMember) -> void:
 
 
 	
-func join_lobby(data : LobbyData, member_data : LobbyMember) -> void:
+func join_lobby(data : LobbyData, member_data : LobbyMember = my_member_data) -> void:
 	state = CLIENT_STATE.CONNECTING_TO_LOBBY
 	my_member_data = member_data
 	var ip : String = data.stats.ip
@@ -127,9 +132,12 @@ func _on_connected_to_server() -> void:
 	match state:
 		CLIENT_STATE.CONNECTING_TO_SERVER:
 			state = CLIENT_STATE.CONNECTED_TO_SERVER
+			Main.output("Client mode connecting to server")
 		CLIENT_STATE.CONNECTING_TO_LOBBY:
 			state = CLIENT_STATE.CONNECTED_TO_LOBBY
 			request_membership_in_lobby(my_member_data)
+		_:
+			Main.output("Connected to server but state is " + str(state))
 			
 		
 func _on_connection_failed() -> void:
@@ -142,6 +150,7 @@ func _on_connection_failed() -> void:
 			
 		
 func _on_disconnected_to_server() -> void:
+	Main.output("Client mode disconnected to server " + str(state))
 	match state:
 		CLIENT_STATE.CONNECTED_TO_SERVER:
 			state = CLIENT_STATE.NOT_CONNECTED
@@ -152,6 +161,7 @@ func _on_disconnected_to_server() -> void:
 			if server_ip == "":
 				Main.output("Cannot rejoin main server because server ip is invalid")
 			else:
+				Main.output("Attempting to join server")
 				join_server(server_ip)
 				
 

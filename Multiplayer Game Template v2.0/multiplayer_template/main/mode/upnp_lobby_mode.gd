@@ -12,7 +12,7 @@ func _init() -> void:
 func open() -> void:
 	upnp_manager = UPNPManager.new()
 	upnp_manager.upnp_bound_successfully.connect(_on_upnp_bound_successfully)
-	Main.main.add_child(upnp_manager)
+	Main.main.add_child(upnp_manager, true)
 	super()
 	
 	Main.output("Opening upnp lobby mode")

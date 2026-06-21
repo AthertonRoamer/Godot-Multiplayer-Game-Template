@@ -103,9 +103,12 @@ func _ready() -> void:
 		Main.mode.open()
 		opening_mode.emit(mode)
 		
-	if outputter != output_stash and not stash_outputted:
+	if outputter == output_stash:
+		outputter = Output.new()
+	if not stash_outputted:
 		output_stash.output_all()
 		stash_outputted = true
+		
 		
 		
 func load_menu() -> void:

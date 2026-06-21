@@ -19,6 +19,7 @@ var listening := false
 #form: key: ip (String), value: data (Dictionary)
 var found_servers : Dictionary = {}
 
+@export var same_device_only : bool = false
 
 func _process(_delta):
 	if listening and listener.get_available_packet_count() > 0:
@@ -87,11 +88,16 @@ func _exit_tree():
 	
 func get_broadcast_address() -> String:
 	var address : String = "127.0.0.1"
+	#Main.output(str(IP.get_local_interfaces()))
 	for interface in IP.get_local_interfaces():
 		if interface.has("friendly") and interface.has("addresses"):
 			if interface.friendly == "Wi-Fi":
 				var addresses = interface.addresses
 				address = str(addresses[addresses.size() - 1])
+	#Main.output("Address: " + addr_to_broadcast_addr(address))
+	if same_device_only:
+		Main.output("IMPORTANT: Broadcaster set to only work on one device")
+		return "127.0.0.255"
 	return addr_to_broadcast_addr(address)
 	
 	

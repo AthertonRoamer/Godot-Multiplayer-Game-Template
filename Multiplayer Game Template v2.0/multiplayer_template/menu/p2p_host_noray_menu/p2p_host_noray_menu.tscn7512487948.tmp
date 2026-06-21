@@ -1,0 +1,190 @@
+[gd_scene format=3 uid="uid://lirdavxh4cbu"]
+
+[ext_resource type="Script" uid="uid://cximbha4b5khj" path="res://p2p_host_noray_menu/sub_menu_holder.gd" id="1_chmv6"]
+[ext_resource type="Script" uid="uid://coffcb4plwdmu" path="res://p2p_host_noray_menu/default_menu.gd" id="2_f5okj"]
+[ext_resource type="Script" uid="uid://emj1on027ics" path="res://p2p_host_noray_menu/host_menu.gd" id="3_1x3cv"]
+[ext_resource type="PackedScene" uid="uid://4njhgvkmpndh" path="res://p2p_host_noray_menu/lobby_display.tscn" id="3_o5w3e"]
+[ext_resource type="Script" uid="uid://cfa56hhoxx6h5" path="res://p2p_host_noray_menu/client_menu.gd" id="5_jc45y"]
+[ext_resource type="Script" uid="uid://casnljl867aaq" path="res://p2p_host_noray_menu/joined_client_menu.gd" id="6_s8mfa"]
+
+[node name="MainMenu" type="Control" unique_id=2059643263]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1703930148]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.3372549, 0.37254903, 0.4627451, 1)
+
+[node name="SubMenuHolder" type="Control" parent="." unique_id=415207518]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.0
+offset_top = -173.0
+offset_right = 196.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_chmv6")
+
+[node name="DefaultMenu" type="Control" parent="SubMenuHolder" unique_id=1642212252]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_f5okj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubMenuHolder/DefaultMenu" unique_id=1932462127]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="SubMenuHolder/DefaultMenu/VBoxContainer" unique_id=630815250]
+layout_mode = 2
+text = "Name"
+vertical_alignment = 1
+
+[node name="NameInput" type="LineEdit" parent="SubMenuHolder/DefaultMenu/VBoxContainer" unique_id=515653271]
+layout_mode = 2
+text = "Player"
+
+[node name="Host" type="Button" parent="SubMenuHolder/DefaultMenu/VBoxContainer" unique_id=1206445595]
+layout_mode = 2
+text = "Host "
+
+[node name="HostLAN" type="Button" parent="SubMenuHolder/DefaultMenu/VBoxContainer" unique_id=552977665]
+layout_mode = 2
+text = "Host LAN Only"
+
+[node name="Join" type="Button" parent="SubMenuHolder/DefaultMenu/VBoxContainer" unique_id=1462385826]
+layout_mode = 2
+text = "Join"
+
+[node name="HostMenu" type="Control" parent="SubMenuHolder" unique_id=15682968]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_1x3cv")
+menu_name = "host_menu"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubMenuHolder/HostMenu" unique_id=426547340]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameIDDisplay" type="HBoxContainer" parent="SubMenuHolder/HostMenu/VBoxContainer" unique_id=360772014]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SubMenuHolder/HostMenu/VBoxContainer/GameIDDisplay" unique_id=801626085]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Game ID:"
+
+[node name="CopyGameID" type="Button" parent="SubMenuHolder/HostMenu/VBoxContainer/GameIDDisplay" unique_id=1361660732]
+layout_mode = 2
+text = "Copy Game ID"
+
+[node name="Start" type="Button" parent="SubMenuHolder/HostMenu/VBoxContainer" unique_id=453543070]
+layout_mode = 2
+text = "Start"
+
+[node name="LobbyDisplay" parent="SubMenuHolder/HostMenu/VBoxContainer" unique_id=614893882 instance=ExtResource("3_o5w3e")]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="SubMenuHolder/HostMenu/VBoxContainer" unique_id=1970691374]
+layout_mode = 2
+text = "Back"
+
+[node name="ClientMenu" type="Control" parent="SubMenuHolder" unique_id=1647455767]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_jc45y")
+menu_name = "client_menu"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubMenuHolder/ClientMenu" unique_id=170485430]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameIDInput" type="LineEdit" parent="SubMenuHolder/ClientMenu/VBoxContainer" unique_id=1217014923]
+layout_mode = 2
+placeholder_text = "Enter Game ID"
+
+[node name="JoinNoray" type="Button" parent="SubMenuHolder/ClientMenu/VBoxContainer" unique_id=11785669]
+layout_mode = 2
+text = "Join"
+
+[node name="LobbyDisplayHolder" type="VBoxContainer" parent="SubMenuHolder/ClientMenu/VBoxContainer" unique_id=487250782]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="SubMenuHolder/ClientMenu/VBoxContainer" unique_id=1056116788]
+layout_mode = 2
+text = "Back"
+
+[node name="JoinedClientMenu" type="Control" parent="SubMenuHolder" unique_id=2017128633]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_s8mfa")
+menu_name = "joined_client_menu"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubMenuHolder/JoinedClientMenu" unique_id=243856610]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LobbyDisplay" parent="SubMenuHolder/JoinedClientMenu/VBoxContainer" unique_id=1564952858 instance=ExtResource("3_o5w3e")]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="SubMenuHolder/JoinedClientMenu/VBoxContainer" unique_id=412226038]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="SubMenuHolder/DefaultMenu/VBoxContainer/Host" to="SubMenuHolder/DefaultMenu" method="_on_host_pressed"]
+[connection signal="pressed" from="SubMenuHolder/DefaultMenu/VBoxContainer/HostLAN" to="SubMenuHolder/DefaultMenu" method="_on_host_lan_pressed"]
+[connection signal="pressed" from="SubMenuHolder/DefaultMenu/VBoxContainer/Join" to="SubMenuHolder/DefaultMenu" method="_on_join_pressed"]
+[connection signal="pressed" from="SubMenuHolder/HostMenu/VBoxContainer/GameIDDisplay/CopyGameID" to="SubMenuHolder/HostMenu" method="_on_copy_game_id_pressed"]
+[connection signal="pressed" from="SubMenuHolder/HostMenu/VBoxContainer/Start" to="SubMenuHolder/HostMenu" method="_on_start_pressed"]
+[connection signal="pressed" from="SubMenuHolder/HostMenu/VBoxContainer/Back" to="SubMenuHolder/HostMenu" method="_on_back_pressed"]
+[connection signal="pressed" from="SubMenuHolder/ClientMenu/VBoxContainer/JoinNoray" to="SubMenuHolder/ClientMenu" method="_on_join_noray_pressed"]
+[connection signal="pressed" from="SubMenuHolder/ClientMenu/VBoxContainer/Back" to="SubMenuHolder/ClientMenu" method="_on_back_pressed"]
+[connection signal="pressed" from="SubMenuHolder/JoinedClientMenu/VBoxContainer/Back" to="SubMenuHolder/JoinedClientMenu" method="_on_back_pressed"]

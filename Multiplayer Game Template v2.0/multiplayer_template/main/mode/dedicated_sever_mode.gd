@@ -13,14 +13,14 @@ func open() -> void:
 	super()
 	lobby_manager = Main.main.lobby_manager_scene.instantiate()
 	lobby_manager.is_master = true
-	Main.main.add_child(lobby_manager)
+	Main.main.add_child(lobby_manager, true)
 	
 	lobby_database = Main.main.lobby_database_scene.instantiate()
-	Main.main.add_child(lobby_database)
+	Main.main.add_child(lobby_database, true)
 	
 	matchmaker = Main.main.matchmaker_scene.instantiate()
 	matchmaker.is_master = true
-	Main.main.add_child(matchmaker)
+	Main.main.add_child(matchmaker, true)
 	
 	Main.output("Opening server mode")
 	

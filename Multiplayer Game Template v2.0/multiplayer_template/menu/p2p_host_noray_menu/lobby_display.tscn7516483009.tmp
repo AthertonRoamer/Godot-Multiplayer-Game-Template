@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://4njhgvkmpndh"]
+
+[ext_resource type="Script" uid="uid://cstsrnktnfx8j" path="res://p2p_host_noray_menu/lobby_display.gd" id="1_id6ia"]
+
+[node name="LobbyDisplay" type="Panel" unique_id=614893882]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("1_id6ia")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1776868148]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=1458799784]
+layout_mode = 2
+text = "Players:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerHolder" type="VBoxContainer" parent="VBoxContainer" unique_id=591126635]
+layout_mode = 2

@@ -12,6 +12,7 @@ func set_open(b : bool) -> void:
 			opened()
 		else:
 			closed()
+		open = b
 	
 	
 func opened() -> void:
