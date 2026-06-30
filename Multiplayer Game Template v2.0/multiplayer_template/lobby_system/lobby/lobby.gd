@@ -53,7 +53,6 @@ func _ready() -> void:
 	if is_master:
 		@warning_ignore("redundant_await")
 		await (Main.mode as LobbyMode).launch_server()
-		Main.output("Completed launching server")
 		
 	
 func parse_args() -> void:
@@ -79,7 +78,8 @@ func serialize_to_lobby_data_dictionary() -> Dictionary:
 	
 func _on_stats_changed() -> void:
 	if is_master:
-		get_lobby_manager().submit_update()
+		if get_lobby_manager():
+			get_lobby_manager().submit_update()
 		Main.output("Submitting stats update")
 		update_remote_lobby_stats.rpc(stats.serialize_to_dictionary())
 	
@@ -146,7 +146,8 @@ func remove_member_by_id(id : int) -> void:
 		members.erase(member_to_remove)
 		if multiplayer.get_peers().has(member_to_remove.id):
 			multiplayer.multiplayer_peer.disconnect_peer(member_to_remove.id)
-		get_lobby_manager().submit_update()
+		if get_lobby_manager():
+			get_lobby_manager().submit_update()
 		member_left.emit(member_to_remove)
 		update_remote_lobby_member_data.rpc(get_serialized_members())
 		Main.output("Removed member with id: " + str(id))

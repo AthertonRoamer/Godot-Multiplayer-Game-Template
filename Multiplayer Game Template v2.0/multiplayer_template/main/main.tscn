@@ -10,11 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://fbv2gaggq1mq" path="res://multiplayer_template/lobby_system/matchmaker/matchmaker.tscn" id="6_xiws1"]
 [ext_resource type="Script" uid="uid://btxn2vsukni76" path="res://multiplayer_template/main/configuration/configuration.gd" id="8_2oxh0"]
 [ext_resource type="Script" uid="uid://bxq0nm0ydnqnc" path="res://multiplayer_template/lobby_system/lobby_stats/lobby_stats_noray.gd" id="8_vpcrk"]
-[ext_resource type="PackedScene" uid="uid://lirdavxh4cbu" path="res://multiplayer_template/menu/p2p_host_noray_menu/p2p_host_noray_menu.tscn" id="10_4yj4q"]
 
 [sub_resource type="Resource" id="Resource_2117q"]
 script = ExtResource("8_2oxh0")
-menu_scene = ExtResource("10_4yj4q")
+menu_scene = ExtResource("2_e8wja")
 lobby_scene = ExtResource("3_sipkh")
 lobby_stats_script = ExtResource("8_vpcrk")
 lobby_args = Array[String](["--mode lobby", "--debug-menu", "--headless"])

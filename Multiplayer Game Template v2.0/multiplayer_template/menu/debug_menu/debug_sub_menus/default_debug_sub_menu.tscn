@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://c7atjd0hjlng3"]
+[gd_scene format=3 uid="uid://c7atjd0hjlng3"]
 
 [ext_resource type="Script" uid="uid://c43lf452i36bx" path="res://multiplayer_template/menu/debug_menu/debug_sub_menus/default_debug_sub_menu.gd" id="1_0o5f1"]
 
-[node name="DefaultDebugSubMenu" type="Control"]
+[node name="DefaultDebugSubMenu" type="Control" unique_id=523262286]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0o5f1")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1803963387]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,19 +21,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="OpenServer" type="Button" parent="VBoxContainer"]
+[node name="OpenServer" type="Button" parent="VBoxContainer" unique_id=1244245094]
 layout_mode = 2
 text = "Open Server"
 
-[node name="OpenClient" type="Button" parent="VBoxContainer"]
+[node name="OpenClient" type="Button" parent="VBoxContainer" unique_id=157174419]
 layout_mode = 2
 text = "Open Client"
 
-[node name="OpenP2PHost" type="Button" parent="VBoxContainer"]
+[node name="OpenP2PHost" type="Button" parent="VBoxContainer" unique_id=1856147053]
 layout_mode = 2
 text = "Open Peer to Peer Host"
 
-[node name="Test" type="Button" parent="VBoxContainer"]
+[node name="OpenLobbyServer" type="Button" parent="VBoxContainer" unique_id=1266028376]
+layout_mode = 2
+text = "Open Lobby Server"
+
+[node name="Test" type="Button" parent="VBoxContainer" unique_id=979936759]
 visible = false
 layout_mode = 2
 text = "Test"
@@ -41,4 +45,5 @@ text = "Test"
 [connection signal="pressed" from="VBoxContainer/OpenServer" to="." method="_on_open_server_pressed"]
 [connection signal="pressed" from="VBoxContainer/OpenClient" to="." method="_on_open_client_pressed"]
 [connection signal="pressed" from="VBoxContainer/OpenP2PHost" to="." method="_on_open_p_2p_host_pressed"]
+[connection signal="pressed" from="VBoxContainer/OpenLobbyServer" to="." method="_on_open_lobby_server_pressed"]
 [connection signal="pressed" from="VBoxContainer/Test" to="." method="_on_test_pressed"]

@@ -18,3 +18,8 @@ func _on_test_pressed():
 func _on_open_p_2p_host_pressed() -> void:
 	Main.open_mode(P2PHostMode.new())
 	holder.open_menu("p2p_host")
+
+
+func _on_open_lobby_server_pressed() -> void:
+	Main.open_mode(ServerLobbyMode.new())
+	holder.open_menu("server_lobby")
