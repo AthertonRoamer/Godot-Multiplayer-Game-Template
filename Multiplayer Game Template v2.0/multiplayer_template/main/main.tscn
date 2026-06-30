@@ -5,19 +5,21 @@
 [ext_resource type="PackedScene" uid="uid://bj5csl8cew8re" path="res://multiplayer_template/game_manager/basic_game_manager/basic_game_manager.tscn" id="2_kmuox"]
 [ext_resource type="PackedScene" uid="uid://b7aa1yhhk54h2" path="res://multiplayer_template/lobby_system/lobby/late_load_lobby/late_load_lobby.tscn" id="3_sipkh"]
 [ext_resource type="PackedScene" uid="uid://b0dta0o2snoho" path="res://multiplayer_template/lobby_system/lobby_database/lobby_database.tscn" id="3_tr6gn"]
-[ext_resource type="PackedScene" uid="uid://ye22u6x1her8" path="res://multiplayer_template/demo_games/demo_late_load_lobby_game/demo_one.tscn" id="4_4yj4q"]
+[ext_resource type="PackedScene" uid="uid://ye22u6x1her8" path="res://multiplayer_template/demo_games/demo_late_load_lobby_game/demo_one.tscn" id="4_vpcrk"]
 [ext_resource type="PackedScene" uid="uid://ctn47px6wv5sq" path="res://multiplayer_template/lobby_system/lobby_manager/lobby_manager.tscn" id="4_yyevb"]
+[ext_resource type="Script" uid="uid://dt0cqi6f3viku" path="res://multiplayer_template/lobby_system/lobby_data/lobby_data.gd" id="5_pfgp2"]
 [ext_resource type="PackedScene" uid="uid://fbv2gaggq1mq" path="res://multiplayer_template/lobby_system/matchmaker/matchmaker.tscn" id="6_xiws1"]
 [ext_resource type="Script" uid="uid://btxn2vsukni76" path="res://multiplayer_template/main/configuration/configuration.gd" id="8_2oxh0"]
-[ext_resource type="Script" uid="uid://bxq0nm0ydnqnc" path="res://multiplayer_template/lobby_system/lobby_stats/lobby_stats_noray.gd" id="8_vpcrk"]
+[ext_resource type="Script" uid="uid://dpf4etlm4xb7m" path="res://multiplayer_template/lobby_system/lobby_member/lobby_member.gd" id="8_7o07q"]
+[ext_resource type="Script" uid="uid://bpq6rwiimydr6" path="res://multiplayer_template/lobby_system/lobby_stats/lobby_stats_game.gd" id="8_vpcrk"]
+[ext_resource type="PackedScene" uid="uid://lirdavxh4cbu" path="res://multiplayer_template/menu/p2p_host_noray_menu/p2p_host_noray_menu.tscn" id="12_gjh7m"]
 
 [sub_resource type="Resource" id="Resource_2117q"]
 script = ExtResource("8_2oxh0")
-menu_scene = ExtResource("2_e8wja")
+menu_scene = ExtResource("12_gjh7m")
 lobby_scene = ExtResource("3_sipkh")
-lobby_stats_script = ExtResource("8_vpcrk")
 lobby_args = Array[String](["--mode lobby", "--debug-menu", "--headless"])
-game_scene = ExtResource("4_4yj4q")
+game_scene = ExtResource("4_vpcrk")
 
 [node name="Main" type="Node" unique_id=1460359677]
 script = ExtResource("1_cj4ru")

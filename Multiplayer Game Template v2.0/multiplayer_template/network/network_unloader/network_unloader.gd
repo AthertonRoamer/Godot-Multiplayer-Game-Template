@@ -7,6 +7,7 @@ signal cease_rpcs_request_received
 
 var ceased_data : Dictionary = {}
 var server_ceased : bool = false
+var unload_triggered : bool = false
 
 func initiate_unload() -> void:
 	if multiplayer.multiplayer_peer.get_connection_status() == MultiplayerPeer.ConnectionStatus.CONNECTION_DISCONNECTED:
@@ -25,7 +26,9 @@ func register_as_ceased() -> void:
 	if multiplayer.multiplayer_peer.get_connection_status() != MultiplayerPeer.ConnectionStatus.CONNECTION_DISCONNECTED:
 		if multiplayer.is_server():
 			server_ceased = true
-		peer_ceased.rpc()
+			verify_cesation()
+		else:
+			peer_ceased.rpc()
 	
 	
 @rpc("any_peer", "reliable")
@@ -40,12 +43,17 @@ func verify_cesation() -> void:
 		if not server_ceased:
 			return
 		for peer in multiplayer.get_peers():
+			if not ceased_data.has(peer):
+				return
 			if not ceased_data[peer]:
 				return
 		trigger_unload()
 	
 	
 func trigger_unload() -> void:
+	if unload_triggered:
+		return
+	unload_triggered = true
 	unload.rpc()
 	
 	

@@ -11,7 +11,7 @@ extends Resource
 @export var broadcast_port : int = 3002
 
 @export_group("Menu")
-@export var menu_scene : PackedScene = preload("res://multiplayer_template/menu/main_menu/main_menu.tscn")
+@export var menu_scene : PackedScene #= preload("res://multiplayer_template/menu/p2p_host_noray_menu/p2p_host_noray_menu.tscn")
 @export var debug_menu_scene : PackedScene = preload("res://multiplayer_template/menu/debug_menu/debug_menu.tscn")
 
 @export_group("Lobby")
@@ -21,9 +21,9 @@ extends Resource
 @export var matchmaker_scene : PackedScene = preload("res://multiplayer_template/lobby_system/matchmaker/matchmaker.tscn")
 
 @export_subgroup("Serialization Scripts")
-@export var lobby_data_script : Script = LobbyData
-@export var lobby_member_script : Script = LobbyMember
-@export var lobby_stats_script : Script = LobbyStats
+@export var lobby_data_script : Script = preload("res://multiplayer_template/lobby_system/lobby_data/lobby_data.gd")
+@export var lobby_member_script : Script = preload("res://multiplayer_template/lobby_system/lobby_member/lobby_member.gd")
+@export var lobby_stats_script : Script = preload("res://multiplayer_template/lobby_system/lobby_stats/lobby_stats_game.gd")
 
 @export_subgroup("Arguments")
 @export var lobby_args : Array[String] = ["--mode lobby"]

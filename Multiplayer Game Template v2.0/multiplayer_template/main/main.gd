@@ -7,7 +7,7 @@ signal about_to_quit
 #the many components that make up this project structure are stored and can be set by using a configuration resource
 @export var configuration : Configuration = load("res://multiplayer_template/main/configuration/configurations/default_configuration.tres")
 
-var menu_scene : PackedScene = preload("res://multiplayer_template/menu/main_menu/main_menu.tscn")
+var menu_scene : PackedScene 
 var lobby_manager_scene : PackedScene = preload("res://multiplayer_template/lobby_system/lobby_manager/lobby_manager.tscn")
 var lobby_scene : PackedScene = preload("res://multiplayer_template/lobby_system/lobby/lobby.tscn")
 var lobby_database_scene : PackedScene = preload("res://multiplayer_template/lobby_system/lobby_database/lobby_database.tscn")

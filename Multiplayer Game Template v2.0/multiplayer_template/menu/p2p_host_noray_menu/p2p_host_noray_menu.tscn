@@ -1,19 +1,21 @@
 [gd_scene format=3 uid="uid://lirdavxh4cbu"]
 
 [ext_resource type="Script" uid="uid://cximbha4b5khj" path="res://multiplayer_template/menu/p2p_host_noray_menu/sub_menu_holder.gd" id="1_chmv6"]
+[ext_resource type="Script" uid="uid://cm5lvc7quiy6u" path="res://multiplayer_template/menu/p2p_host_noray_menu/p_2p_host_noray_menu.gd" id="1_wwsfk"]
 [ext_resource type="Script" uid="uid://coffcb4plwdmu" path="res://multiplayer_template/menu/p2p_host_noray_menu/default_menu.gd" id="2_f5okj"]
 [ext_resource type="Script" uid="uid://emj1on027ics" path="res://multiplayer_template/menu/p2p_host_noray_menu/host_menu.gd" id="3_1x3cv"]
 [ext_resource type="PackedScene" uid="uid://4njhgvkmpndh" path="res://multiplayer_template/menu/p2p_host_noray_menu/lobby_display.tscn" id="3_o5w3e"]
 [ext_resource type="Script" uid="uid://cfa56hhoxx6h5" path="res://multiplayer_template/menu/p2p_host_noray_menu/client_menu.gd" id="5_jc45y"]
 [ext_resource type="Script" uid="uid://casnljl867aaq" path="res://multiplayer_template/menu/p2p_host_noray_menu/joined_client_menu.gd" id="6_s8mfa"]
 
-[node name="MainMenu" type="Control" unique_id=2059643263]
+[node name="P2PHostNorayMenu" type="Control" unique_id=2059643263]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_wwsfk")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1703930148]
 layout_mode = 1
@@ -40,7 +42,6 @@ grow_vertical = 2
 script = ExtResource("1_chmv6")
 
 [node name="DefaultMenu" type="Control" parent="SubMenuHolder" unique_id=1642212252]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -121,6 +122,7 @@ layout_mode = 2
 text = "Back"
 
 [node name="ClientMenu" type="Control" parent="SubMenuHolder" unique_id=1647455767]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -137,6 +139,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Connecting" type="Label" parent="SubMenuHolder/ClientMenu/VBoxContainer" unique_id=921411683]
+visible = false
+layout_mode = 2
+text = "Connecting..."
+horizontal_alignment = 1
 
 [node name="GameIDInput" type="LineEdit" parent="SubMenuHolder/ClientMenu/VBoxContainer" unique_id=1217014923]
 layout_mode = 2

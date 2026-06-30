@@ -115,7 +115,7 @@ func initiate_enet_client(ip : String) -> void:
 		return
 	active_ip = ip
 	multiplayer.multiplayer_peer = peer
-	Main.output("Created client at ip: " + ip + ", port: " + str(port)) 
+	Main.output("Created client at ip: " + ip + ", port: " + str(port))
 	
 	
 func close_peer() -> void:

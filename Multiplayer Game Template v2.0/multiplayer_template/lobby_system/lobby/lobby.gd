@@ -5,6 +5,7 @@ extends Node
 
 signal game_began
 signal game_ended
+signal stats_updated
 signal received_external_address(ip : String, port : int)
 signal accepted_into_lobby
 signal authority_acknowleged(member_has_authority : bool)
@@ -26,29 +27,32 @@ var has_authority : bool = false
 var game_manager : GameManager
 
 #these variables will need be changed if any of those classes are extended with more variables, so that the correct deserializers will be used
-static var lobby_stats_class = LobbyStatsNoray
+static var lobby_stats_class = LobbyStatsGame
 static var lobby_member_class = LobbyMember
 static var lobby_data_class = LobbyData
 
 var game_manager_scene : PackedScene = preload("res://multiplayer_template/game_manager/game_manager.tscn")
 
 func _ready() -> void:
+	if Main.main.configuration.lobby_stats_script:
+		lobby_stats_class = Main.main.configuration.lobby_stats_script
+	if Main.main.configuration.lobby_member_script:
+		lobby_member_class = Main.main.configuration.lobby_member_script
+	if Main.main.configuration.lobby_data_script:
+		lobby_data_class = Main.main.configuration.lobby_data_script
+
+	stats = lobby_stats_class.new()
 	parse_args()
-	
-	#set components from config
-	lobby_stats_class = Main.main.configuration.lobby_stats_script
-	lobby_member_class = Main.main.configuration.lobby_member_script
-	lobby_data_class = Main.main.configuration.lobby_data_script
-	
+
 	game_manager_scene = Main.main.configuration.game_manager_scene
-	
+
 	game_manager = game_manager_scene.instantiate()
 	game_manager.lobby = self
 	add_child(game_manager)
-		
+
 	Network.peer_disconnected.connect(_on_peer_disconnected)
 	Network.server_disconnected.connect(_on_server_disconnected)
-	
+
 	stats.changed.connect(_on_stats_changed)
 	if is_master:
 		@warning_ignore("redundant_await")
@@ -88,6 +92,7 @@ func _on_stats_changed() -> void:
 func update_remote_lobby_stats(new_stats : Dictionary) -> void:
 	if not is_master:
 		stats = lobby_stats_class.desirialize_from_dictionary(new_stats)
+		stats_updated.emit()
 		Main.output("Received stats update")
 	
 	
@@ -176,7 +181,7 @@ func update_remote_lobby_member_data(new_member_data : Array) -> void:
 					break
 			if absent:
 				Main.output("Member left: " + str(old_member.serialize_to_dictionary()))
-				member_left.emit()
+				member_left.emit(old_member)
 		#for absent_member in absent_members:
 			#Main.output("Member left: " + str(absent_member.serialize_to_dictionary()))
 			#member_left.emit(absent_member)
@@ -377,8 +382,4 @@ func leave_lobby() -> void:
 	Network.close_peer()
 	if game_manager.in_game:
 		end_game()
-	
-	
-func _exit_tree() -> void:
-	Main.output("Lobby " + str(self) + " exiting tree")
 	

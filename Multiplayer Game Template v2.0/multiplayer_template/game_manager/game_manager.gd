@@ -6,6 +6,8 @@ extends Node
 #this class should be extended for your game
 
 signal game_loaded
+signal starting_game
+signal ending_game
 
 var lobby : Lobby
 var in_game : bool = false
@@ -18,8 +20,10 @@ func load_game() -> void:
 	
 func start_game() -> void:
 	in_game = true
+	starting_game.emit()
 	
 	
 func end_game() -> void:
 	in_game = false
 	is_game_loaded = false
+	ending_game.emit()

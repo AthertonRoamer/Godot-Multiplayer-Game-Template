@@ -46,8 +46,9 @@ func launch_server() -> void:
 		Network.server_browser.start_broadcast()
 	
 	
-func get_world() -> Node:
+func get_game() -> Node:
 	if lobby.game_manager.has_method("get_game"):
 		return lobby.game_manager.get_game()
 	else:
+		Main.output("CRITICAL ERROR: Get game returned null")
 		return null

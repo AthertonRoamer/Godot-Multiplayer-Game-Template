@@ -16,6 +16,10 @@ var lobby_name : String = "LobbyName"
 
 var lobby_lan_broadcast : bool = false
 
+var join_retry_count : int = 0
+const MAX_JOIN_RETRIES : int = 100
+const JOIN_RETRY_DELAY : float = 1.0
+
 func _init() -> void:
 	id = "p2p_host"
 	Network.connected_to_server.connect(_on_connected_to_server)
@@ -109,16 +113,17 @@ func _on_lobby_external_address_received(ip : String, port : int) -> void:
 	Main.output("Lobby external ip: " + ip + " external port: " + str(port))
 		
 		
-func _on_lobby_data_changed() -> void: 
+func _on_lobby_data_changed() -> void:
+	if lobby_database.data.values().size() == 0:
+		return
+	var data : LobbyData = lobby_database.data.values()[0]
 	match state:
 		CLIENT_STATE.NOT_CONNECTED:
-			if lobby_database.data.values().size() > 0:
-				join_lobby(lobby_database.data.values()[0], my_member_data)
-				pass
+			join_lobby(data, my_member_data)
 		CLIENT_STATE.CONNECTING_TO_LOBBY:
-			if lobby_database.data.values().size() > 0:
-				join_lobby(lobby_database.data.values()[0], my_member_data)
-				pass
+			if data.stats.lobby_port != Network.port:
+				join_retry_count = 0
+				join_lobby(data, my_member_data)
 			
 			
 func shut_down_lobby() -> void:
@@ -139,15 +144,26 @@ func get_additional_lobby_args() -> Array[String]:
 func _on_connected_to_server() -> void:
 	match state:
 		CLIENT_STATE.CONNECTING_TO_LOBBY:
+			join_retry_count = 0
 			state = CLIENT_STATE.CONNECTED_TO_LOBBY
 			request_membership_in_lobby(my_member_data)
-			
-		
+
+
 func _on_connection_failed() -> void:
 	match state:
 		CLIENT_STATE.CONNECTING_TO_LOBBY:
 			Network.port = Main.main.configuration.server_port
-	state = CLIENT_STATE.NOT_CONNECTED
+			state = CLIENT_STATE.NOT_CONNECTED
+			if join_retry_count < MAX_JOIN_RETRIES:
+				join_retry_count += 1
+				Main.output("Lobby join failed, retrying (%d/%d)..." % [join_retry_count, MAX_JOIN_RETRIES])
+				await Main.main.get_tree().create_timer(JOIN_RETRY_DELAY).timeout
+				if state == CLIENT_STATE.NOT_CONNECTED and lobby_database.data.values().size() > 0:
+					join_lobby(lobby_database.data.values()[0], my_member_data)
+			else:
+				join_retry_count = 0
+		_:
+			state = CLIENT_STATE.NOT_CONNECTED
 			
 		
 func _on_disconnected_to_server() -> void:
@@ -159,8 +175,9 @@ func _on_disconnected_to_server() -> void:
 	state = CLIENT_STATE.NOT_CONNECTED
 	
 	
-func get_world() -> Node:
+func get_game() -> Node:
 	if lobby.game_manager.has_method("get_game"):
 		return lobby.game_manager.get_game()
 	else:
+		Main.output("CRITICAL ERROR: Get game returned null")
 		return null

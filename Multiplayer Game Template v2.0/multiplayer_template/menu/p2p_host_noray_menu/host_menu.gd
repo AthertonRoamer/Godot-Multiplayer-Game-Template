@@ -5,6 +5,8 @@ func opened() -> void:
 	$VBoxContainer/GameIDDisplay.visible = Main.main.configuration.lobby_args.has("--mode noray_lobby")
 	(Main.mode as P2PHostMode).lobby_database.data_changed.connect(_on_lobby_data_updated)
 	$VBoxContainer/LobbyDisplay.lobby = Main.mode.lobby
+	Main.mode.lobby.game_manager.starting_game.connect($"../.."._on_game_starting)
+	Main.mode.lobby.game_manager.ending_game.connect($"../.."._on_game_ending)
 	Main.output("Opening host menu")
 	
 

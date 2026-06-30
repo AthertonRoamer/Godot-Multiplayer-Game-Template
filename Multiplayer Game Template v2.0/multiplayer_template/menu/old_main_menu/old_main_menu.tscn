@@ -15,7 +15,7 @@ script = ExtResource("1_h7vh4")
 layout_mode = 0
 offset_right = 1971.0
 offset_bottom = 1823.0
-color = Color(0.337255, 0.372549, 0.462745, 1)
+color = Color(0, 0, 0, 1)
 
 [node name="Menu1" type="VBoxContainer" parent="."]
 layout_mode = 1

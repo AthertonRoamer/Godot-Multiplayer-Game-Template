@@ -25,7 +25,7 @@ func load_game() -> void:
 	super()
 	if game_scene != null:
 		game = game_scene.instantiate()
-		add_child(game)
+		add_child(game, true)
 	else:
 		push_warning("BasicGameManager cannot load game because it does not have a game scene to load")
 
