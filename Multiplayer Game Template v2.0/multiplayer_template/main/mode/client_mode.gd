@@ -19,6 +19,8 @@ var my_member_data : LobbyMember = LobbyMember.new()
 
 var noray_manager : NorayManager
 
+var custom_noray_ip : String = ""
+
 func _init() -> void:
 	id = "client"
 	Network.connected_to_server.connect(_on_connected_to_server)
@@ -85,6 +87,8 @@ func direct_join_lobby(ip : String, port : int, member_data : LobbyMember = my_m
 func join_noray_lobby(game_id : String, member_data : LobbyMember = my_member_data) -> void:
 	Network.close_peer()
 	noray_manager = NorayManager.new()
+	if custom_noray_ip != "":
+		noray_manager.custom_noray_server_ip = custom_noray_ip
 	my_member_data = member_data
 	server_port = Network.port
 	state = CLIENT_STATE.CONNECTING_TO_LOBBY

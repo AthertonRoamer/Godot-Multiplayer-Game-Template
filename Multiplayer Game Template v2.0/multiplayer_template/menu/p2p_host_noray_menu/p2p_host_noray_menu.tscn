@@ -79,6 +79,26 @@ text = "Host LAN Only"
 layout_mode = 2
 text = "Join"
 
+[node name="AdvancedToggleContainer" type="HBoxContainer" parent="SubMenuHolder/DefaultMenu/VBoxContainer" unique_id=1401717953]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="SubMenuHolder/DefaultMenu/VBoxContainer/AdvancedToggleContainer" unique_id=1457546285]
+layout_mode = 2
+text = "Advanced"
+
+[node name="Advanced" type="VBoxContainer" parent="SubMenuHolder/DefaultMenu/VBoxContainer" unique_id=972041190]
+visible = false
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="SubMenuHolder/DefaultMenu/VBoxContainer/Advanced" unique_id=1632600970]
+layout_mode = 2
+placeholder_text = "Custom Noray IP or Domain"
+
+[node name="Label" type="Label" parent="SubMenuHolder/DefaultMenu/VBoxContainer/Advanced" unique_id=2078585784]
+layout_mode = 2
+text = "Host and client must use the same noray server to connect"
+autowrap_mode = 3
+
 [node name="HostMenu" type="Control" parent="SubMenuHolder" unique_id=15682968]
 visible = false
 layout_mode = 1
@@ -190,6 +210,7 @@ text = "Back"
 [connection signal="pressed" from="SubMenuHolder/DefaultMenu/VBoxContainer/Host" to="SubMenuHolder/DefaultMenu" method="_on_host_pressed"]
 [connection signal="pressed" from="SubMenuHolder/DefaultMenu/VBoxContainer/HostLAN" to="SubMenuHolder/DefaultMenu" method="_on_host_lan_pressed"]
 [connection signal="pressed" from="SubMenuHolder/DefaultMenu/VBoxContainer/Join" to="SubMenuHolder/DefaultMenu" method="_on_join_pressed"]
+[connection signal="pressed" from="SubMenuHolder/DefaultMenu/VBoxContainer/AdvancedToggleContainer/CheckButton" to="SubMenuHolder/DefaultMenu" method="_on_check_button_pressed"]
 [connection signal="pressed" from="SubMenuHolder/HostMenu/VBoxContainer/GameIDDisplay/CopyGameID" to="SubMenuHolder/HostMenu" method="_on_copy_game_id_pressed"]
 [connection signal="pressed" from="SubMenuHolder/HostMenu/VBoxContainer/Start" to="SubMenuHolder/HostMenu" method="_on_start_pressed"]
 [connection signal="pressed" from="SubMenuHolder/HostMenu/VBoxContainer/Back" to="SubMenuHolder/HostMenu" method="_on_back_pressed"]

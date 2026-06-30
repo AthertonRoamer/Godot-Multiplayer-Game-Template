@@ -11,6 +11,8 @@ func _init() -> void:
 
 func open() -> void:
 	noray_manager = NorayManager.new()
+	if Main.has_arg_option("--custom-noray-ip"):
+		noray_manager.custom_noray_server_ip = Main.get_arg_option_parameter("--custom-noray-ip")
 	Main.main.add_child(noray_manager, true)
 	super()
 	

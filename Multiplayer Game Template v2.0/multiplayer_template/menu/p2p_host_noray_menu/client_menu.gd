@@ -24,6 +24,7 @@ func closed() -> void:
 func _on_join_noray_pressed() -> void:
 	if $VBoxContainer/GameIDInput.text != "":
 		(Main.main.mode as ClientMode).my_member_data.name = $"../DefaultMenu/VBoxContainer/NameInput".text
+		(Main.mode as ClientMode).custom_noray_ip = $"../DefaultMenu/VBoxContainer/Advanced/LineEdit".text
 		(Main.main.mode as ClientMode).join_noray_lobby($VBoxContainer/GameIDInput.text)
 		if not Network.connected_to_server.is_connected(_on_connected_to_server):
 			Network.connected_to_server.connect(_on_connected_to_server)

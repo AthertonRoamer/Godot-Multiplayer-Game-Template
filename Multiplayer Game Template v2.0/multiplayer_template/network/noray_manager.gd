@@ -3,6 +3,8 @@ extends Node
 
 
 var game_id : String = ""
+var noray_server_ip : String = "159.89.237.170"
+var custom_noray_server_ip : String = ""
 
 func initiate_noray_server() -> void:
 	Network.noray = true
@@ -28,12 +30,14 @@ func initiate_noray_client(g_id : String = game_id) -> void:
 
 func register_with_noray() -> Error:
 	Main.output("registering with noray")
-	var host = "159.89.237.170"
+	var host = noray_server_ip
+	if custom_noray_server_ip != "":
+		host = custom_noray_server_ip
 	var port = 8890
 	var err = OK
 
 	# Connect to noray
-	Main.output("about to connect to host")
+	Main.output("about to connect to host at " + host + ":" + str(port))
 	err = await Noray.connect_to_host(host, port)
 	if err != OK:
 		Main.output("Error %s connecting to noray" % err)

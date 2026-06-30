@@ -16,6 +16,8 @@ var lobby_name : String = "LobbyName"
 
 var lobby_lan_broadcast : bool = false
 
+var custom_noray_ip : String = ""
+
 var join_retry_count : int = 0
 const MAX_JOIN_RETRIES : int = 100
 const JOIN_RETRY_DELAY : float = 1.0
@@ -138,6 +140,8 @@ func get_additional_lobby_args() -> Array[String]:
 	var args : Array[String] = ["--name " + lobby_name]
 	if lobby_lan_broadcast:
 		args.append("--lan-broadcast")
+	if custom_noray_ip != "":
+		args.append("--custom-noray-ip " + custom_noray_ip)
 	return args
 	
 	
