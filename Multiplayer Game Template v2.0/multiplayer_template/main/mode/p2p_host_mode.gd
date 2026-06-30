@@ -85,6 +85,7 @@ func launch_lobby() -> void:
 func join_lobby(data : LobbyData, member_data : LobbyMember) -> void:
 	state = CLIENT_STATE.CONNECTING_TO_LOBBY
 	my_member_data = member_data
+	my_member_data.version = ProjectSettings.get_setting("application/config/version")
 	var ip : String = data.stats.ip
 	if ip == "" or ip == "server":
 		ip = "127.0.0.1"

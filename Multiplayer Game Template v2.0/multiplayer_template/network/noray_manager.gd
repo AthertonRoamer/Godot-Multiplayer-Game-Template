@@ -3,7 +3,7 @@ extends Node
 
 
 var game_id : String = ""
-var noray_server_ip : String = "159.89.237.170"
+var noray_server_ip : String = ""
 var custom_noray_server_ip : String = ""
 
 func initiate_noray_server() -> void:

@@ -6,9 +6,10 @@ class_name LobbyMember
 
 var name : String = "Player name"
 var id : int = 0
+var version : String
 
 func serialize_to_dictionary() -> Dictionary:
-	return {"name" : name, "id": id}
+	return {"name" : name, "id": id, "version": version}
 	
 	
 static func desirialize_from_dictionary(dict : Dictionary) -> LobbyMember: #effectively a constructor for this class
@@ -17,4 +18,6 @@ static func desirialize_from_dictionary(dict : Dictionary) -> LobbyMember: #effe
 		member.name = dict["name"]
 	if dict.has("id"):
 		member.id = dict["id"]
+	if dict.has("version"):
+		member.version = dict["version"]
 	return member

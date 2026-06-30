@@ -1,7 +1,7 @@
 class_name Main #entry point for project
 extends Node
 
-signal opening_mode(mode : Mode)
+signal opened_mode(mode : Mode)
 signal about_to_quit
 
 #the many components that make up this project structure are stored and can be set by using a configuration resource
@@ -68,7 +68,7 @@ static func open_mode(new_mode : Mode) -> void:
 			mode.close()
 		mode = new_mode
 		mode.open()
-		main.opening_mode.emit(mode)
+		main.opened_mode.emit(mode)
 	
 
 func _ready() -> void:
@@ -101,7 +101,7 @@ func _ready() -> void:
 	Main.output("arguments:   " + str(arg_dictionary))
 	if Main.mode != null and Main.mode.id != "none" and !Main.mode.is_open:
 		Main.mode.open()
-		opening_mode.emit(mode)
+		opened_mode.emit(mode)
 		
 	if outputter == output_stash:
 		outputter = Output.new()

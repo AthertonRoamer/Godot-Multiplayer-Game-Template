@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://4njhgvkmpndh" path="res://multiplayer_template/menu/p2p_host_noray_menu/lobby_display.tscn" id="3_o5w3e"]
 [ext_resource type="Script" uid="uid://cfa56hhoxx6h5" path="res://multiplayer_template/menu/p2p_host_noray_menu/client_menu.gd" id="5_jc45y"]
 [ext_resource type="Script" uid="uid://casnljl867aaq" path="res://multiplayer_template/menu/p2p_host_noray_menu/joined_client_menu.gd" id="6_s8mfa"]
+[ext_resource type="Script" uid="uid://ce3q43054tm51" path="res://multiplayer_template/menu/p2p_host_noray_menu/version_label.gd" id="8_mq6ic"]
+[ext_resource type="Script" uid="uid://ndu5ddy3rrl2" path="res://multiplayer_template/menu/p2p_host_noray_menu/version_warning.gd" id="9_igulj"]
 
 [node name="P2PHostNorayMenu" type="Control" unique_id=2059643263]
 layout_mode = 3
@@ -96,7 +98,7 @@ placeholder_text = "Custom Noray IP or Domain"
 
 [node name="Label" type="Label" parent="SubMenuHolder/DefaultMenu/VBoxContainer/Advanced" unique_id=2078585784]
 layout_mode = 2
-text = "Host and client must use the same noray server to connect"
+text = "Host and clients connect to the same noray server"
 autowrap_mode = 3
 
 [node name="HostMenu" type="Control" parent="SubMenuHolder" unique_id=15682968]
@@ -206,6 +208,38 @@ layout_mode = 2
 [node name="Back" type="Button" parent="SubMenuHolder/JoinedClientMenu/VBoxContainer" unique_id=412226038]
 layout_mode = 2
 text = "Back"
+
+[node name="VersionLabel" type="Label" parent="." unique_id=1395042388]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -207.0
+offset_top = -49.0
+offset_right = -51.0
+offset_bottom = -3.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("8_mq6ic")
+
+[node name="VersionWarning" type="Label" parent="." unique_id=878784519]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.887
+anchor_right = 0.5
+anchor_bottom = 0.887
+offset_left = -180.0
+offset_top = -14.776001
+offset_right = 179.0
+offset_bottom = 8.223999
+text = "Warning: Players have different game versions.
+Make sure everyone has the most recent version"
+horizontal_alignment = 1
+script = ExtResource("9_igulj")
 
 [connection signal="pressed" from="SubMenuHolder/DefaultMenu/VBoxContainer/Host" to="SubMenuHolder/DefaultMenu" method="_on_host_pressed"]
 [connection signal="pressed" from="SubMenuHolder/DefaultMenu/VBoxContainer/HostLAN" to="SubMenuHolder/DefaultMenu" method="_on_host_lan_pressed"]

@@ -74,6 +74,7 @@ func close_local_client() -> void:
 func direct_join_lobby(ip : String, port : int, member_data : LobbyMember = my_member_data) -> void:
 	state = CLIENT_STATE.CONNECTING_TO_LOBBY
 	my_member_data = member_data
+	my_member_data.version = ProjectSettings.get_setting("application/config/version")
 	if ip == "server":
 		ip = server_ip
 	if ip == "":
@@ -90,6 +91,7 @@ func join_noray_lobby(game_id : String, member_data : LobbyMember = my_member_da
 	if custom_noray_ip != "":
 		noray_manager.custom_noray_server_ip = custom_noray_ip
 	my_member_data = member_data
+	my_member_data.version = ProjectSettings.get_setting("application/config/version")
 	server_port = Network.port
 	state = CLIENT_STATE.CONNECTING_TO_LOBBY
 	noray_manager.initiate_noray_client(game_id)
@@ -99,6 +101,7 @@ func join_noray_lobby(game_id : String, member_data : LobbyMember = my_member_da
 func join_lobby(data : LobbyData, member_data : LobbyMember = my_member_data) -> void:
 	state = CLIENT_STATE.CONNECTING_TO_LOBBY
 	my_member_data = member_data
+	my_member_data.version = ProjectSettings.get_setting("application/config/version")
 	var ip : String = data.stats.ip
 	if ip == "server":
 		ip = server_ip

@@ -11,7 +11,7 @@ signal accepted_into_lobby
 signal authority_acknowleged(member_has_authority : bool)
 
 signal member_joined(new_member : LobbyMember)
-signal member_left
+signal member_left(old_member : LobbyMember)
 
 var stats : LobbyStatsNoray = LobbyStatsNoray.new()
 var members : Array[LobbyMember] = []
@@ -383,3 +383,10 @@ func leave_lobby() -> void:
 	if game_manager.in_game:
 		end_game()
 	
+	
+func check_game_versions() -> bool:
+	var version : String = members[0].version
+	for member in members:
+		if member.version != version:
+			return false
+	return true
